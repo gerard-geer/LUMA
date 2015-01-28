@@ -2,23 +2,24 @@
 <html ng-app='luma'>
 <head>
 	<link rel='stylesheet' type='text/css' href='css/index.css'>
-	<script type='text/javascript' src='js/angular.js'></script>
-	<script type='text/javascript' src='js/app.js'></script>
+	<script type='text/javascript' src='js/libs/jquery-1.11.2.min.js'></script>
+	<script type='text/javascript' src='js/libs/angular.min.js'></script>
+	<script type='text/javascript' src='js/libs/app.js'></script>
 	<title>CSH LUMA</title>
 </head>
 <body>	
-	<div id='search_container' ng-controller='QueryController as qctr'>
+	<div id='search_container' ng-controller='QueryController as query'>
 		<div id='search_bar'>
 			<form id='search_form' name='search_form' 
-			ng-submit='qctr.onSubmit()' novalidate>
-				<input ng-model='qctr.search' type='text' id='text_input'></input>
+			ng-submit='query.onSubmit()' novalidate>
+				<input ng-model='query.query' type='text' id='text_input'></input>
 				<button id='search_button'>Search</button>
 			</form>
 		</div>
 		<div id='search_results'>
 			<div class='search_result'
 			ng-controller='ResultController as result'
-			ng-repeat='light in qctr.response'>
+			ng-repeat='light in query.response'>
 				<div class='result_content' 
 				ng-click='result.onSelect(light)'>
 					<p class='light_name'>{{light.name}}</p>
