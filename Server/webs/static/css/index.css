@@ -1,0 +1,22 @@
+#search_container
+{
+	position: absolute;
+	margin-top: 6%;
+	margin-left: 6%;
+	background-color: #775577;
+	width: 30%;
+	height: 8%;
+	min-height: 50px;
+	max-height: 100px;
+	min-width: 300px;
+	max-width: 500px;
+	border-radius: 12px;
+}
+
+#search_form
+{
+	width: 95%;
+	height: 90%;
+	margin-left: 2.5%;
+	background-color: #880088;
+}

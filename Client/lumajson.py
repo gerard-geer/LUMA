@@ -1,0 +1,256 @@
+#module: lumajson 
+
+"""
+Performs all our JSON encoding-decoding needs.
+"""
+
+from json import dumps, loads, JSONEncoder
+from light import Light
+from colorchannel import ColorChannel
+
+def _encode_light(l):
+	"""
+	Encodes a light object into a dictionary.
+	
+	Parameters:
+		l (Light): The Light instance to encode.
+	
+	Returns:
+		A dictionary containing all the fields of the Light instance.
+		
+	Preconditions:
+		None.
+		
+	Postconditions:
+		None.
+	"""
+	d = {}
+	d['name'] = l.name
+	d['r_c'] = l.r.chan
+	d['r_t'] = l.r.times.aslist()
+	d['r_v'] = l.r.vals.aslist()
+	d['g_c'] = l.g.chan
+	d['g_t'] = l.g.times.aslist()
+	d['g_v'] = l.g.vals.aslist()
+	d['b_c'] = l.b.chan
+	d['b_t'] = l.b.times.aslist()
+	d['b_v'] = l.b.vals.aslist()
+	return d
+
+class _LightEncoder(JSONEncoder):
+	"""
+	A custom JSONEncoder that specifies its own way of doing things.
+	"""
+	def default(self, obj):
+		"""
+		Overrides JSONEncoder.default() to call _encode_light() if the
+		object being encoded is actually a Light instance.
+		
+		Parameters:
+			obj (Any): The object to encode.
+			
+		Returns:
+			The object transformed to be encoded.
+			
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		try:
+			return _encode_light(obj)
+		except:
+			return JSONEncoder.default(self, 5)
+
+def _decode_light(d):
+	"""
+	Creates a Light instance from a dictionary containing the guts of a Light
+	instance.
+	
+	Parameters:
+		d (Dictionary): The dictionary that contains the organs and ideas of
+		the Light we are trying to coax into existence.
+		
+	Returns:
+		A cultivated Light.
+	
+	Preconditions:
+		The dictionary actually does specify a light. (i.e. it was encoded
+		using _encode_light().)
+		
+	Postconditions:
+		A Light is created.
+	"""
+	# Create the three different ColorChannels from members of the dictionary.
+	r = ColorChannel(d['r_t'], d['r_v'], d['r_c'])
+	g = ColorChannel(d['g_t'], d['g_v'], d['g_c'])
+	b = ColorChannel(d['b_t'], d['b_v'], d['b_c'])
+	# Construct and return the Light instance that wraps the ColorChannels.
+	return Light(r, g, b, d['name'])
+
+def decodeRequest(r):
+	"""
+	Takes a String received as a request over a socket and decodes it as
+	a JSON object into a dictionary.
+	
+	There are three types of requests.
+		-status: These request the status of a Light or all Lights. If in want
+			of a single Light, the data field contains the name of the light.
+			If the status of all lights is desired, then the data field contains
+			None.
+		-change: These signal to change the pattern of a single Light. In this
+			this Light is not decoded beyond Dictionary form.
+	
+	Parameters:
+		r (String): The request. It should be a JSON String that encodes:
+		{
+			"type":"status"|"change"
+			"data":<light name>|null
+		}
+		
+	Returns:
+		A dictionary that contains the following items:
+		{
+			"type":"status"|"change"
+			"data":<light name>|None
+		}
+		
+	Preconditions:
+		The request is a valid JSON String encoding the above data.
+		
+	Postconditions:
+		A dictionary is created and returned.
+	"""
+	return loads(r)
+	
+def encodeResponse(type, light_s, message):
+	"""
+	Takes a response type, light, and encodes them into a JSON
+	String to transmit back in response to a request.
+	
+	There are three types of responses:
+		-status: These are in response to status requests. They store in their
+			data field the state of the Light[s] requested in the request's data 
+			field.
+		-success: These indicate a successful update. The affected light's state
+			is returned.
+		-error: If a light doesn't exist on the client, or if an update could
+			not be performed, then an error response is created with the
+			affected light's name, and an explanatory message.
+	
+	Parameters:
+		type ("status" | "success" | "error"): The type of response.
+		light (Light | Light[] | None): The light to return.
+		message (String): A message to send back.
+		
+	Returns:
+		A JSON String that encodes a response as detailed above.
+	
+	Preconditions:
+		The response should be valid as defined above.
+		
+	Postconditions:
+		A response is created and encoded and returned.
+	"""
+	r = {}
+	r['type'] = type
+	r['data'] = light_s
+	r['message'] = message
+	return dumps(r, cls=_LightEncoder)
+	
+def encodeLight(light):
+	"""
+	Returns a JSON encoded String describing the given Light.
+	
+	Parameters:
+		light (Light): The light to encode.
+	
+	Returns:
+		A JSON encoded String describing the given Light.
+		
+	Preconditions:
+		The Light is kosher.
+		
+	Postconditions:
+		None.
+	"""
+	return dumps(light, cls=_LightEncoder, sort_keys=True, indent=4)
+	
+		
+def encodeLights(lights):
+	"""
+	Returns a JSON encoded String describing the list of Lights.
+	
+	Parameters:
+		Lights (List): The list of Lights to encode.
+		
+	Returns:
+		A JSON encoded String describing the list of Lights.
+		
+	Preconditions:
+		The list of Lights is kosher.
+		
+	Postconditions:
+		None.
+	"""
+	return dumps(lights, cls=_LightEncoder, sort_keys=True, indent=4)
+		
+def encodeState(name, lights):
+	"""
+	Encodes a lighting state.
+	
+	Parameters:
+		name (String): The name of the client.
+		Lights (List): The list of Lights to save.
+		
+	Returns:
+		A JSON String encoding the given name and lights.
+	
+	Preconditions:
+		The list contains only Light instances.
+		
+	Postconditions:
+		None.
+	"""
+	# Create a JSON string containing all the lights. This will encode normally
+	# until it recurses down to the elements in the list of lights, when it will
+	# use the Light encoder.
+	return encodeLights({'name':name, 'lights':lights})
+	
+def decodeState(state):
+	"""
+	Decodes a lighting state.
+	
+	Parameters:
+		state (String): The JSON String that describes lighting state.
+	
+	Returns:
+		A tuple (Client name, dictionary of lights)
+		
+	Preconditions:
+		The JSON encoded state is valid 
+		
+	Postconditions:
+		None.
+	"""
+	
+	# Load the json object from a string. At this point it should be a list of
+	# dictionaries, each dictionary a light.
+	print('json parsing')
+	j = loads(state)
+	print(type(j['lights']))
+	# Create a dictionary to store all the new Light instances.
+	lights = {}
+	
+	# For each dictionary in the json, we decode the dictionary and append it to
+	# the lights list.
+	print('light parsing')
+	print('numlights: '+str(len(j['lights'].values())))
+	for d in j['lights'].values():
+		print(d)
+		l = _decode_light(d)
+		lights[l.name] = l
+		
+	# Finally we return the lights.
+	return j['name'], lights

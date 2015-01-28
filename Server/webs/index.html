@@ -1,0 +1,45 @@
+<!doctype HTML>
+<html ng-app='luma'>
+<head>
+	<link rel='stylesheet' type='text/css' href='css/index.css'>
+	<script type='text/javascript' src='js/angular.js'></script>
+	<script type='text/javascript' src='js/app.js'></script>
+	<title>CSH LUMA</title>
+</head>
+<body>	
+	<div id='search_container' ng-controller='QueryController as qctr'>
+		<div id='search_bar'>
+			<form id='search_form' name='search_form' 
+			ng-submit='qctr.onSubmit()' novalidate>
+				<input ng-model='qctr.search' type='text' id='text_input'></input>
+				<button id='search_button'>Search</button>
+			</form>
+		</div>
+		<div id='search_results'>
+			<div class='search_result'
+			ng-controller='ResultController as result'
+			ng-repeat='light in qctr.response'>
+				<div class='result_content' 
+				ng-click='result.onSelect(light)'>
+					<p class='light_name'>{{light.name}}</p>
+					<p class='light_client'>{{light.client}}</p>
+				</div>
+			</div>
+			<!-- Search result divs go here.  -->
+		</div>
+	</div>
+	 <!-- The edit pane holds the editing UI.  -->
+	 <div id='edit_pane'> 
+		 <!-- The waveform editor paradigm allows users to edit the pattern with three waveforms and periods.  -->
+		 <div id='waveform' class='editor'> 
+			 <div id='red' class='wave_channel'> 
+				 <canvas id='red_canvas' class='wave_canvas'></canvas> 
+			 </div> 
+			 <div id='green' class='wave_channel'></div> 
+			 <div id='blue' class='wave_channel'></div> 
+		 </div> 
+		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->
+		 <div id='node' class='editor'></div> 
+	 </div> 
+</body>
+</html>

@@ -1,0 +1,20 @@
+********************************************************************************
+This is an outline of the current RESTful functionality of the server. Unlike
+the JSON Request Outline, this document makes no hubub over things that will
+eventually be implemented, and only reflects what can be done.
+
+<LUMA domain> is just the URL of the server.
+********************************************************************************
+
+<LUMA domain>/resources/lights
+	GET: Gets collection of lights that are available to the current UUID
+	and match the query.
+	POST: Not used.
+	PUT: Not used.
+	DELETE: Not used.
+
+<LUMA domain>/resources/lights/state
+	GET: Gets the state of a single light.
+	POST: Sets the state of a single light.
+	PUT: Not used.
+	DELETE: Not used.

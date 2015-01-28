@@ -1,0 +1,56 @@
+{
+    "Ceiling": {
+        "client": "Research Room", 
+        "name": "Ceiling", 
+        "permitted": [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5", 
+            "6", 
+            "7"
+        ]
+    }, 
+    "Gerard's Desk": {
+        "client": "Gerard's Room", 
+        "name": "Gerard's Desk", 
+        "permitted": [
+            "6", 
+            "7"
+        ]
+    }, 
+    "Max's Couch": {
+        "client": "DUMMYNAME", 
+        "name": "Max's Couch", 
+        "permitted": [
+            "3"
+        ]
+    }, 
+    "Shelves": {
+        "client": "Research Room", 
+        "name": "Shelves", 
+        "permitted": [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5", 
+            "6", 
+            "7"
+        ]
+    }, 
+    "Under Countertop": {
+        "client": "Research Room", 
+        "name": "Under Countertop", 
+        "permitted": [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5", 
+            "6", 
+            "7"
+        ]
+    }
+}
