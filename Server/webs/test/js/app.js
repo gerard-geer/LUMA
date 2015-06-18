@@ -40,11 +40,11 @@ app.controller('QueryController', ['$animate', function($animate){
 			
 		this.submitted = true;
 		this.response = Array();
-		lowercase = this.query.toLowerCase();
+		this.query = this.query.toLowerCase();
 		for(var i = 0; i < testLights.length; ++i)
 		{
-			if(	testLights[i].name.toLowerCase().indexOf(lowercase) >= 0 ||
-			testLights[i].client.toLowerCase().indexOf(lowercase) >= 0 )
+			if(	testLights[i].name.toLowerCase().indexOf(this.query) >= 0 ||
+			testLights[i].client.toLowerCase().indexOf(this.query) >= 0 )
 				this.response.push(testLights[i]);
 		}
 	};
