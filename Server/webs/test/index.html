@@ -60,12 +60,18 @@
 	 <!-- The edit pane holds the editing UI.  -->
 	 <div id='edit_pane'> 
 		 <!-- The waveform editor paradigm allows users to edit the pattern with three waveforms and periods.  -->
-		 <div id='waveform' class='editor'> 
-			 <div id='red' class='wave_channel'> 
-				 <canvas id='red_canvas' class='wave_canvas'></canvas> 
-			 </div> 
-			 <div id='green' class='wave_channel'></div> 
-			 <div id='blue' class='wave_channel'></div> 
+		 <div id='waveform' class='editor'>
+			<div id='red' class='wave_channel'> 
+				<canvas id='red_canvas' class='wave_canvas' width='800px' height='450'></canvas> 
+			</div> 
+			<div id='green' class='wave_channel'>
+				<canvas id='green_canvas' class='wave_canvas' width='800px' height='450'></canvas> </div> 
+			<div id='blue' class='wave_channel'>
+				<canvas id='blue_canvas' class='wave_canvas' width='800px' height='450'></canvas> 
+			</div>
+			<div id='red_select' class='wave_select_button'>Red Channel</div>
+			<div id='green_select' class='wave_select_button'>Green Channel</div>
+			<div id='blue_select' class='wave_select_button'>Blue Channel</div>
 		 </div> 
 		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->
 		 <div id='node' class='editor'></div> 
