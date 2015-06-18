@@ -36,7 +36,7 @@
 			<!-- their functionality.										 -->
 			<div class='search_result'
 			ng-controller='ResultController as result'
-			ng-click='result.onSelect(light)'
+			ng-click='result.onSelect(light, query)'
 			ng-repeat='light in query.response'>
 				<div class='result_content'>
 					<div class='light_info'>
