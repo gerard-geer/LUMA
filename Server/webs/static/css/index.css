@@ -1,22 +1,119 @@
-#search_container
+body
 {
-	position: absolute;
-	margin-top: 6%;
-	margin-left: 6%;
-	background-color: #775577;
-	width: 30%;
-	height: 8%;
-	min-height: 50px;
-	max-height: 100px;
-	min-width: 300px;
-	max-width: 500px;
-	border-radius: 12px;
+	font-size: 1em;
+	font-family: "helvetica" sans-serif;
+}
+.search_container
+{
+	-webkit-transition: margin-top .3s; /* Chrome */
+	transition: margin-top .3s;
+	margin-top: 300px;
+	text-align: center;
+}
+.search_container.submitted
+{
+	margin-top: 30px;
 }
 
+#search_bar
+{
+	text-align: center;
+	max-height: 100px;
+}
 #search_form
 {
-	width: 95%;
-	height: 90%;
-	margin-left: 2.5%;
-	background-color: #880088;
+	margin: auto;
+	width: 800px;
+	height: 50px;
+	padding: 0;
+	box-shadow: #444444 3px 3px 5px;
+}
+input:focus
+{
+	outline-width: 0;
+}
+input[type=text]
+{
+	height: 46px;
+	font-size: 1.4em;
+	width: 736px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #222255;
+}
+input[type=submit]
+{
+	background-color: #CCCCCC;
+	float: right;
+	width: 58px;
+	height: 52px;
+	color: #FFFFFF;
+	background-color: #222255;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #111144;
+	padding-left: 5px;
+	box-shadow: #444444 -2px 0px 2px;
+}
+#search_results
+{
+	text-align: center;
+	padding: auto;
+}
+
+.search_result
+{
+	width: 800px;
+	height: 40px;
+	color: #222222;
+	background-color: #CCCCDD;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #111144;
+	padding-left: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: #444444 1.5px 1.5px 3px;
+	-webkit-transition: opacity 1s;
+	transition: opacity 1s;
+	opacity: 1.0;
+}
+.search_result.ng-enter
+{
+	opacity: 0.0;
+}
+.search_result.ng-enter-active
+{
+	opacity: 1.0;
+}
+.search_result.ng-leave-active
+{
+	opacity: 1.0;
+}
+.search_result.ng-leave
+{
+	opacity: 0.0;
+}
+
+.label
+{
+	font-size: .8em;
+	display: inline;
+	color: #444455;
+}
+.light
+{
+	width: 100%;
+	display: block;
+	text-align: left;
+}
+.light.name
+{
+}
+.light.client
+{
+	margin-top: 5px;
 }

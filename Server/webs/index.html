@@ -1,32 +1,52 @@
 <!doctype HTML>
-<html ng-app='luma'>
+<html ng-app='LumaClient'>
 <head>
 	<link rel='stylesheet' type='text/css' href='css/index.css'>
-	<script type='text/javascript' src='js/libs/jquery-1.11.2.min.js'></script>
 	<script type='text/javascript' src='js/libs/angular.min.js'></script>
-	<script type='text/javascript' src='js/libs/app.js'></script>
+	<script type='text/javascript' src='js/libs/angular-animate.min.js'></script>
+	<script type='text/javascript' src='js/libs/jquery-2.1.3.min.js'></script>
+	<script type='text/javascript' src='js/app.js'></script>
 	<title>CSH LUMA</title>
 </head>
-<body>	
-	<div id='search_container' ng-controller='QueryController as query'>
+<body>
+	<!-- The container that holds the search bar. This is governed by the	 -->
+	<!-- QueryController. If a query has been submitted we add a new class	 -->
+	<!-- to the component to re-align it so the query results are centered.  -->
+	<div class='search_container' ng-controller='QueryController as query'
+	ng-class='query.submitted?"submitted":""'>
+		<!-- The search bar itself. This contains a form that talks through  -->
+		<!-- the QueryController's onSubmit() callback to query the server	 -->
+		<!-- after storing the input's value in the QueryController's		 -->
+		<!-- query field.													 -->
 		<div id='search_bar'>
 			<form id='search_form' name='search_form' 
 			ng-submit='query.onSubmit()' novalidate>
-				<input ng-model='query.query' type='text' id='text_input'></input>
-				<button id='search_button'>Search</button>
+				<div>
+					<input ng-model='query.query' type='text'/>
+					<input type='submit' value='Search.'/>
+				</div>
 			</form>
 		</div>
+		<!-- Parent container for all the returned search results.			 -->
 		<div id='search_results'>
+			<!-- This search result div is repeated for each result	returned -->
+			<!-- by the server, each with their own ResultController guiding -->
+			<!-- their functionality.										 -->
 			<div class='search_result'
 			ng-controller='ResultController as result'
+			ng-click='result.onSelect(light)'
 			ng-repeat='light in query.response'>
-				<div class='result_content' 
-				ng-click='result.onSelect(light)'>
-					<p class='light_name'>{{light.name}}</p>
-					<p class='light_client'>{{light.client}}</p>
+				<div class='result_content'>
+					<div class='light_info'>
+						<div class='light name'>
+							<p class='label'>Name:</p>{{light.name}}
+						</div>
+						<div class='light client'>
+							<p class='label'>Client:</p>{{light.client}}
+						</div>
+					</div>
 				</div>
 			</div>
-			<!-- Search result divs go here.  -->
 		</div>
 	</div>
 	 <!-- The edit pane holds the editing UI.  -->
