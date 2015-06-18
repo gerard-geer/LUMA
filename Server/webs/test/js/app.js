@@ -15,6 +15,18 @@ var testLights = [ 	{name:"Gerard's Desk", client:"Gerard and Josh's Room"},
 					{name:"Desk", client:"Max's Room"},
 					{name:"Bed", client:"Max's Room"},
 					{name:"Ceiling", client:"Max's Room"}];
+					
+var testState = {	success: True,
+					message: "simple message from client of Couch",
+					name: "Couch",
+					client: "Max's Room",
+					r_t: [<red channel timings>],
+					r_v: [<red channel values>],
+					g_t: [<green channel timings>],
+					g_v: [<green channel values>],
+					b_t: [<blue channel timings>],
+					b_v: [<blue channel values>]
+					
 		
 // The user's selection from the original query.
 var selectedResult = null;

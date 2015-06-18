@@ -40,10 +40,13 @@ EXAMPLE RESPONSE
 	"client": "<example client name>",
 	"r_t": [<red channel timings>],
 	"r_v": [<red channel values>],
+	"r_c": <red channel pin>,
 	"g_t": [<green channel timings>],
 	"g_v": [<green channel values>],
+	"g_c": <green channel pin>,
 	"b_t": [<blue channel timings>],
-	"b_v": [<blue channel values>]
+	"b_v": [<blue channel values>],
+	"b_c": <blue channel pin>
 }
 
 EXAMPLE LIGHTING UPDATE:
