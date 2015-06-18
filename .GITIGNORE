@@ -1,4 +1,4 @@
 *.pyc
 */__pycache__/
 Server/webs/static/js/libs/*
-Server/webs/test/*
+Server/webs/test/js/libs/*
