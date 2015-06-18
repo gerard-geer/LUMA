@@ -55,11 +55,10 @@ app.controller('QueryController', ['$animate', function($animate){
 	result.
 */
 app.controller('ResultController', function(){
-	this.onSelect = function(light){
+	this.onSelect = function(light, query){
 		// Remove the search results so we can put something else in their
 		// place, such as an edit pane.
-		results = document.getElementById("search_results");
-		results.parentNode.removeChild(results);
+		query.response = Array();
 		this.selectedResult = light;
 		console.log("selected light: \n"+light.name+"\n"+light.client);
 	};
