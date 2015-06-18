@@ -22,7 +22,9 @@
 			<form id='search_form' name='search_form' 
 			ng-submit='query.onSubmit()' novalidate>
 				<div>
-					<input ng-model='query.query' type='text'/>
+					<input ng-model='query.query' type='text' 
+					placeholder='Search for lights or clients by name or IP address.'
+					autofocus/>
 					<input type='submit' value='Search.'/>
 				</div>
 			</form>

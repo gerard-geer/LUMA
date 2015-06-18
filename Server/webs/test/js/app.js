@@ -27,20 +27,28 @@ var selectedLight = null;
 	The QueryController. Handles functionality regarding
 	the querying of the light server for valid light instances.
 */
-app.controller('QueryController', function(){
+app.controller('QueryController', ['$animate', function($animate){
 	// The query that will be sent to the server.
 	this.query = null;
-	this.response = null;
+	// Our fake response from the server.
+	this.response = new Array();
+	// Whether or not this query has been submitted.
 	this.submitted = false;
 	
 	// The submisison callback for the query form.
 	this.onSubmit = function(){
-		console.log(this.query);
+			
 		this.submitted = true;
-		// The response from the server to this query.
-		this.response = testLights;
+		this.response = Array();
+		this.query = this.query.toLowerCase();
+		for(var i = 0; i < testLights.length; ++i)
+		{
+			if(	testLights[i].name.toLowerCase().indexOf(this.query) >= 0 ||
+			testLights[i].client.toLowerCase().indexOf(this.query) >= 0 )
+				this.response.push(testLights[i]);
+		}
 	};
-});
+}]);
 				
 /*
 	The Result Controller. Handles the functionality of each
