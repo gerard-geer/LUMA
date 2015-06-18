@@ -84,6 +84,7 @@ input[type=submit]
 	padding: 5px;
 	box-shadow: #444444 1.5px 1.5px 3px;
 	opacity: 1.0;
+	cursor: pointer;
 	-webkit-transition: padding-left .1s linear;
 	-moz-transition: padding-left .1s, background-color .1s linear;
 	-o-transition: padding-left .1s, background-color .1s linear;
