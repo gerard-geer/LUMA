@@ -16,24 +16,19 @@ var testLights = [ 	{name:"Gerard's Desk", client:"Gerard and Josh's Room"},
 					{name:"Bed", client:"Max's Room"},
 					{name:"Ceiling", client:"Max's Room"}];
 					
-var testState = {	success: True,
+var testState = {	success: true,
 					message: "simple message from client of Couch",
 					name: "Couch",
 					client: "Max's Room",
-					r_t: [<red channel timings>],
-					r_v: [<red channel values>],
-					g_t: [<green channel timings>],
-					g_v: [<green channel values>],
-					b_t: [<blue channel timings>],
-					b_v: [<blue channel values>]
-					
-		
-// The user's selection from the original query.
-var selectedResult = null;
-
-// The entirety of the light selected by the user,
-// returned by the server for editing locally.
-var selectedLight = null;
+					r_t: [0,1],
+					r_v: [0,1],
+					r_c: 0,
+					g_t: [0,1],
+					g_v: [0,1],
+					g_c: 0,
+					b_t: [0,1],
+					b_v: [0,1],
+					b_c: 0};
 					
 /*
 	The QueryController. Handles functionality regarding
@@ -77,11 +72,21 @@ app.controller('QueryController', ['$animate', function($animate){
 	result.
 */
 app.controller('ResultController', function(){
+	
+	// The user's selection from the original query.
+	this.selectedResult = null;
+
+	// The entirety of the light selected by the user,
+	// returned by the server for editing locally.
+	this.selectedLight = null;
+	
 	this.onSelect = function(light, query){
 		// Remove the search results so we can put something else in their
 		// place, such as an edit pane.
 		query.response = Array();
 		this.selectedResult = light;
 		console.log("selected light: \n"+light.name+"\n"+light.client);
+		this.requestedState = testState;
+		console.log(this.requestedState);
 	};
 });
