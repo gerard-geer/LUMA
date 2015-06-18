@@ -54,9 +54,23 @@ input[type=submit]
 #search_results
 {
 	text-align: center;
+	margin-top: 15px;
 	padding: auto;
 }
 
+#no_result
+{
+	width: 600px;
+	height: 40px;
+	color: #222222;
+	background-color: #CCCCDD;
+	padding-left: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	padding: 5px;
+	box-shadow: #444444 1.5px 1.5px 3px;
+}
 .search_result
 {
 	width: 800px;
@@ -72,9 +86,25 @@ input[type=submit]
 	opacity: 1.0;
 	-webkit-transition: padding-left .1s linear;
 	-moz-transition: padding-left .1s, background-color .1s linear;
-	-o-transition: padding-left .1s, background-color .1slinear;
+	-o-transition: padding-left .1s, background-color .1s linear;
 	-ms-transition: padding-left .1s, background-color .1s linear;
 	transition: padding-left .1s, background-color .1s linear;
+}
+.search_result.ng-enter
+{
+	transition: 0s;
+	-webkit-transition: 0s;
+	-moz-transition: 0s;
+	-o-transition: 0s;
+	-ms-transition: 0s;
+}
+.search_result.ng-leave
+{
+	transition: 0s;
+	-webkit-transition: 0s;
+	-moz-transition: 0s;
+	-o-transition: 0s;
+	-ms-transition: 0s;
 }
 .search_result:hover
 {

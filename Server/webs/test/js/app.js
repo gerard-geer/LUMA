@@ -34,11 +34,15 @@ app.controller('QueryController', ['$animate', function($animate){
 	this.response = new Array();
 	// Whether or not this query has been submitted.
 	this.submitted = false;
+	// Whether or not we need to display the sadness dialog.
+	this.noResults = false;
 	
 	// The submission callback for the query form.
 	this.onSubmit = function(){
-			
+		
+		console.log(this.noResults);
 		this.submitted = true;
+		this.noResults = false;
 		this.response = Array();
 		lowercase = this.query.toLowerCase();
 		for(var i = 0; i < testLights.length; ++i)
@@ -46,6 +50,10 @@ app.controller('QueryController', ['$animate', function($animate){
 			if(	testLights[i].name.toLowerCase().indexOf(lowercase) >= 0 ||
 			testLights[i].client.toLowerCase().indexOf(lowercase) >= 0 )
 				this.response.push(testLights[i]);
+		}
+		if(this.response.length == 0)
+		{
+			this.noResults = true;
 		}
 	};
 }]);
