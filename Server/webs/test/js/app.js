@@ -40,11 +40,13 @@ app.controller('QueryController', ['$animate', function($animate){
 	// The submission callback for the query form.
 	this.onSubmit = function(){
 		
-		console.log(this.noResults);
+		// Well we submitted it didn't we?
 		this.submitted = true;
+		// We don't know if we've struck out before we play the game.
 		this.noResults = false;
+		
 		this.response = Array();
-		lowercase = this.query.toLowerCase();
+		lowercase = this.query.toLowerCase(); // For better comparison.
 		for(var i = 0; i < testLights.length; ++i)
 		{
 			if(	testLights[i].name.toLowerCase().indexOf(lowercase) >= 0 ||
