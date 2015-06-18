@@ -78,6 +78,16 @@ input[type=submit]
 	border-radius: 5px;
 	box-shadow: #444444 1.5px 1.5px 3px;
 	opacity: 1.0;
+	-webkit-transition: padding-left .1s linear;
+	-moz-transition: padding-left .1s, background-color .1s linear;
+	-o-transition: padding-left .1s, background-color .1slinear;
+	-ms-transition: padding-left .1s, background-color .1s linear;
+	transition: padding-left .1s, background-color .1s linear;
+}
+.search_result:hover
+{
+	background-color: #FFFFFF;
+	padding-left: 10px;
 }
 
 .label
