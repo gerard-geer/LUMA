@@ -105,9 +105,17 @@ class RequestHandler(object):
 		
 		# If we can, well, that's good.
 		res = self._cm.sendStatusRequest(address, req['name'])
-		return {'success': res['type'] == 'status',
-				'message': res['message'],
-				'state': res['data'],
+		
+		# Now if we were unable to connect to the client we have to adapt.
+		if res['type'] == 'error':
+			return {'success': False,
+					'message': 'Could not connect to client.',
+					'name': req['name'],
+					'client': light['client']}
+		else:
+			return {'success': res['type'] == 'status',
+					'message': res['message'],
+					'state': res['data'],
 					'client': light['client']}
 				
 	def lightUpdate(self, req):
