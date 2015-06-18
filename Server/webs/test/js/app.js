@@ -35,16 +35,16 @@ app.controller('QueryController', ['$animate', function($animate){
 	// Whether or not this query has been submitted.
 	this.submitted = false;
 	
-	// The submisison callback for the query form.
+	// The submission callback for the query form.
 	this.onSubmit = function(){
 			
 		this.submitted = true;
 		this.response = Array();
-		this.query = this.query.toLowerCase();
+		lowercase = this.query.toLowerCase();
 		for(var i = 0; i < testLights.length; ++i)
 		{
-			if(	testLights[i].name.toLowerCase().indexOf(this.query) >= 0 ||
-			testLights[i].client.toLowerCase().indexOf(this.query) >= 0 )
+			if(	testLights[i].name.toLowerCase().indexOf(lowercase) >= 0 ||
+			testLights[i].client.toLowerCase().indexOf(lowercase) >= 0 )
 				this.response.push(testLights[i]);
 		}
 	};
