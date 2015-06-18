@@ -59,15 +59,23 @@
 	</div>
 	 <!-- The edit pane holds the editing UI.  -->
 	 <div id='edit_pane'> 
-		 <!-- The waveform editor paradigm allows users to edit the pattern with three waveforms and periods.  -->
+		 <!-- The waveform editor paradigm allows users to edit the pattern	 -->
+		 <!-- as three waveforms and periods. 								 -->
 		 <div id='waveform' class='editor'>
+			<!-- The three edit canvases and their container divs.			 -->
 			<div id='red' class='wave_channel'> 
-				<canvas id='red_canvas' class='wave_canvas' width='800px' height='450'></canvas> 
+				<canvas id='red_canvas' class='wave_canvas' width='800px' height='450px'>
+				Your browser does not support HTML5 Canvas.
+				</canvas> 
 			</div> 
 			<div id='green' class='wave_channel'>
-				<canvas id='green_canvas' class='wave_canvas' width='800px' height='450'></canvas> </div> 
+				<canvas id='green_canvas' class='wave_canvas' width='800px' height='450px'>
+				Your browser does not support HTML5 Canvas.
+				</canvas> </div> 
 			<div id='blue' class='wave_channel'>
-				<canvas id='blue_canvas' class='wave_canvas' width='800px' height='450'></canvas> 
+				<canvas id='blue_canvas' class='wave_canvas' width='800px' height='450px'>
+				Your browser does not support HTML5 Canvas.
+				</canvas> 
 			</div>
 			<div id='red_select' class='wave_select_button'>Red Channel</div>
 			<div id='green_select' class='wave_select_button'>Green Channel</div>

@@ -1,4 +1,3 @@
-
 // Create our Angular module, which depends on ngAnimate.
 var app = angular.module('LumaClient', ['ngAnimate']);
 
