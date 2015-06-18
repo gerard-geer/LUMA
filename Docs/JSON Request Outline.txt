@@ -1,0 +1,153 @@
+********************************************************************************
+This is a list of types of JSON requests and responses as well as examples
+of each.
+Most of these describe features that aren't yet implemented in the application.
+
+So far we've got base functionality:
+	-Querying for a set of lights
+	-Getting the state of a light
+	-Updating the state of a light.
+
+Note: 	". . ." is used to denote a structure with multiple elements.
+********************************************************************************
+
+EXAMPLE QUERY:
+{
+	"uuid": "<example UUID>",
+	"query": "<example query>"
+}
+EXAMPLE RESPONSE:
+{
+	"lights": [
+		{
+			"name": "<example light name>",
+			"client": "<example client name>"
+		}
+		. . .
+	]
+}
+
+EXAMPLE STATE REQUEST
+{
+	"name": "<example light name>",
+	"uuid": "<example UUID>"
+}
+EXAMPLE RESPONSE
+{
+	"success": <True | False>,
+	"message": "<possible message>"
+	"name": "<example light name>",
+	"client": "<example client name>",
+	"r_t": [<red channel timings>],
+	"r_v": [<red channel values>],
+	"r_c": <red channel pin>,
+	"g_t": [<green channel timings>],
+	"g_v": [<green channel values>],
+	"g_c": <green channel pin>,
+	"b_t": [<blue channel timings>],
+	"b_v": [<blue channel values>],
+	"b_c": <blue channel pin>
+}
+
+EXAMPLE LIGHTING UPDATE:
+{
+	"uuid": "<example UUID>",
+	"lights": [
+		{
+			"name": "<example light name>",
+			"client": "<example client name>",
+			"r_t": [<red channel timings>],
+			"r_v": [<red channel values>],
+			"g_t": [<green channel timings>],
+			"g_v": [<green channel values>],
+			"b_t": [<blue channel timings>],
+			"b_v": [<blue channel values>]
+		}
+		. . .
+	]
+}
+EXAMPLE RESPONSE:
+{
+	"lights": [
+		{
+			"success": <True | False>,
+			"message": "<update message>",
+			"name": "<example light name>",
+			"client": "<example client name>",
+			"r_t": [<red channel timings>],
+			"r_v": [<red channel values>],
+			"g_t": [<green channel timings>],
+			"g_v": [<green channel values>],
+			"b_t": [<blue channel timings>],
+			"b_v": [<blue channel values>]
+		}
+
+EXAMPLE UUID ADD:
+{
+	"uuid": "<example UUID>"
+	"lights": [
+		"<example light name>",
+		. . .
+	]
+}
+EXAMPLE RESPONSE:
+{
+	"<light name>": {
+		"success": <True | False>,
+		"message": <None | "<Example message>">
+		}
+	. . .
+}
+
+EXAMPLE UUID REMOVE:
+{
+	"uuid": "<example UUID>"
+	"lights": [
+		"<example light name>",
+		. . .
+	]
+}
+EXAMPLE RESPONSE:
+{
+	"<light name>": {
+		"success": <True | False>,
+		"message": <None | "<Example message>">
+		}
+	. . .
+}
+
+EXAMPLE LIGHT ADD:
+{
+	"name": "<example light name>",
+	"client": "<example client name>",
+	"address": "<example client IP>"
+	"permitted": [
+		"<example UUID>",
+		. . .
+	]
+}
+EXAMPLE RESPONSE:
+{
+	"success":<True | False>,
+	"message": <None | "<Example message>">
+}
+
+EXAMPLE LIGHT REMOVE:
+{
+	"name": "<example light name>"
+}
+EXAMPLE RESPONSE:
+{
+	"success":<True | False>,
+	"message": <None | "<Example message>">
+}
+
+EXAMPLE STATE BACKUP:
+{
+	<No JSON is parsed server side.>
+}
+EXAMPLE RESPONSE:
+{
+	"success":<True | False>,
+	"message": <None | "<Example message>">
+}
