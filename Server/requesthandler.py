@@ -113,10 +113,12 @@ class RequestHandler(object):
 					'name': req['name'],
 					'client': light['client']}
 		else:
-			return {'success': res['type'] == 'status',
+			print('merging dicts')
+			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
-					'state': res['data'],
 					'client': light['client']}
+			resp.update(res['data'])
+			return resp
 				
 	def lightUpdate(self, req):
 		"""
