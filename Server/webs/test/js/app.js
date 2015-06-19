@@ -37,7 +37,7 @@ var lightToEdit = null;
 	The QueryController. Handles functionality regarding
 	the querying of the light server for valid light instances.
 */
-app.controller('QueryController', ['$animate', function($animate){
+app.controller('QueryController', ['$animate', '$rootScope', function($animate, $rootScope){
 	// The query that will be sent to the server.
 	this.query = null;
 	// Our fake response from the server.
@@ -53,6 +53,9 @@ app.controller('QueryController', ['$animate', function($animate){
 		
 		// Well we submitted it didn't we?
 		this.submitted = true;
+		// If we're trying to submit a query, we aren't editing a light.
+		
+		$rootScope.isEditing = false;
 		// We don't know if we've struck out before we play the game.
 		this.noResults = false;
 		
@@ -75,7 +78,7 @@ app.controller('QueryController', ['$animate', function($animate){
 	The Result Controller. Handles the functionality of each
 	result.
 */
-app.controller('ResultController', function($rootScope){
+app.controller('ResultController', ['$rootScope', function($rootScope){
 	
 	this.onSelect = function(light, query){
 		// Remove the search results so we can put something else in their
@@ -85,7 +88,7 @@ app.controller('ResultController', function($rootScope){
 		lightToEdit = testState;
 		$rootScope.isEditing = true;
 	};
-});
+}]);
 
 /*
 	The Waveform Controller. Handles the functionality of the waveform
