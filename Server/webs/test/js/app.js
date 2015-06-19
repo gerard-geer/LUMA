@@ -28,6 +28,10 @@ var testState = {	success: true,
 					b_t: [0,1],
 					b_v: [0,1],
 					b_c: 0};
+
+// The entirety of the light selected by the user,
+// returned by the server for editing locally.
+var lightToEdit = null;
 					
 /*
 	The QueryController. Handles functionality regarding
@@ -42,7 +46,8 @@ app.controller('QueryController', ['$animate', function($animate){
 	this.submitted = false;
 	// Whether or not we need to display the sadness dialog.
 	this.noResults = false;
-	
+	// Whether or not there is a light to edit.
+	this.isEditing = false;
 	// The submission callback for the query form.
 	this.onSubmit = function(){
 		
@@ -70,22 +75,41 @@ app.controller('QueryController', ['$animate', function($animate){
 	The Result Controller. Handles the functionality of each
 	result.
 */
-app.controller('ResultController', function(){
-	
-	// The user's selection from the original query.
-	this.selectedResult = null;
-
-	// The entirety of the light selected by the user,
-	// returned by the server for editing locally.
-	this.selectedLight = null;
+app.controller('ResultController', function($rootScope){
 	
 	this.onSelect = function(light, query){
 		// Remove the search results so we can put something else in their
 		// place, such as an edit pane.
 		query.response = Array();
-		this.selectedResult = light;
 		console.log("selected light: \n"+light.name+"\n"+light.client);
-		this.requestedState = testState;
-		console.log(this.requestedState);
+		lightToEdit = testState;
+		$rootScope.isEditing = true;
 	};
+});
+
+/*
+	The Waveform Controller. Handles the functionality of the waveform
+	paradigm editing widget.
+*/
+app.controller('WaveformController', function($scope){
+	
+	// The currently selected channel.
+	$scope.channel = 'red';
+	
+	// The various canvases' rendering contexts.
+	$scope.rCtx = document.getElementById('red_canvas').getContext('2d');	
+	$scope.gCtx = document.getElementById('green_canvas').getContext('2d');	
+	$scope.bCtx = document.getElementById('blue_canvas').getContext('2d');
+	
+	$scope.rCtx.rect(0, 0, 800, 450);
+	$scope.rCtx.fillStyle='red';
+	$scope.rCtx.fill();
+	
+	$scope.gCtx.rect(0, 0, 800, 450);
+	$scope.gCtx.fillStyle='green';
+	$scope.gCtx.fill();
+	
+	$scope.bCtx.rect(0, 0, 800, 450);
+	$scope.bCtx.fillStyle='blue';
+	$scope.bCtx.fill();
 });

@@ -85,7 +85,7 @@ input[type=submit]
 	box-shadow: #444444 1.5px 1.5px 3px;
 	opacity: 1.0;
 	cursor: pointer;
-	-webkit-transition: padding-left .1s linear;
+	-webkit-transition: padding-left .1s, background-color .1s linear;
 	-moz-transition: padding-left .1s, background-color .1s linear;
 	-o-transition: padding-left .1s, background-color .1s linear;
 	-ms-transition: padding-left .1s, background-color .1s linear;
@@ -131,4 +131,75 @@ input[type=submit]
 .light.client
 {
 	margin-top: 5px;
+}
+
+#edit_pane
+{
+}
+
+#waveform
+{
+	display: block;
+	text-align: center;
+	padding: auto;
+}
+
+.wave_canvas
+{
+	margin: auto;
+}
+
+.wave_select_button
+{
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+	margin-bottom: auto;
+	padding: 4px;
+	display: inline;
+	background-color: #FFFFFF;
+	font-weight: bold;
+	box-shadow: #222222 1.5px 1.5px 5px;
+	cursor: pointer;
+	-webkit-transition: padding .1s, margin .1s, color .1s linear;
+	-moz-transition: padding .1s, margin .1s, color .1s linear;
+	-o-transition: padding .1s, margin .1s, color .1s linear;
+	-ms-transition: padding .1s, margin .1s, color .1s linear;
+	transition: padding .1s, margin .1s, color .1s linear;
+}
+
+#red_select
+{
+	color: #FF0000;
+}
+#red_select:hover
+{
+	color: #FF6666;
+	padding: 4px 6px 4px 6px;
+	margin: 5px 3px auto 3px;
+}
+#green_select
+{
+	color: #00FF00;
+}
+#green_select:hover
+{
+	color: #66FF66;
+	padding: 4px 6px 4px 6px;
+	margin: 5px 3px auto 3px;
+}
+#blue_select
+{
+	color: #0000FF;
+}
+#blue_select:hover
+{
+	color: #6666FF;
+	padding: 4px 6px 4px 6px;
+	margin: 5px 3px auto 3px;
+}
+
+#node
+{
+	display: none;
 }

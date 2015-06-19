@@ -58,28 +58,29 @@
 		</div>
 	</div>
 	 <!-- The edit pane holds the editing UI.  -->
-	 <div id='edit_pane'> 
+	 <div id='edit_pane' ng-show='isEditing'> 
 		 <!-- The waveform editor paradigm allows users to edit the pattern	 -->
 		 <!-- as three waveforms and periods. 								 -->
-		 <div id='waveform' class='editor'>
+		 <div id='waveform' class='editor'
+		 ng-controller='WaveformController as wave'>
 			<!-- The three edit canvases and their container divs.			 -->
-			<div id='red' class='wave_channel'> 
-				<canvas id='red_canvas' class='wave_canvas' width='800px' height='450px'>
+			<div id='red' class='wave_channel' ng-show='channel=="red"'> 
+				<canvas id='red_canvas' class='wave_canvas' width='800' height='450'>
 				Your browser does not support HTML5 Canvas.
 				</canvas> 
 			</div> 
-			<div id='green' class='wave_channel'>
-				<canvas id='green_canvas' class='wave_canvas' width='800px' height='450px'>
+			<div id='green' class='wave_channel' ng-show='channel=="green"'>
+				<canvas id='green_canvas' class='wave_canvas' width='800' height='450'>
 				Your browser does not support HTML5 Canvas.
 				</canvas> </div> 
-			<div id='blue' class='wave_channel'>
-				<canvas id='blue_canvas' class='wave_canvas' width='800px' height='450px'>
+			<div id='blue' class='wave_channel' ng-show='channel=="blue"'>
+				<canvas id='blue_canvas' class='wave_canvas' width='800' height='450'>
 				Your browser does not support HTML5 Canvas.
 				</canvas> 
 			</div>
-			<div id='red_select' class='wave_select_button'>Red Channel</div>
-			<div id='green_select' class='wave_select_button'>Green Channel</div>
-			<div id='blue_select' class='wave_select_button'>Blue Channel</div>
+			<div ng-click='channel="red"' id='red_select' class='wave_select_button'>Red Channel</div>
+			<div ng-click='channel="green"' id='green_select' class='wave_select_button'>Green Channel</div>
+			<div ng-click='channel="blue"' id='blue_select' class='wave_select_button'>Blue Channel</div>
 		 </div> 
 		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->
 		 <div id='node' class='editor'></div> 
