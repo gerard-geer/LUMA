@@ -26,7 +26,7 @@ body
 	width: 800px;
 	height: 50px;
 	padding: 0;
-	box-shadow: #333333 2px 2px 6px;
+	box-shadow: #333333 0px 2px 6px;
 }
 input:focus
 {
@@ -49,7 +49,7 @@ input[type=submit]
 	background-color: #222255;
 	border-width: 0px;
 	padding-left: 5px;
-	box-shadow: #444444 -2px 0px 2px;
+	box-shadow: #444444 0px 2px 2px;
 }
 #search_results
 {
@@ -69,7 +69,7 @@ input[type=submit]
 	margin-right: auto;
 	margin-top: 15px;
 	padding: 5px;
-	box-shadow: #444444 1.5px 1.5px 3px;
+	box-shadow: #444444 0px 1.5px 3px;
 }
 .search_result
 {
@@ -82,7 +82,7 @@ input[type=submit]
 	margin-right: auto;
 	margin-top: 5px;
 	padding: 5px;
-	box-shadow: #444444 1.5px 1.5px 3px;
+	box-shadow: #444444 0px 1.5px 3px;
 	opacity: 1.0;
 	cursor: pointer;
 	-webkit-transition: padding-left .1s, background-color .1s linear;
@@ -159,44 +159,43 @@ input[type=submit]
 	display: inline;
 	background-color: #FFFFFF;
 	font-weight: bold;
-	box-shadow: #222222 1.5px 1.5px 5px;
+	box-shadow: #222222 0px 1.5px 3px;
 	cursor: pointer;
-	-webkit-transition: padding .1s, margin .1s, color .1s linear;
-	-moz-transition: padding .1s, margin .1s, color .1s linear;
-	-o-transition: padding .1s, margin .1s, color .1s linear;
-	-ms-transition: padding .1s, margin .1s, color .1s linear;
-	transition: padding .1s, margin .1s, color .1s linear;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	-webkit-transition: border-bottom-width .1s linear;
+	-moz-transition: border-bottom-width .1s  linear;
+	-o-transition: border-bottom-width .1s  linear;
+	-ms-transition: border-bottom-width .1s  linear;
+	transition: border-bottom-width .1s  linear;
 }
 
 #red_select
 {
+	border-color: #FF0000;
 	color: #FF0000;
 }
 #red_select:hover
 {
-	color: #FF6666;
-	padding: 4px 6px 4px 6px;
-	margin: 5px 3px auto 3px;
+	border-bottom-width: 5px;
 }
 #green_select
 {
+	border-color: #00FF00;
 	color: #00FF00;
 }
 #green_select:hover
 {
-	color: #66FF66;
-	padding: 4px 6px 4px 6px;
-	margin: 5px 3px auto 3px;
+	border-bottom-width: 5px;
 }
 #blue_select
 {
+	border-color: #0000FF;
 	color: #0000FF;
 }
 #blue_select:hover
 {
-	color: #6666FF;
-	padding: 4px 6px 4px 6px;
-	margin: 5px 3px auto 3px;
+	border-bottom-width: 5px;
 }
 
 #node
