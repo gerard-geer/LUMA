@@ -146,14 +146,47 @@ input[type=submit]
 
 .wave_canvas
 {
-	margin: auto;
+	z-index: 0;
+	position: relatve;
+	margin: 10px auto 5px auto;
+	cursor: crosshair;
+}
+
+.wave_canvas:active
+{
+	cursor: cell;
+}
+.preset_button
+{
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding: 4px;
+	display: inline;
+	background-color: #FFFFFF;
+	font-weight: bold;
+	box-shadow: #222222 0px 1.5px 3px;
+	cursor: pointer;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	border-color: #FFFF00;
+	-webkit-transition: border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: border-bottom-width .2s, padding-bottom .2s;
+	transition: border-bottom-width .2s, padding-bottom .2s;
+}
+.preset_button:hover
+{
+	border-bottom-width: 4px;
+	padding-bottom: 0px;
 }
 
 .wave_select_button
 {
 	margin-left: 5px;
 	margin-right: 5px;
-	margin-top: 5px;
 	margin-bottom: auto;
 	padding: 4px;
 	display: inline;
@@ -163,11 +196,16 @@ input[type=submit]
 	cursor: pointer;
 	border-bottom-style: solid;
 	border-bottom-width: 0px;
-	-webkit-transition: border-bottom-width .1s linear;
-	-moz-transition: border-bottom-width .1s  linear;
-	-o-transition: border-bottom-width .1s  linear;
-	-ms-transition: border-bottom-width .1s  linear;
-	transition: border-bottom-width .1s  linear;
+	-webkit-transition: border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: border-bottom-width .2s, padding-bottom .2s;
+	transition: border-bottom-width .2s, padding-bottom .2s;
+}
+.wave_select_button:hover
+{
+	padding-bottom: 0px;
+	border-bottom-width: 4px;
 }
 
 #red_select
@@ -175,29 +213,27 @@ input[type=submit]
 	border-color: #FF0000;
 	color: #FF0000;
 }
-#red_select:hover
-{
-	border-bottom-width: 5px;
-}
 #green_select
 {
 	border-color: #00FF00;
 	color: #00FF00;
-}
-#green_select:hover
-{
-	border-bottom-width: 5px;
 }
 #blue_select
 {
 	border-color: #0000FF;
 	color: #0000FF;
 }
-#blue_select:hover
+.slider_container
 {
-	border-bottom-width: 5px;
+	display: inline-block;
+	width: 300px;
+	max-width: 300px;
 }
-
+#red_slider
+{
+	width: 300px;
+	background-color: #FF0000;
+}
 #node
 {
 	display: none;
