@@ -200,6 +200,20 @@ input[type=submit]
 {
 	border-color: #FFFF00;
 }
+.clear_button
+{
+	-webkit-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+}
+.clear_button:hover
+{
+	border-color: #FF0000;
+	color: #FF0000;
+}
+
 #red_select
 {
 	border-color: #FF0000;
