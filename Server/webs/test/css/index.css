@@ -146,13 +146,13 @@ input[type=submit]
 {
 	text-align: center;
 }
-#edit_subject_reminder
+#edit_subject_info
 {
 	font-size: .75em;
 	color: #888888;
 	margin: -6px auto 10px auto;
 }
-.edit_subject_info
+.edit_subject_attr
 {
 	color: #333333;
 	font-weight: bold;
