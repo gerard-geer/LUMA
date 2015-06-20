@@ -144,8 +144,19 @@ input[type=submit]
 
 #edit_pane
 {
+	text-align: center;
 }
-
+#edit_subject_reminder
+{
+	font-size: .75em;
+	color: #888888;
+	margin: -6px auto 10px auto;
+}
+.edit_subject_info
+{
+	color: #333333;
+	font-weight: bold;
+}
 #waveform
 {
 	display: block;

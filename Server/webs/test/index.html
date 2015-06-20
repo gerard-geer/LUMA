@@ -59,11 +59,18 @@
 		</div>
 	</div>
 	 <!-- The edit pane holds the editing UI.  -->
-	 <div id='edit_pane' ng-show='isEditing'> 
-		 <!-- The waveform editor paradigm allows users to edit the pattern	 -->
-		 <!-- as three waveforms and periods. 								 -->
-		 <div id='waveform' class='editor'
-		 ng-controller='WaveformController as wave'>
+	 <div id='edit_pane' ng-show='isEditing'>
+		<div id='edit_subject_reminder'>
+			You are editing the 
+			<span class='edit_subject_info'>{{editSubject.name}}</span> 
+			light on the 
+			<span class='edit_subject_info'>{{editSubject.client}}</span> 
+			client.
+		</div>
+		<!-- The waveform editor paradigm allows users to edit the pattern	 -->
+		<!-- as three waveforms and periods. 								 -->
+		<div id='waveform' class='editor'
+		ng-controller='WaveformController as wave'>
 			<!-- The three edit canvases and their container divs.			 -->
 			<div id='red' class='wave_channel no_sel' ng-show='channel=="red"'>
 				<!-- These buttons all reset the waveform to a preset shape. -->
