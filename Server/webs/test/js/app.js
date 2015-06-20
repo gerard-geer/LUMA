@@ -154,6 +154,7 @@ app.controller('WaveformController', function($scope){
 		}
 	}
 	
+	// The sine-wave preset function.
 	this.sine = function(ctx, vals)
 	{
 		vals.length = 0;
@@ -164,6 +165,7 @@ app.controller('WaveformController', function($scope){
 		}
 		updateAll(ctx, vals);
 	}
+	// The sawtooth preset function.
 	this.saw = function(ctx, vals)
 	{
 		vals.length = 0;
@@ -173,6 +175,7 @@ app.controller('WaveformController', function($scope){
 		}
 		updateAll(ctx, vals);
 	}
+	// The reverse sawtooth preset function.
 	this.revsaw = function(ctx, vals)
 	{
 		vals.length = 0;
@@ -182,6 +185,7 @@ app.controller('WaveformController', function($scope){
 		}
 		updateAll(ctx, vals);
 	}
+	// The square-wave preset function.
 	this.square = function(ctx, vals)
 	{
 		vals.length = 0;
@@ -191,6 +195,7 @@ app.controller('WaveformController', function($scope){
 		}
 		updateAll(ctx, vals);
 	}
+	// The triangle squarewave function.
 	this.triangle = function(ctx, vals)
 	{
 		vals.length = 0;

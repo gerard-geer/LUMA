@@ -63,6 +63,7 @@
 		 ng-controller='WaveformController as wave'>
 			<!-- The three edit canvases and their container divs.			 -->
 			<div id='red' class='wave_channel no_sel' ng-show='channel=="red"'>
+				<!-- These buttons all reset the waveform to a preset shape. -->
 				<div class='edit_button preset_button' ng-click='wave.sine(rCtx,rVals)'>Sine</div>
 				<div class='edit_button preset_button' ng-click='wave.saw(rCtx,rVals)'>Sawtooth</div>
 				<div class='edit_button preset_button' ng-click='wave.revsaw(rCtx,rVals)'>Reverse Sawtooth</div>
@@ -92,7 +93,7 @@
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div>
-			<!-- The three channel selection buttons. -->
+			<!-- The three channel selection buttons. 						-->
 			<div ng-click='channel="red"' id='red_select' class='edit_button wave_select_button'>
 				Red Channel
 			</div>
@@ -102,7 +103,7 @@
 			<div ng-click='channel="blue"' id='blue_select' class='edit_button wave_select_button'>
 				Blue Channel
 			</div>
-			<!-- Some wave manipulation utilities. -->
+			<!-- Some wave manipulation utilities.							-->
 			<div class='utility_container no_sel' ng-show='channel=="red"'>
 				<div class='edit_button rotate_button' ng-click='wave.rotateRight(rCtx,rVals)'>Rotate Right</div>
 				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(rCtx,rVals)'>Rotate Left</div>
