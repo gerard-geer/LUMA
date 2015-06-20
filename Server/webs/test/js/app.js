@@ -209,6 +209,7 @@ app.controller('WaveformController', function($scope){
 		}
 		updateAll(ctx, vals);
 	}
+	// Empties the waveform, resetting every sample to zero.
 	this.clear = function(ctx, vals)
 	{
 		for(var i = 0; i < vals.length; ++i)
