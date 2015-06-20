@@ -19,7 +19,6 @@ angular.module('LumaClient').controller('QueryController', ['$animate', '$rootSc
 		// Well we submitted it didn't we?
 		this.submitted = true;
 		// If we're trying to submit a query, we aren't editing a light.
-		
 		$rootScope.isEditing = false;
 		// We don't know if we've struck out before we play the game.
 		this.noResults = false;
