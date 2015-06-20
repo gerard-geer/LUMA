@@ -140,8 +140,8 @@ app.controller('WaveformController', function($scope){
 		ctx.lineWidth = 2;
 		ctx.moveTo(index, 576);
 		ctx.lineTo(index, 576-576*val);
-		ctx.rect(index-1.5, 574, 3, 1);
-		ctx.rect(index-1.5, 576-576*val, 3, 1);
+		ctx.rect(index-1.25, 574, 2.5, 1);
+		ctx.rect(index-1.25, 576-576*val, 2.5, 1);
 		ctx.stroke();
 	}
 	
