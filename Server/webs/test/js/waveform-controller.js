@@ -38,18 +38,19 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
 	// Redraws a line.
 	function update(ctx, index, val)
 	{
-		index *= 8;
-		
+		// Go ahead and scale the index so we can
+		// use it as the drawing x-coordinate.
+		index *= ctx.canvas.width/128;
 		// Clear the region of the line.
-		ctx.clearRect(index-3, 0, 6, 576);
+		ctx.clearRect(index-3, 0, 6, ctx.canvas.height);
 		
 		// Draw the new line.
 		ctx.beginPath();
 		ctx.lineWidth = 2;
-		ctx.moveTo(index, 576);
-		ctx.lineTo(index, 576-576*val);
-		ctx.rect(index-1.25, 574, 2.5, 1);
-		ctx.rect(index-1.25, 576-576*val, 2.5, 1);
+		ctx.moveTo(index, ctx.canvas.height);
+		ctx.lineTo(index, ctx.canvas.height-ctx.canvas.height*val);
+		ctx.rect(index-1.25, ctx.canvas.height-2, 2.5, 1);
+		ctx.rect(index-1.25, ctx.canvas.height-ctx.canvas.height*val, 2.5, 1);
 		ctx.stroke();
 	}
 	
