@@ -177,6 +177,14 @@ app.controller('WaveformController', function($scope){
 		}
 		updateAll(ctx, vals);
 	}
+	this.clear = function(ctx, vals)
+	{
+		for(var i = 0; i < vals.length; ++i)
+		{
+			vals[i] = 0;
+		}
+		updateAll(ctx, vals);
+	}
 	// Initialize them all with dummy values.
 	for(var i = 0; i < 128; ++i)
 	{
