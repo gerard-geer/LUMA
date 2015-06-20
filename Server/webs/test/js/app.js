@@ -127,7 +127,7 @@ app.controller('WaveformController', function($scope){
 	$scope.gVals = Array();
 	$scope.bVals = Array();
 	
-	this.sine = function(ctx, vals, color)
+	this.sine = function(ctx, vals)
 	{
 		vals.length = 0;
 		for(var i = 0; i < 128; ++i)
@@ -135,36 +135,36 @@ app.controller('WaveformController', function($scope){
 			//								2PI/128
 			vals.push( Math.pow( Math.sin(i*.024544), 2 ) );
 		}
-		updateAll(ctx, vals, color);
+		updateAll(ctx, vals);
 	}
-	this.saw = function(ctx, vals, color)
+	this.saw = function(ctx, vals)
 	{
 		vals.length = 0;
 		for(var i = 0; i < 128; ++i)
 		{
 			vals.push( i/128 );
 		}
-		updateAll(ctx, vals, color);
+		updateAll(ctx, vals);
 	}
-	this.revsaw = function(ctx, vals, color)
+	this.revsaw = function(ctx, vals)
 	{
 		vals.length = 0;
 		for(var i = 0; i < 128; ++i)
 		{
 			vals.push( 1.0-(i/128) );
 		}
-		updateAll(ctx, vals, color);
+		updateAll(ctx, vals);
 	}
-	this.square = function(ctx, vals, color)
+	this.square = function(ctx, vals)
 	{
 		vals.length = 0;
 		for(var i = 0; i < 128; ++i)
 		{
 			vals.push( Math.floor( 2.0*(i/128) ) );
 		}
-		updateAll(ctx, vals, color);
+		updateAll(ctx, vals);
 	}
-	this.triangle = function(ctx, vals, color)
+	this.triangle = function(ctx, vals)
 	{
 		vals.length = 0;
 		for(var i = 0; i < 64; ++i)
@@ -175,7 +175,7 @@ app.controller('WaveformController', function($scope){
 		{
 			vals.push( 1.0-((i-64)/64) );
 		}
-		updateAll(ctx, vals, color);
+		updateAll(ctx, vals);
 	}
 	// Initialize them all with dummy values.
 	for(var i = 0; i < 128; ++i)
@@ -186,7 +186,7 @@ app.controller('WaveformController', function($scope){
 	}
 	
 	// Redraws a line.
-	function update(ctx, index, val, color)
+	function update(ctx, index, val)
 	{
 		index *= 8;
 		
@@ -195,7 +195,6 @@ app.controller('WaveformController', function($scope){
 		
 		// Draw the new line.
 		ctx.beginPath();
-		ctx.strokeStyle = color;
 		ctx.lineWidth = 2;
 		ctx.moveTo(index, 576);
 		ctx.lineTo(index, 576-576*val);
@@ -203,11 +202,11 @@ app.controller('WaveformController', function($scope){
 	}
 	
 	// Redraws all lines for a canvas.
-	function updateAll(ctx, vals, color)
+	function updateAll(ctx, vals)
 	{
 		for(var i = 0; i < 128; ++i)
 		{
-			update(ctx, i, vals[i], color);
+			update(ctx, i, vals[i]);
 		}
 	}
 	
@@ -221,13 +220,13 @@ app.controller('WaveformController', function($scope){
     }
 	
 	// Draw all the initial values to the screen.
-	updateAll($scope.rCtx, $scope.rVals, '#FF0000');
-	updateAll($scope.gCtx, $scope.gVals, '#00FF00');
-	updateAll($scope.bCtx, $scope.bVals, '#0000FF');
+	updateAll($scope.rCtx, $scope.rVals);
+	updateAll($scope.gCtx, $scope.gVals);
+	updateAll($scope.bCtx, $scope.bVals);
 	
 	// A function that takes the mouse position and finds the closest
 	// value line to it, and updates it.
-	function updateVal(canvas, ctx, evt, vals, color)
+	function updateVal(canvas, ctx, evt, vals)
 	{
 		if(mdown)
 		{
@@ -239,23 +238,46 @@ app.controller('WaveformController', function($scope){
 			// Update the value.
 			vals[index] = val;
 			
-			update(ctx, index, val, color);
+			update(ctx, index, val);
 		}
+	}
+	
+	// A function that rotates a waveform's values left by 1/128 its period.
+	this.rotateLeft = function(ctx, vals)
+	{
+		var first = vals[0];
+		for(var i = 0; i < vals.length-1; ++i)
+		{
+			vals[i] = vals[i+1];
+		}
+		vals[vals.length-1]=first;
+		updateAll(ctx, vals);
+	}
+	// A sister function that rotates right.
+	this.rotateRight = function(ctx, vals)
+	{
+		var last = vals[vals.length-1];
+		for(var i = vals.length-1; i > 0; --i)
+		{
+			vals[i] = vals[i-1];
+		}
+		vals[0] = last;
+		updateAll(ctx, vals);
 	}
 	
 	// Add the mouse up/down listeners so we can know when we're taking a drag.
 	// Oh, and we also want functionality on click, so we update on mouse-down.
 	$scope.rCanvas.addEventListener('mousedown', function(evt){
 		mdown=true;
-		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.rVals, '#FF0000');
+		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.rVals);
 	},false);
 	$scope.gCanvas.addEventListener('mousedown', function(){
 		mdown=true;
-		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.gVals, '#00FF00');
+		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.gVals);
 	},false);
 	$scope.bCanvas.addEventListener('mousedown', function(){
 		mdown=true;
-		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals, '#0000FF');
+		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals);
 	},false);
 	$scope.rCanvas.addEventListener('mouseup', function(){mdown=false;},false);
 	$scope.gCanvas.addEventListener('mouseup', function(){mdown=false;},false);
@@ -270,12 +292,12 @@ app.controller('WaveformController', function($scope){
 	// Add the mouse move functions, which update the model if the mouse
 	// is dragged.
 	$scope.rCanvas.addEventListener('mousemove', function(evt){
-		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.rVals, '#FF0000');
+		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.rVals);
 	},false);
 	$scope.gCanvas.addEventListener('mousemove', function(evt){
-		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.gVals, '#00FF00');
+		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.gVals);
 	},false);
 	$scope.bCanvas.addEventListener('mousemove', function(evt){
-		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals, '#0000FF');
+		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals);
 	},false);
 });

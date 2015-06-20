@@ -133,6 +133,15 @@ input[type=submit]
 	margin-top: 5px;
 }
 
+.no_sel
+{
+	-moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
+	user-select: none;
+}
+
 #edit_pane
 {
 }
@@ -151,12 +160,12 @@ input[type=submit]
 	margin: 10px auto 5px auto;
 	cursor: crosshair;
 }
-
 .wave_canvas:active
 {
 	cursor: cell;
 }
-.preset_button
+
+.edit_button
 {
 	margin-left: 5px;
 	margin-right: 5px;
@@ -177,37 +186,20 @@ input[type=submit]
 	-ms-transition: border-bottom-width .2s, padding-bottom .2s;
 	transition: border-bottom-width .2s, padding-bottom .2s;
 }
-.preset_button:hover
+.edit_button:hover
 {
 	border-bottom-width: 4px;
 	padding-bottom: 0px;
 }
 
-.wave_select_button
+.rotate_button
 {
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-bottom: auto;
-	padding: 4px;
-	display: inline;
-	background-color: #FFFFFF;
-	font-weight: bold;
-	box-shadow: #222222 0px 1.5px 3px;
-	cursor: pointer;
-	border-bottom-style: solid;
-	border-bottom-width: 0px;
-	-webkit-transition: border-bottom-width .2s, padding-bottom .2s;
-	-moz-transition: border-bottom-width .2s, padding-bottom .2s;
-	-o-transition: border-bottom-width .2s, padding-bottom .2s;
-	-ms-transition: border-bottom-width .2s, padding-bottom .2s;
-	transition: border-bottom-width .2s, padding-bottom .2s;
+	border-color: #FF00FF;
 }
-.wave_select_button:hover
+.preset_button
 {
-	padding-bottom: 0px;
-	border-bottom-width: 4px;
+	border-color: #FFFF00;
 }
-
 #red_select
 {
 	border-color: #FF0000;
@@ -223,18 +215,8 @@ input[type=submit]
 	border-color: #0000FF;
 	color: #0000FF;
 }
-.slider_container
+.utility_container
 {
-	display: inline-block;
-	width: 300px;
-	max-width: 300px;
-}
-#red_slider
-{
-	width: 300px;
-	background-color: #FF0000;
-}
-#node
-{
-	display: none;
+	margin: auto auto auto 50px;
+	display:inline;
 }
