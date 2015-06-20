@@ -127,6 +127,33 @@ app.controller('WaveformController', function($scope){
 	$scope.gVals = Array();
 	$scope.bVals = Array();
 	
+	// Redraws a line.
+	function update(ctx, index, val)
+	{
+		index *= 8;
+		
+		// Clear the region of the line.
+		ctx.clearRect(index-3, 0, 6, 576);
+		
+		// Draw the new line.
+		ctx.beginPath();
+		ctx.lineWidth = 2;
+		ctx.moveTo(index, 576);
+		ctx.lineTo(index, 576-576*val);
+		ctx.rect(index-1.5, 574, 3, 1);
+		ctx.rect(index-1.5, 576-576*val, 3, 1);
+		ctx.stroke();
+	}
+	
+	// Redraws all lines for a canvas.
+	function updateAll(ctx, vals)
+	{
+		for(var i = 0; i < 128; ++i)
+		{
+			update(ctx, i, vals[i]);
+		}
+	}
+	
 	this.sine = function(ctx, vals)
 	{
 		vals.length = 0;
@@ -191,31 +218,6 @@ app.controller('WaveformController', function($scope){
 		$scope.rVals.push( Math.sin(i*.1)*Math.sin(i*.1) );
 		$scope.gVals.push( Math.sin(i*.05)*Math.sin(i*.05) );
 		$scope.bVals.push( Math.sin(i*.01)*Math.sin(i*.01) );
-	}
-	
-	// Redraws a line.
-	function update(ctx, index, val)
-	{
-		index *= 8;
-		
-		// Clear the region of the line.
-		ctx.clearRect(index-2, 0, 4, 576);
-		
-		// Draw the new line.
-		ctx.beginPath();
-		ctx.lineWidth = 2;
-		ctx.moveTo(index, 576);
-		ctx.lineTo(index, 576-576*val);
-		ctx.stroke();
-	}
-	
-	// Redraws all lines for a canvas.
-	function updateAll(ctx, vals)
-	{
-		for(var i = 0; i < 128; ++i)
-		{
-			update(ctx, i, vals[i]);
-		}
 	}
 	
 	// A quick function that gets the mouse position on a canvas.
