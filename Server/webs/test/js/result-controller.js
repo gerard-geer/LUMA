@@ -9,7 +9,7 @@ angular.module('LumaClient').controller('ResultController', ['$rootScope', funct
 		// place, such as an edit pane.
 		query.response = Array();
 		console.log("selected light: \n"+light.name+"\n"+light.client);
-		lightToEdit = testState;
+		$rootScope.editSubject = testState;
 		$rootScope.isEditing = true;
 	};
 }]);
