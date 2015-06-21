@@ -1,5 +1,5 @@
 // Create our Angular module.
-var app = angular.module('LumaClient', []);
+var app = angular.module('LUMAClient', []);
 
 // Just a simple bank of test lights.
 var testLights = [ 	{name:"Gerard's Desk", client:"Gerard and Josh's Room"},
