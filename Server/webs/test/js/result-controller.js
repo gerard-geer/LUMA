@@ -2,14 +2,14 @@
 	The Result Controller. Handles the functionality of each
 	result.
 */
-angular.module('LumaClient').controller('ResultController', ['$rootScope', function($rootScope){
+angular.module('LUMAClient').controller('ResultController', 
+['$scope','LUMAServerService','LUMAStateService', 
+function($scope, LUMAServerService, LUMAStateService){
 	
-	this.onSelect = function(light, query){
-		// Remove the search results so we can put something else in their
-		// place, such as an edit pane.
-		query.response = Array();
-		console.log("selected light: \n"+light.name+"\n"+light.client);
-		$rootScope.editSubject = testState;
-		$rootScope.isEditing = true;
+	this.onSelect = function(light){
+		LUMAStateService.selectedLight = light;
+		console.log("selected light: \n"+LUMAStateService.selectedLight.name+
+		"\n"+LUMAStateService.selectedLight.client);
+		LUMAStateService.isEditing = true;
 	};
 }]);

@@ -2,8 +2,12 @@
 	The Waveform Controller. Handles the functionality of the waveform
 	paradigm editing widget.
 */
-angular.module('LumaClient').controller('WaveformController', function($scope){
-	$scope.$broadcast('refreshSlider')
+angular.module('LUMAClient').controller('WaveformController', 
+['$scope','LUMAServerService','LUMAStateService',
+function($scope,LUMAServerService,LUMAStateService){
+	
+	// Get the state of the selected light.
+	LUMAServerService.requestLightState('<uuid>',LUMAStateService.selectedLight);
 	// The currently selected channel.
 	$scope.channel = 'red';
 	
@@ -225,4 +229,4 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
 	$scope.bCanvas.addEventListener('mousemove', function(evt){
 		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals);
 	},false);
-});
+}]);
