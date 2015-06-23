@@ -37,4 +37,11 @@ function($scope, LUMAServerService,LUMAStateService){
 			LUMAStateService.noResults = true;
 		}
 	};
+	
+	// A function that is called when the text input recieves focus.
+	this.onFocus = function()
+	{
+		// Simply reset the query.
+		LUMAStateService.query = '';
+	}
 }]);

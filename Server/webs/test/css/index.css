@@ -26,7 +26,6 @@ body
 	width: 800px;
 	height: 50px;
 	padding: 0;
-	box-shadow: #333333 0px 2px 6px;
 }
 input:focus
 {
@@ -38,18 +37,19 @@ input[type=text]
 	height: 46px;
 	font-size: 1.4em;
 	width: 736px;
+	box-shadow: #888888 0px 2px 6px;
 }
 input[type=submit]
 {
 	background-color: #CCCCCC;
 	float: right;
 	width: 58px;
-	height: 52px;
+	height: 49px;
 	color: #FFFFFF;
 	background-color: #222255;
 	border-width: 0px;
 	padding-left: 5px;
-	box-shadow: #444444 0px 2px 2px;
+	box-shadow: #888888 0px 2px 6px;
 }
 #search_results
 {
@@ -69,7 +69,7 @@ input[type=submit]
 	margin-right: auto;
 	margin-top: 15px;
 	padding: 5px;
-	box-shadow: #444444 0px 1.5px 3px;
+	box-shadow: #888888 0px 1.5px 3px;
 }
 .search_result
 {
@@ -82,7 +82,7 @@ input[type=submit]
 	margin-right: auto;
 	margin-top: 5px;
 	padding: 5px;
-	box-shadow: #444444 0px 1.5px 3px;
+	box-shadow: #888888 0px 1.5px 3px;
 	opacity: 1.0;
 	cursor: pointer;
 	-webkit-transition: padding-left .1s, background-color .1s linear;
@@ -117,6 +117,7 @@ input[type=submit]
 {
 	font-size: .8em;
 	display: inline;
+	font-weight: bold;
 	color: #444455;
 }
 .light
@@ -186,7 +187,7 @@ input[type=submit]
 	display: inline;
 	background-color: #FFFFFF;
 	font-weight: bold;
-	box-shadow: #222222 0px 1.5px 3px;
+	box-shadow: #888888 0px 1.5px 3px;
 	cursor: pointer;
 	border-bottom-style: solid;
 	border-bottom-width: 0px;
