@@ -8,6 +8,7 @@
 	<script src='js/state-service.js'></script>
 	<script src='js/query-controller.js'></script>
 	<script src='js/result-controller.js'></script>
+	<script src='js/editor-controller.js'></script>
 	<script src='js/waveform-controller.js'></script>
 	<title>CSH LUMA</title>
 </head>
@@ -16,7 +17,6 @@
 	<!-- QueryController. If a query has been submitted we add a new class	 -->
 	<!-- to the component to re-align it so the query results are centered.  -->
 	<div class='search_container' ng-controller='QueryController as query'
-	ng-service='LUMAStateService as state'
 	ng-class='state.submitted?"submitted":""'>
 		<!-- The search bar itself. This contains a form that talks through  -->
 		<!-- the QueryController's onSubmit() callback and the various LUMA	 -->
@@ -26,13 +26,12 @@
 			<form id='search_form' name='search_form' 
 			ng-submit='query.onSubmit()' novalidate>
 				<div>
-					<input ng-model='query.query' type='text' 
+					<input ng-model='state.query' type='text' 
 					placeholder='Search LUMA for lights and clients by name or IP address.'
 					autofocus />
 					<input type='submit' value='Search'/>
 				</div>
 			</form>
-		</div>
 		</div>
 		<!-- Parent container for all the returned search results.			 -->
 		<div id='search_results'>
@@ -42,7 +41,7 @@
 			<div class='search_result'
 			ng-controller='ResultController as result'
 			ng-click='result.onSelect(light)'
-			ng-repeat='light in LUMAStateService.queryResults'>
+			ng-repeat='light in state.queryResults'>
 				<div class='result_content'>
 					<div class='light_info'>
 						<div class='light name'>
@@ -58,17 +57,19 @@
 		<!-- The "hey man that was a crappy search try again buddy" dialog.	 -->
 		<!-- It's only shown when there are no results, according to		 -->
 		<!-- query.NoResults.												 -->
-		<div id='no_result' ng-show='noResults'>
+		<div id='no_result' ng-show='state.noResults'>
 			<p>No LUMA lights or clients found. Try a different search.</p>
 		</div>
 	</div>
 	 <!-- The edit pane holds the editing UI.  -->
-	 <div id='edit_pane' ng-show='LUMAStateService.isEditing'>
+	 <div ng-controller='EditorController as editor' 
+	 ng-show='state.isEditing'
+	 id='edit_pane'>
 		<div id='edit_subject_info'>
 			You are editing the 
-			<span class='edit_subject_attr'>{{editSubject.name}}</span> 
+			<span class='edit_subject_attr'>{{state.lightState.name}}</span> 
 			light on the 
-			<span class='edit_subject_attr'>{{editSubject.client}}</span> 
+			<span class='edit_subject_attr'>{{state.lightState.client}}</span> 
 			client.
 		</div>
 		<!-- The waveform editor paradigm allows users to edit the pattern	 -->
@@ -78,31 +79,31 @@
 			<!-- The three edit canvases and their container divs.			 -->
 			<div id='red' class='wave_channel no_sel' ng-show='channel=="red"'>
 				<!-- These buttons all reset the waveform to a preset shape. -->
-				<div class='edit_button preset_button' ng-click='wave.sine(rCtx,rVals)'>Sine</div>
-				<div class='edit_button preset_button' ng-click='wave.saw(rCtx,rVals)'>Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='wave.revsaw(rCtx,rVals)'>Reverse Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='wave.square(rCtx,rVals)'>Square</div>
-				<div class='edit_button preset_button' ng-click='wave.triangle(rCtx,rVals)'>Triangle</div>
+				<div class='edit_button preset_button' ng-click='wave.sine(rCtx,state.r_v)'>Sine</div>
+				<div class='edit_button preset_button' ng-click='wave.saw(rCtx,state.r_v)'>Sawtooth</div>
+				<div class='edit_button preset_button' ng-click='wave.revsaw(rCtx,state.r_v)'>Reverse Sawtooth</div>
+				<div class='edit_button preset_button' ng-click='wave.square(rCtx,state.r_v)'>Square</div>
+				<div class='edit_button preset_button' ng-click='wave.triangle(rCtx,state.r_v)'>Triangle</div>
 				<canvas id='red_canvas' class='wave_canvas' width='1200' height='450'>
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div> 
 			<div id='green' class='wave_channel no_sel' ng-show='channel=="green"'>
-				<div class='edit_button preset_button' ng-click='wave.sine(gCtx,gVals)'>Sine</div>
-				<div class='edit_button preset_button' ng-click='wave.saw(gCtx,gVals)'>Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='wave.revsaw(gCtx,gVals)'>Reverse Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='wave.square(gCtx,gVals)'>Square</div>
-				<div class='edit_button preset_button' ng-click='wave.triangle(gCtx,gVals)'>Triangle</div>
+				<div class='edit_button preset_button' ng-click='wave.sine(gCtx,state.g_v)'>Sine</div>
+				<div class='edit_button preset_button' ng-click='wave.saw(gCtx,state.g_v)'>Sawtooth</div>
+				<div class='edit_button preset_button' ng-click='wave.revsaw(gCtx,state.g_v)'>Reverse Sawtooth</div>
+				<div class='edit_button preset_button' ng-click='wave.square(gCtx,state.g_v)'>Square</div>
+				<div class='edit_button preset_button' ng-click='wave.triangle(gCtx,state.g_v)'>Triangle</div>
 				<canvas id='green_canvas' class='wave_canvas' width='1200' height='450'>
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div> 
 			<div id='blue' class='wave_channel no_sel' ng-show='channel=="blue"'>
-				<div class='edit_button preset_button' ng-click='wave.sine(bCtx,bVals)'>Sine</div>
-				<div class='edit_button preset_button' ng-click='wave.saw(bCtx,bVals)'>Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='wave.revsaw(bCtx,bVals)'>Reverse Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='wave.square(bCtx,bVals)'>Square</div>
-				<div class='edit_button preset_button' ng-click='wave.triangle(bCtx,bVals)'>Triangle</div>
+				<div class='edit_button preset_button' ng-click='wave.sine(bCtx,state.b_v)'>Sine</div>
+				<div class='edit_button preset_button' ng-click='wave.saw(bCtx,state.b_v)'>Sawtooth</div>
+				<div class='edit_button preset_button' ng-click='wave.revsaw(bCtx,state.b_v)'>Reverse Sawtooth</div>
+				<div class='edit_button preset_button' ng-click='wave.square(bCtx,state.b_v)'>Square</div>
+				<div class='edit_button preset_button' ng-click='wave.triangle(bCtx,state.b_v)'>Triangle</div>
 				<canvas id='blue_canvas' class='wave_canvas' width='1200' height='450'>
 					Your browser does not support HTML5 Canvases.
 				</canvas>
@@ -119,19 +120,19 @@
 			</div>
 			<!-- Some wave manipulation utilities.							-->
 			<div class='utility_container no_sel' ng-show='channel=="red"'>
-				<div class='edit_button rotate_button' ng-click='wave.rotateRight(rCtx,rVals)'>Rotate Right</div>
-				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(rCtx,rVals)'>Rotate Left</div>
-				<div class='edit_button clear_button' ng-click='wave.clear(rCtx,rVals)'>Clear</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateRight(rCtx,state.r_v)'>Rotate Right</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(rCtx,state.r_v)'>Rotate Left</div>
+				<div class='edit_button clear_button' ng-click='wave.clear(rCtx,state.r_v)'>Clear</div>
 			</div>
 			<div class='utility_container no_sel' ng-show='channel=="green"'>
-				<div class='edit_button rotate_button' ng-click='wave.rotateRight(gCtx,gVals)'>Rotate Right</div>
-				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(gCtx,gVals)'>Rotate Left</div>
-				<div class='edit_button clear_button' ng-click='wave.clear(gCtx,gVals)'>Clear</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateRight(gCtx,state.g_v)'>Rotate Right</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(gCtx,state.g_v)'>Rotate Left</div>
+				<div class='edit_button clear_button' ng-click='wave.clear(gCtx,state.g_v)'>Clear</div>
 			</div>
 			<div class='utility_container no_sel' ng-show='channel=="blue"'>
-				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(bCtx,bVals)'>Rotate Left</div>
-				<div class='edit_button rotate_button' ng-click='wave.rotateRight(bCtx,bVals)'>Rotate Right</div>
-				<div class='edit_button clear_button' ng-click='wave.clear(bCtx,bVals)'>Clear</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(bCtx,state.b_v)'>Rotate Left</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateRight(bCtx,state.b_v)'>Rotate Right</div>
+				<div class='edit_button clear_button' ng-click='wave.clear(bCtx,state.b_v)'>Clear</div>
 			</div>
 		 </div> 
 		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->

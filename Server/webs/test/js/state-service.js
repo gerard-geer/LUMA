@@ -5,6 +5,8 @@
 angular.module('LUMAClient').factory('LUMAStateService', [function()
 {
 	return {
+		// The query sent to the server.
+		query: "",
 		// The array of query results returned by the server.
 		queryResults: new Array(),
 		// Whether or not this query has been submitted.
