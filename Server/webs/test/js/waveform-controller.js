@@ -2,8 +2,13 @@
 	The Waveform Controller. Handles the functionality of the waveform
 	paradigm editing widget.
 */
-angular.module('LumaClient').controller('WaveformController', function($scope){
-	$scope.$broadcast('refreshSlider')
+angular.module('LUMAClient').controller('WaveformController', 
+['$scope','LUMAServerService','LUMAStateService',
+function($scope,LUMAServerService,LUMAStateService){
+	
+	// Bind the controller's scope to the state service.
+	$scope.state = LUMAStateService;
+	
 	// The currently selected channel.
 	$scope.channel = 'red';
 	
@@ -31,9 +36,9 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
 	$scope.bCtx.strokeStyle = '#0000FF';
 	
 	// The arrays of brightness values.
-	$scope.rVals = Array();
-	$scope.gVals = Array();
-	$scope.bVals = Array();
+	$scope.state.r_v = Array();
+	$scope.state.g_v = Array();
+	$scope.state.b_v = Array();
 	
 	// Redraws a line.
 	function update(ctx, index, val)
@@ -130,9 +135,9 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
 	// Initialize them all with dummy values.
 	for(var i = 0; i < 128; ++i)
 	{
-		$scope.rVals.push( Math.sin(i*.1)*Math.sin(i*.1) );
-		$scope.gVals.push( Math.sin(i*.05)*Math.sin(i*.05) );
-		$scope.bVals.push( Math.sin(i*.01)*Math.sin(i*.01) );
+		$scope.state.r_v.push( Math.sin(i*.1)*Math.sin(i*.1) );
+		$scope.state.g_v.push( Math.sin(i*.05)*Math.sin(i*.05) );
+		$scope.state.b_v.push( Math.sin(i*.01)*Math.sin(i*.01) );
 	}
 	
 	// A quick function that gets the mouse position on a canvas.
@@ -145,9 +150,9 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
     }
 	
 	// Draw all the initial values to the screen.
-	updateAll($scope.rCtx, $scope.rVals);
-	updateAll($scope.gCtx, $scope.gVals);
-	updateAll($scope.bCtx, $scope.bVals);
+	updateAll($scope.rCtx, $scope.state.r_v);
+	updateAll($scope.gCtx, $scope.state.g_v);
+	updateAll($scope.bCtx, $scope.state.b_v);
 	
 	// A function that takes the mouse position and finds the closest
 	// value line to it, and updates it.
@@ -194,15 +199,15 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
 	// Oh, and we also want functionality on click, so we update on mouse-down.
 	$scope.rCanvas.addEventListener('mousedown', function(evt){
 		mdown=true;
-		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.rVals);
+		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.state.r_v);
 	},false);
 	$scope.gCanvas.addEventListener('mousedown', function(){
 		mdown=true;
-		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.gVals);
+		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.state.g_v);
 	},false);
 	$scope.bCanvas.addEventListener('mousedown', function(){
 		mdown=true;
-		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals);
+		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.state.b_v);
 	},false);
 	$scope.rCanvas.addEventListener('mouseup', function(){mdown=false;},false);
 	$scope.gCanvas.addEventListener('mouseup', function(){mdown=false;},false);
@@ -217,12 +222,12 @@ angular.module('LumaClient').controller('WaveformController', function($scope){
 	// Add the mouse move functions, which update the model if the mouse
 	// is dragged.
 	$scope.rCanvas.addEventListener('mousemove', function(evt){
-		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.rVals);
+		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.state.r_v);
 	},false);
 	$scope.gCanvas.addEventListener('mousemove', function(evt){
-		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.gVals);
+		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.state.g_v);
 	},false);
 	$scope.bCanvas.addEventListener('mousemove', function(evt){
-		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.bVals);
+		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.state.b_v);
 	},false);
-});
+}]);
