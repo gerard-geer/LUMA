@@ -26,9 +26,11 @@
 			<form id='search_form' name='search_form' 
 			ng-submit='query.onSubmit()' novalidate>
 				<div>
-					<input ng-model='state.query' type='text' 
+					<input type='text' 
+					autofocus
 					placeholder='Search LUMA for lights and clients by name or IP address.'
-					autofocus />
+					ng-focus='query.onFocus()'
+					ng-model='state.query' />			
 					<input type='submit' value='Search'/>
 				</div>
 			</form>
@@ -45,10 +47,10 @@
 				<div class='result_content'>
 					<div class='light_info'>
 						<div class='light name'>
-							<p class='label'>Name:</p>{{light.name}}
+							<p class='label'>Name: </p>{{light.name}}
 						</div>
 						<div class='light client'>
-							<p class='label'>Client:</p>{{light.client}}
+							<p class='label'>Client: </p>{{light.client}}
 						</div>
 					</div>
 				</div>
