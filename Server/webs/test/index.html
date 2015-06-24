@@ -113,6 +113,10 @@
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div>
+			<!-- The button that raises the wavelength dialog.				 -->
+			<div ng-click='raisePeriodDialog()' id='edit_wavelengths' class='edit_button'>
+				Wavelengths
+			</div>
 			<!-- The three channel selection buttons. 						 -->
 			<div ng-click='channel="red"' id='red_select' class='edit_button wave_select_button'>
 				Red Channel
@@ -124,17 +128,17 @@
 				Blue Channel
 			</div>
 			<!-- The wavelength modal.										 -->
-			<modal-dialog show='1'  width='30em' height='17em'>
+			<modal-dialog show='showPeriodDialog'  width='30em' height='17em'>
 				<!-- The title bar of the wavelength editor.				 -->
 				<div id='wavelength_header'>
-					Edit Wavelength
+					Edit Wavelengths
 				</div>
 				<!-- The form used: 3 text inputs and a submit.				 -->
 				<form id='wavelength_form' name='wavelength_form' novalidate>
 					<!-- Each text input is wrapped up with a label.		 -->
 					<div class='wavelength_container'>
 						<p class='wavelength_label red'>Red</p>
-						<input autofocus
+						<input
 						placeholder='Red wavelength'
 						class='wavelength_input' type='text'/>
 					</div>
@@ -156,7 +160,8 @@
 						Your browswer does not support HTML5 canvases.
 					</canvas>
 					<!-- The cancel button is just another div-based button. -->
-					<div id='wavelength_cancel' class='edit_button'>Cancel</div>
+					<div id='wavelength_cancel' ng-click='supressPeriodDialog()'
+					class='edit_button'>Cancel</div>
 					<!-- Whereas the submit button is actually a submit.	 -->
 					<input 
 					id='wavelength_submit' class='edit_button' type='submit' value='Submit'/>

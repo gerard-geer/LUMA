@@ -12,6 +12,9 @@ function($scope,LUMAServerService,LUMAStateService){
 	// The currently selected channel.
 	$scope.channel = 'red';
 	
+	// Whether or not the wavelength dialog is visible.
+	$scope.showPeriodDialog = false;
+	
 	// The periods of the channel waveforms.
 	$scope.rPeriod = 0.5;
 	$scope.gPeriod = 0.5;
@@ -230,4 +233,18 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.bCanvas.addEventListener('mousemove', function(evt){
 		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.state.b_v);
 	},false);
+	
+	// A function that raises the wavelength dialog.
+	$scope.raisePeriodDialog = function()
+	{
+		$scope.showPeriodDialog = true;
+	}
+	
+	// A sister function that lowers that dialog.
+	$scope.supressPeriodDialog = function()
+	{
+		$scope.showPeriodDialog = false;
+	}
+	
+	
 }]);
