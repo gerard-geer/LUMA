@@ -14,10 +14,10 @@ function($scope, LUMAStateService){
 	// Set up the drawing context.
 	$scope.wContext.lineWidth = 2;
 	
-		// The default values for wavelengths of the three channels.
-	$scope.rLambda = 1.0;//getWavelength(LUMAStateService.lightState.r_t);
-	$scope.gLambda = 1.0;//getWavelength(LUMAStateService.lightState.g_t);
-	$scope.bLambda = 1.0;//getWavelength(LUMAStateService.lightState.b_t);
+	// The default values for wavelengths of the three channels.
+	$scope.rLambda = 1.0;
+	$scope.gLambda = 1.0;
+	$scope.bLambda = 1.0;
 
 	
 	// Returns the greatest common factor of two numbers.
