@@ -190,7 +190,7 @@ function($scope,LUMAServerService,LUMAStateService){
 			// Get the mouse position.
 			var pos = getMousePos(canvas, evt);
 			// Get the index of the value to update.
-			var index = parseInt((pos.x/canvas.width)*vals.length);
+			var index = parseInt(Math.round((pos.x/canvas.width)*vals.length));
 			var val = 1 - (pos.y/canvas.height);
 			// Update the value.
 			vals[index] = val;
