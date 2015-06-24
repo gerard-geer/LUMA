@@ -147,11 +147,19 @@ input:focus
 {
 	text-align: center;
 }
-#edit_subject_info
+.edit_subject_info
 {
 	font-size: .75em;
+	font-weight: normal;
 	color: #888888;
 	margin: -6px auto 10px auto;
+}
+#wavelength_subject_info
+{
+	font-size: .375em;
+	font-weight: normal;
+	margin-top: .1em;
+	margin-bottom: .1em;
 }
 .edit_subject_attr
 {

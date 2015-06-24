@@ -11,9 +11,7 @@ function($scope, LUMAServerService,LUMAStateService){
 	
 	// The submission callback for the query form.
 	this.onSubmit = function(){
-		
-		console.log(LUMAStateService.test);
-		
+				
 		// Well we submitted it didn't we?
 		LUMAStateService.submitted = true;
 		
