@@ -52,7 +52,6 @@ angular.module('LUMAClient').factory('LUMAServerService',
 			testLights[i].client.toLowerCase().indexOf(lowercase) >= 0 )
 				LUMAStateService.queryResults.push(testLights[i]);
 		}
-		console.log('RESPONSE LENGTH BRAH: '+LUMAStateService.queryResults.length);
 	}
 	
 	// "Requests from the server the state of the light."

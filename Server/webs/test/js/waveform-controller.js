@@ -184,7 +184,6 @@ function($scope,LUMAServerService,LUMAStateService){
 	// value line to it, and updates it.
 	function updateVal(canvas, ctx, evt, vals)
 	{
-		console.log("TRYIN TO UPDAHT");
 		if(mdown)
 		{
 			// Get the mouse position.

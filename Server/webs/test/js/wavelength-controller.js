@@ -125,7 +125,6 @@ function($scope, LUMAStateService){
 	function() {
 		if(LUMAStateService.lightState != null)
 		{
-			console.log("CALLED IT");
 			$scope.rLambda = getWavelength(LUMAStateService.lightState.r_t);
 			$scope.gLambda = getWavelength(LUMAStateService.lightState.g_t);
 			$scope.bLambda = getWavelength(LUMAStateService.lightState.b_t);
