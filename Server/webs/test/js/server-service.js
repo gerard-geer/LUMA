@@ -17,14 +17,14 @@ var testState = {	success: true,
 					message: "simple message from client of Couch",
 					name: "Couch",
 					client: "Max's Room",
-					r_t: [0,1],
-					r_v: [0,1],
+					r_t: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+					r_v: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 					r_c: 0,
-					g_t: [0,1],
-					g_v: [0,1],
+					g_t: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+					g_v: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 					g_c: 0,
-					b_t: [0,1],
-					b_v: [0,1],
+					b_t: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+					b_v: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 					b_c: 0};
 					
 /*
@@ -52,7 +52,6 @@ angular.module('LUMAClient').factory('LUMAServerService',
 			testLights[i].client.toLowerCase().indexOf(lowercase) >= 0 )
 				LUMAStateService.queryResults.push(testLights[i]);
 		}
-		console.log('RESPONSE LENGTH BRAH: '+LUMAStateService.queryResults.length);
 	}
 	
 	// "Requests from the server the state of the light."

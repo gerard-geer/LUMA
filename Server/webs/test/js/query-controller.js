@@ -12,7 +12,6 @@ function($scope, LUMAServerService,LUMAStateService){
 	// The submission callback for the query form.
 	this.onSubmit = function(){
 		
-		LUMAStateService.test = 'WE CHANGED IT IN THE QUERY CONTROLLER';
 		console.log(LUMAStateService.test);
 		
 		// Well we submitted it didn't we?
@@ -33,7 +32,6 @@ function($scope, LUMAServerService,LUMAStateService){
 		// Decide whether or not we need to display the sadness dialog.
 		if(LUMAStateService.queryResults.length == 0)
 		{
-			console.log("WELP NUTTIN");
 			LUMAStateService.noResults = true;
 		}
 	};

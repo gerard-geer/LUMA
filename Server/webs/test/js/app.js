@@ -1,2 +1,2 @@
 // Create our Angular module.
-var app = angular.module('LUMAClient', []);
+var app = angular.module('LUMAClient', ['ngModal']);

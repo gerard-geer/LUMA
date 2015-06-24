@@ -31,7 +31,7 @@ input:focus
 {
 	outline-width: 0;
 }
-input[type=text]
+#search_text
 {
 	border-width: 0px;
 	height: 46px;
@@ -39,7 +39,7 @@ input[type=text]
 	width: 736px;
 	box-shadow: #888888 0px 2px 6px;
 }
-input[type=submit]
+#search_submit
 {
 	background-color: #CCCCCC;
 	float: right;
@@ -245,4 +245,90 @@ input[type=submit]
 {
 	margin: auto auto auto 50px;
 	display:inline;
+}
+
+#wavelength_header
+{
+	width: 100%;
+	color: #333333;
+	background-color: #FFFFFF;
+	text-align: left;
+	font-size: 1.75em;
+	font-weight: bold;
+	padding-left: .5em;
+	padding-top: .5em;
+	padding-bottom: .125em;
+	margin-bottom: .5em;
+	box-shadow: #888888 0px 1.5px 3px;
+}
+#wavelength_form
+{
+	display: block;
+	text-align: center;
+}
+.wavelength_container
+{
+	display:block;
+	text-align: left;
+	width: 15em;
+	margin: 2.5% auto 2.5% auto;
+	box-shadow: #888888 0px 1.5px 3px;
+}
+.wavelength_label
+{
+	display:inline-block;
+	font-weight: bold;
+	color: #FFFFFF;
+	width: 4em;
+	margin: 0;
+	padding: .2em;
+}
+.wavelength_label.red
+{
+	background-color: #FF0000;
+}
+.wavelength_label.green
+{
+	background-color: #00FF00;
+}
+.wavelength_label.blue
+{
+	background-color: #0000FF;
+}
+.wavelength_input
+{
+	display:inline-block;
+	border-width: 0px;
+	width: 12em;
+}
+#wavelength_canvas
+{
+	display: block;
+	margin: auto;
+}
+#wavelength_submit
+{
+	font-weight: bold;
+	font-size: 1em;
+	padding-bottom: 3px;
+	margin-top: .5em;
+	border-color: #FFAA00;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	-webkit-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+}
+#wavelength_submit:hover
+{
+	color: #FFAA00;
+	padding-bottom: 0px;
+}
+#wavelength_cancel
+{
+	margin-top: .5em;
+	border-color: #FFAA00;
 }
