@@ -71,7 +71,7 @@
 	 <div ng-controller='EditorController as editor' 
 	 ng-show='state.isEditing'
 	 id='edit_pane'>
-		<div id='edit_subject_info'>
+		<div class='edit_subject_info'>
 			You are editing the 
 			<span class='edit_subject_attr'>{{state.lightState.name}}</span> 
 			light on the 
@@ -132,14 +132,22 @@
 			<modal-dialog 
 			show='showPeriodDialog'
 			width='30em' 
-			height='17em'>
+			height='18em'>
+				<div id='wavelength_container'
+				ng-controller='WavelengthController as wctrl'>
 				<!-- The title bar of the wavelength editor.				 -->
 				<div id='wavelength_header'>
 					Edit Wavelengths
+					<div class='edit_subject_info' id='wavelength_subject_info'>
+						You are editing the 
+						<span class='edit_subject_attr'>{{state.lightState.name}}</span> 
+						light on the 
+						<span class='edit_subject_attr'>{{state.lightState.client}}</span> 
+						client.
+					</div>
 				</div>
 				<!-- The form used: 3 text inputs and a submit.				 -->
 				<form 
-				ng-controller='WavelengthController as wctrl'
 				ng-submit='wctrl.onSubmit();supressPeriodDialog();'
 				id='wavelength_form' name='wavelength_form' novalidate>
 					<!-- Each text input is wrapped up with a label.		 -->
@@ -176,7 +184,7 @@
 					<!-- This canvas is used to illustrate roughly the		 -->
 					<!-- cyclic relations of the current wavelengths.		 -->
 					<canvas id='wavelength_canvas' width='425' height='50'>
-						Your browswer does not support HTML5 canvases.
+						Your browser does not support HTML5 canvases.
 					</canvas>
 					<!-- The cancel button is just another div-based button. -->
 					<div id='wavelength_cancel' ng-click='supressPeriodDialog()'
@@ -185,6 +193,7 @@
 					<input 
 					id='wavelength_submit' class='edit_button' type='submit' value='Submit'/>
 				</form>
+				</div>
 			</modal-dialog>
 			<!-- Some wave manipulation utilities.							 -->
 			<div class='utility_container no_sel' ng-show='channel=="red"'>
