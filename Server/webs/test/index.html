@@ -12,6 +12,7 @@
 	<script src='js/result-controller.js'></script>
 	<script src='js/editor-controller.js'></script>
 	<script src='js/waveform-controller.js'></script>
+	<script src='js/wavelength-controller.js'></script>
 	<title>CSH LUMA</title>
 </head>
 <body>
@@ -128,30 +129,48 @@
 				Blue Channel
 			</div>
 			<!-- The wavelength modal.										 -->
-			<modal-dialog show='showPeriodDialog'  width='30em' height='17em'>
+			<modal-dialog 
+			show='showPeriodDialog'
+			width='30em' 
+			height='17em'>
 				<!-- The title bar of the wavelength editor.				 -->
 				<div id='wavelength_header'>
 					Edit Wavelengths
 				</div>
 				<!-- The form used: 3 text inputs and a submit.				 -->
-				<form id='wavelength_form' name='wavelength_form' novalidate>
+				<form 
+				ng-controller='WavelengthController as wctrl'
+				ng-submit='wctrl.onSubmit();supressPeriodDialog();'
+				id='wavelength_form' name='wavelength_form' novalidate>
 					<!-- Each text input is wrapped up with a label.		 -->
 					<div class='wavelength_container'>
 						<p class='wavelength_label red'>Red</p>
 						<input
+						ng-model='rLambda'
+						ng-model-options='{ }'
+						ng-change='wctrl.updatePreview()'
 						placeholder='Red wavelength'
+						id='red_wavelength_input'
 						class='wavelength_input' type='text'/>
 					</div>
 					<div class='wavelength_container'>
 						<p class='wavelength_label green'>Green</p>
 						<input 
+						ng-model='gLambda'
+						ng-model-options='{ }'
+						ng-change='wctrl.updatePreview()'
 						placeholder='Green wavelength'
+						id='green_wavelength_input'
 						class='wavelength_input' type='text'/>
 					</div>
 					<div class='wavelength_container'>
 						<p class='wavelength_label blue'>Blue</p>
 						<input 
+						ng-model='bLambda'
+						ng-model-options='{ }'
+						ng-change='wctrl.updatePreview()'
 						placeholder='Blue wavelength'
+						id='blue_wavelength_input'
 						class='wavelength_input' type='text'/>
 					</div>
 					<!-- This canvas is used to illustrate roughly the		 -->

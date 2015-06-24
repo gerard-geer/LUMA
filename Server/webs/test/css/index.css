@@ -305,9 +305,6 @@ input:focus
 {
 	display: block;
 	margin: auto;
-	border-style: solid;
-	border-color: #000000;
-	border-width: 1px;
 }
 #wavelength_submit
 {

@@ -44,11 +44,11 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.state.b_v = Array();
 	
 	// Redraws a line.
-	function update(ctx, index, val)
+	function update(ctx, index, val, numVals)
 	{
 		// Go ahead and scale the index so we can
 		// use it as the drawing x-coordinate.
-		index *= ctx.canvas.width/128;
+		index *= ctx.canvas.width/numVals;
 		// Clear the region of the line.
 		ctx.clearRect(index-3, 0, 6, ctx.canvas.height);
 		
@@ -65,48 +65,52 @@ function($scope,LUMAServerService,LUMAStateService){
 	// Redraws all lines for a canvas.
 	function updateAll(ctx, vals)
 	{
-		for(var i = 0; i < 128; ++i)
+		for(var i = 0; i < vals.length; ++i)
 		{
-			update(ctx, i, vals[i]);
+			update(ctx, i, vals[i], vals.length);
 		}
 	}
 	
 	// The sine-wave preset function.
 	this.sine = function(ctx, vals)
 	{
+		var length = vals.length;
+		var period = 3.1459/length;
 		vals.length = 0;
-		for(var i = 0; i < 128; ++i)
+		for(var i = 0; i < length; ++i)
 		{
-			//								2PI/128
-			vals.push( Math.pow( Math.sin(i*.024544), 2 ) );
+			vals.push( Math.pow( Math.sin(i*period), 2 ) );
 		}
 		updateAll(ctx, vals);
 	}
 	// The sawtooth preset function.
 	this.saw = function(ctx, vals)
 	{
+		var length = vals.length;
 		vals.length = 0;
-		for(var i = 0; i < 128; ++i)
+		for(var i = 0; i < length; ++i)
 		{
-			vals.push( i/128 );
+			vals.push( i/length );
 		}
 		updateAll(ctx, vals);
 	}
 	// The reverse sawtooth preset function.
 	this.revsaw = function(ctx, vals)
 	{
+		var length = vals.length;
 		vals.length = 0;
-		for(var i = 0; i < 128; ++i)
+		for(var i = 0; i < length; ++i)
 		{
-			vals.push( 1.0-(i/128) );
+			vals.push( 1.0-(i/length) );
 		}
 		updateAll(ctx, vals);
 	}
 	// The square-wave preset function.
 	this.square = function(ctx, vals)
 	{
+		var length = vals.length;
 		vals.length = 0;
-		for(var i = 0; i < 128; ++i)
+		for(var i = 0; i < length; ++i)
 		{
 			vals.push( Math.floor( 2.0*(i/128) ) );
 		}
@@ -115,14 +119,15 @@ function($scope,LUMAServerService,LUMAStateService){
 	// The triangle squarewave function.
 	this.triangle = function(ctx, vals)
 	{
+		var length = vals.length;
 		vals.length = 0;
-		for(var i = 0; i < 64; ++i)
+		for(var i = 0; i < parseInt(Math.floor(length/2)); ++i)
 		{
-			vals.push( i/64 );
+			vals.push( i/parseInt(Math.floor(length/2)) );
 		}
-		for(var i = 64; i < 128; ++i)
+		for(var i = parseInt(Math.floor(length/2)); i < length; ++i)
 		{
-			vals.push( 1.0-((i-64)/64) );
+			vals.push( 1.0-((i-parseInt(Math.floor(length/2)))/parseInt(Math.floor(length/2))) );
 		}
 		updateAll(ctx, vals);
 	}
@@ -135,6 +140,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		}
 		updateAll(ctx, vals);
 	}
+	
 	// Initialize them all with dummy values.
 	for(var i = 0; i < 128; ++i)
 	{
@@ -157,10 +163,28 @@ function($scope,LUMAServerService,LUMAStateService){
 	updateAll($scope.gCtx, $scope.state.g_v);
 	updateAll($scope.bCtx, $scope.state.b_v);
 	
+	$scope.$watch(function() {
+		return LUMAStateService.lightState;
+	},
+	function() {
+		if(LUMAStateService.lightState != null)
+		{
+			
+			$scope.state = LUMAStateService.lightState;
+			$scope.rCtx.clearRect(0, 0, $scope.rCtx.canvas.width, $scope.rCtx.canvas.height);
+			$scope.gCtx.clearRect(0, 0, $scope.gCtx.canvas.width, $scope.gCtx.canvas.height);
+			$scope.bCtx.clearRect(0, 0, $scope.bCtx.canvas.width, $scope.bCtx.canvas.height);
+			updateAll($scope.rCtx, $scope.state.r_v);
+			updateAll($scope.gCtx, $scope.state.g_v);
+			updateAll($scope.bCtx, $scope.state.b_v);
+		}
+	});
+	
 	// A function that takes the mouse position and finds the closest
 	// value line to it, and updates it.
 	function updateVal(canvas, ctx, evt, vals)
 	{
+		console.log("TRYIN TO UPDAHT");
 		if(mdown)
 		{
 			// Get the mouse position.
@@ -171,7 +195,7 @@ function($scope,LUMAServerService,LUMAStateService){
 			// Update the value.
 			vals[index] = val;
 			
-			update(ctx, index, val);
+			update(ctx, index, val, vals.length);
 		}
 	}
 	
@@ -238,6 +262,7 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.raisePeriodDialog = function()
 	{
 		$scope.showPeriodDialog = true;
+		document.getElementById('wavelength_cancel').focus();
 	}
 	
 	// A sister function that lowers that dialog.
