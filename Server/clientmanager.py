@@ -6,6 +6,7 @@ from json import dumps, loads
 
 _CONN_ERR = {'type': 'error',	\
 			'data': None}
+_DATAREAD = 16384
 @Singleton
 class ClientManager(object):
 	"""
@@ -81,6 +82,7 @@ class ClientManager(object):
 			dict(Dictionary): A dictionary containing the to-be lighting state,
 				formatted as follows:
 				{
+					'id': The ID of the light.
 					'name': The name of the light.
 					'r_t': List of red timings.
 					'r_v': List of red values.
@@ -106,7 +108,7 @@ class ClientManager(object):
 			s.settimeout(.5)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
-			res = s.recv(4096)
+			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
 		except Exception:
