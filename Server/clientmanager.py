@@ -131,10 +131,10 @@ class ClientManager(object):
 			None.
 		"""
 		# Incorrect number of keys.
-		if len(dict.keys()) != 7:
+		if len(dict.keys()) != 8:
 			return 'Incorrect number of keys.'
 		# Check for necessary keys.
-		for test in ['r_t','r_v','g_t','g_v','b_t','b_v','name']:
+		for test in ['r_t','r_v','g_t','g_v','b_t','b_v','name', 'id']:
 			if test not in dict.keys():
 				return 'Light does not contain a '+test+' key.'
 		# Test each list key.
@@ -147,7 +147,7 @@ class ClientManager(object):
 				if not isinstance(val, (int, float)):
 					return test+' does not contain only numbers.'
 		# Others not a string?
-		for test in ['name']:
+		for test in ['name', 'id']:
 			if not isinstance(dict[test], str):
 				return test+' not a string.'
 				
