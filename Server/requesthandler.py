@@ -273,10 +273,10 @@ class RequestHandler(object):
 		Postconditions:
 			The light specified is removed if it existed.
 		"""
-		if not self._lm.isAllowed(req['uuid'], req['name']):
+		if not self._lm.isAllowed(req['uuid'], req['id']):
 			return {'success':False,	\
 					'message': 'User not allowed to access light.'}
-		if self._lm.deleteLight(req['name']):
+		if self._lm.deleteLight(req['id']):
 			return {'success':True,'message':None}
 		return {'success':False,'message':'Light does not exist.'}
 	
