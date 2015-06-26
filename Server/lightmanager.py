@@ -137,12 +137,12 @@ class LightManager(object):
 		self._lights[id] = light
 		return True
 		
-	def changeLightName(self, original, new):
+	def changeLightName(self, id, new):
 		"""
 		Changes the name of a light.
 		
 		Parameters:
-			original (String): The original (existing) light name.
+			id (String): The light's ID.
 			new (String): The new name for the light.
 			
 		Returns:
@@ -154,9 +154,8 @@ class LightManager(object):
 		Postconditions:
 			The light's name has been changed.
 		"""
-		if original in self._lights.keys():
-			self._lights[new] = self._lights.pop(original)
-			self._lights[new]['name'] = new
+		if id in self._lights.keys():
+			self._lights[id]['name'] = new
 			return True
 		return False
 			
