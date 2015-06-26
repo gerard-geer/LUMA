@@ -39,7 +39,7 @@ class ClientManager(object):
 		self._PORT = 8641
 		
 		
-	def sendStatusRequest(self, address, ID):
+	def sendStatusRequest(self, address, id):
 		"""
 		Sends a status request to the client at the given address and returns
 		its response.
@@ -59,7 +59,7 @@ class ClientManager(object):
 			A message is sent to the address specified on port 8641, and its
 			response is returned.
 		"""
-		req = {'type':'status', 'data':name}
+		req = {'type':'status', 'data':id}
 		try:
 			s = socket(AF_INET, SOCK_STREAM)
 			s.settimeout(.5)
