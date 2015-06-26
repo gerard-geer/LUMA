@@ -46,7 +46,10 @@ class RequestHandler(object):
 		"""
 		requested = []
 		
+		# Get the subset of all allowed lights.
 		allowed = self._lm.getAllowedSubset(req['uuid'])
+		
+		# Gets possible aliases should the query be an IP address.
 		possible = self._am.getPossibleAliases(req['query'])
 		
 		# If the user just sends us nothing, we just send all that's possible.
