@@ -272,12 +272,12 @@ class LightManager(object):
 				result[id]['message'] = 'Light does not exist.'
 		return result
 		
-	def lightExists(self, name):
+	def lightExists(self, id):
 		"""
 		Returns whether or not the light exists on the server.
 		
 		Parameters:
-			name (String): The name of the light to check for.
+			id (String): The ID of the light to check for.
 			
 		Returns:
 			True if the light exists, false otherwise.
@@ -288,7 +288,7 @@ class LightManager(object):
 		Postconditions:
 			None.
 		"""
-		return name in self._lights.keys()
+		return id in self._lights.keys()
 		
 	def getLight(self, name):
 		"""
