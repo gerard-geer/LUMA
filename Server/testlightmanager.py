@@ -129,15 +129,3 @@ if __name__ == '__main__':
 	print(lm.isAllowed('6', '100002'))
 	print(lm.isAllowed('3', "100003"))
 	print(not lm.isAllowed('999', "100003"))
-	
-	# Test light validation.
-	print(lm.validateLight(validLight) == None)
-	print(lm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')
-	print(lm.validateLight(invalidLightB) == 'Light not in server.')
-	print(lm.validateLight(invalidLightC) == 'Incorrect number of keys.')
-	print(lm.validateLight(invalidLightD) == 'g_t is not a list.')
-	print(lm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')
-	print(lm.validateLight(invalidLightF) == 'name not a string.')
-	print(lm.validateLight(invalidLightG))# == 'name not a string.')
-	print(lm.validateLight(invalidLightH))# == 'name not a string.')
-	print(lm.validateLight(invalidLightI))# == 'name not a string.')

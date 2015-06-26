@@ -41,3 +41,15 @@ if __name__ == '__main__':
 	cr['name'] = 'nonexistent light'
 	print(cm.sendChangeRequest(good_addr, cr))
 	print(cm.sendChangeRequest(bad_addr, cr))
+	
+	# Test light validation.
+	print(lm.validateLight(validLight) == None)
+	print(lm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')
+	print(lm.validateLight(invalidLightB) == 'Light not in server.')
+	print(lm.validateLight(invalidLightC) == 'Incorrect number of keys.')
+	print(lm.validateLight(invalidLightD) == 'g_t is not a list.')
+	print(lm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')
+	print(lm.validateLight(invalidLightF) == 'name not a string.')
+	print(lm.validateLight(invalidLightG))# == 'name not a string.')
+	print(lm.validateLight(invalidLightH))# == 'name not a string.')
+	print(lm.validateLight(invalidLightI))# == 'name not a string.')
