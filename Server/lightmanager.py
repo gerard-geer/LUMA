@@ -1,6 +1,7 @@
 #module lightmanager.py
 
 from json import load, dump
+from uuid import uuid4
 from singleton import Singleton
 
 @Singleton
