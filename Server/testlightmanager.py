@@ -125,7 +125,7 @@ if __name__ == '__main__':
 	print(lm.changeLightName("100001", "lol"))
 	print(lm.lightExists('100001'))
 	print(not lm.lightExists('300001'))
-	print(not lm.isAllowed('3', '100001'))
+	print(not lm.isAllowed('3', '100002'))
 	print(lm.isAllowed('6', '100002'))
 	print(lm.isAllowed('3', "100003"))
 	print(not lm.isAllowed('999', "100003"))
