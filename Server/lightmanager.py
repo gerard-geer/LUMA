@@ -111,7 +111,10 @@ class LightManager(object):
 		
 	def addLight(self, name, client, permitted):
 		"""
-		Adds a new light.
+		Adds a new light, creating a UUID to uniquely identify it. The
+		permitted list is not manipulated, but shallow copied into
+		the new light.
+		Also, the light is keyed into the light dictionary by its id.
 		
 		Parameters:
 			name (String): The name of the new light.
@@ -122,17 +125,16 @@ class LightManager(object):
 			True if the light was added, False otherwise.
 		
 		Preconditions:
-			The name is not already taken, and the lights loaded.
+			The lights are loaded.
 			
 		Postconditions:
 			The light is added to the list.
 		"""
-		if name in self._lights.keys():
-			return False
+		id = str(uuid4())
 			
-		light = {'name':name,'client':client,'permitted':[]}
+		light = {'id':id, 'name':name,'client':client,'permitted':[]}
 		light['permitted'].extend(permitted)
-		self._lights[light['name']] = light
+		self._lights[id] = light
 		return True
 		
 	def changeLightName(self, original, new):
