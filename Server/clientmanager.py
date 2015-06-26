@@ -39,14 +39,14 @@ class ClientManager(object):
 		self._PORT = 8641
 		
 		
-	def sendStatusRequest(self, address, name):
+	def sendStatusRequest(self, address, ID):
 		"""
 		Sends a status request to the client at the given address and returns
 		its response.
 		
 		Parameters:
 			address (String): The address of the client.
-			name (String): The name of the lighting fixture whose status is
+			id (String): The ID of the lighting fixture whose status is
 				desired. Passing None returns the status of all lights.
 				
 		Returns:	
@@ -65,7 +65,7 @@ class ClientManager(object):
 			s.settimeout(.5)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
-			res = s.recv(4096)
+			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
 		except timeout:
