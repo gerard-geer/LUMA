@@ -155,7 +155,7 @@ class RequestHandler(object):
 		for light in req['lights']:
 		
 			# Get the light from the manager.
-			l = self._lm.getLight(light['name'])
+			l = self._lm.getLight(light['id'])
 			if l == None:
 				light['success'] = False
 				light['message'] = 'Light does not exist.'
@@ -163,14 +163,14 @@ class RequestHandler(object):
 				continue
 				
 			# Make sure the user can access the light.
-			if not self._lm.isAllowed(req['uuid'], light['name']):
+			if not self._lm.isAllowed(req['uuid'], light['id']):
 				light['success'] = False
 				light['message'] = 'User not allowed to access light.'
 				updated.append(light)
 				continue
 
-			# We need to translate the alias.
-			address = self._am.getAddress(l['client'])
+			# We need to translate the client name/alias to an IP.
+			address = self._am.getAddress(light['client'])
 			if address == None:
 				light['success'] = False
 				light['message'] = 'Alias not recognized.'
