@@ -341,7 +341,7 @@ class LUMA(object):
 			return encodeResponse('status', self._getLight(),	\
 			'Status returned.')
 		
-		# OH MAN WHOA GET GOT A NAME THAT MATCHES LET'S DO OUR BEST!
+		# OH MAN WHOA GET GOT A ID THAT MATCHES LET'S DO OUR BEST!
 		if self._exists(req['data']):
 			return encodeResponse('status', self._getLight(req['data']),	\
 			'Status returned.')
