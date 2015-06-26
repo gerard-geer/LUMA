@@ -122,13 +122,13 @@ if __name__ == '__main__':
 			"Under Countertop"])
 	
 	# Test name changing and permissions.
-	print(lm.changeLightName("Gerard's Desk", "lol"))
-	print(lm.lightExists('lol'))
-	print(not lm.lightExists('loll'))
-	print(not lm.isAllowed('3', 'lol'))
-	print(lm.isAllowed('6', 'lol'))
-	print(lm.isAllowed('3', "Max's Couch"))
-	print(not lm.isAllowed('999', "Max's Couch"))
+	print(lm.changeLightName("100001", "lol"))
+	print(lm.lightExists('100001'))
+	print(not lm.lightExists('300001'))
+	print(not lm.isAllowed('3', '100001'))
+	print(lm.isAllowed('6', '100002'))
+	print(lm.isAllowed('3', "100003"))
+	print(not lm.isAllowed('999', "100003"))
 	
 	# Test light validation.
 	print(lm.validateLight(validLight) == None)
