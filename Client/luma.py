@@ -179,12 +179,12 @@ class LUMA(object):
 			self.running = False
 			self.runLock.release()
 			
-	def _exists(self, lightName):
+	def _exists(self, lightID):
 		"""
 		A thread safe way to check if a light is present.
 		
 		Parameters:
-			lightName (String): The name of the Light to question.
+			lightID (String): The ID of the Light to question.
 			
 		Returns:
 			Whether or not the Light is present.
@@ -196,7 +196,7 @@ class LUMA(object):
 			None.
 		"""
 		self.lightLock.acquire(True)
-		e = lightName in self.lights.keys()
+		e = ( lightID in self.lights.keys() )
 		self.lightLock.release()
 		return e
 	
