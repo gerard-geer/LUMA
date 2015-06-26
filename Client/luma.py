@@ -370,19 +370,19 @@ class LUMA(object):
 			None.
 		"""
 		# OH MAN THIS LIGHT UPDATE MATCHES ONE OF MY LIGHTS I'M SO HAPPY
-		if self._exists(req['data']['name']):
-			self._changeLight( req['data']['name'], \
+		if self._exists(req['data']['id']):
+			self._changeLight( req['data']['id'], \
 			req['data']['r_t'], req['data']['r_v'],	\
 			req['data']['g_t'], req['data']['g_v'],	\
 			req['data']['b_t'], req['data']['b_v'] )
 			return encodeResponse('success',\
-					self._getLight(req['data']['name']),\
+					self._getLight(req['data']['id']),\
 					'State updated.')
 			
 		# Whelp the requested Light off and skedaddled.
 		else:
 			return encodeResponse('error', None,	\
-			'Light '+str(req['data']['name'])+' does not exist on client '+	\
+			'Light '+str(req['data']['id'])+' does not exist on client '+	\
 			str(self.name))
 		
 	def onRequest(self, s):
