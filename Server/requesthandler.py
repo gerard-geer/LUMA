@@ -58,12 +58,20 @@ class RequestHandler(object):
 		
 		else:
 			for light in allowed:
-				if req['query'] in light['name'] or req['query'] in light['client']:
-					requested.append({'name':light['name'], 'client':light['client']})
+				if 	req['query'] in light['name'] or	\
+					req['query'] in	light['id'] or 		\
+					req['query'] in light['client']:
+					
+					requested.append({'id':light['id'],		\
+									'name':light['name'],	\
+									'client':light['client']})
 				else:
+				
 					for alias in possible:
 						if alias in light['client']:
-							requested.append({'name':light['name'],	\
+							
+							requested.append({'id':light['id'],		\
+											'name':light['name'],	\
 											'client':light['client']})
 		
 		return {'lights':requested}
