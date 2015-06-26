@@ -1,0 +1,55 @@
+********************************************************************************
+
+This is an outline of the client's configuration file, and describes how each
+light is represented in the configuration.
+
+Each light is a JSON object, stored alongside all others in a JSON object named
+"lights".
+
+The light's key is its name, attached to such a key is a JSON object deeper
+still that describes all the properties of the light.
+
+The number of terms in the timings and values lists should match, both each
+other and across channels. Also, they should be holding numeric values. One
+cannot set a light to a brightness of "asdf1234" for "asjk;" seconds.
+
+********************************************************************************
+
+Light property keys, type, and descriptions:
+
+	name (String):	The light's name.
+	
+	r_c (Integer): 	The number of the PWM pin that the light's red channel uses.
+	r_t (List): 	The red channel's timings list.
+	r_v (List): 	The red channel's list of brightness values.
+
+	g_c (Integer): 	The number of the PWM pin that the light's green channel uses.
+	g_t (List): 	The green channel's timings list.
+	g_v (List): 	The green channel's list of brightness values.
+
+	b_c (Integer): 	The number of the PWM pin that the light's blue channel uses.
+	b_t (list): 	The blue channel's timings list.
+	b_v (list): 	The blue channel's list of brightness values.
+	
+********************************************************************************
+
+Example object. Terms in "" quotation marks are key names and mustn't be tussled
+with. Values in brackets are user configurable.
+{
+	"lights": {
+		. . .
+		<light name>: {
+			"name": <light name>
+			"r_c": <red channel PWM pin>,
+			"r_t": [ . . . ],
+			"r_v": [ . . . ],
+			"g_c": <green channel PWM pin>,
+			"g_t": [ . . . ],
+			"g_v": [ . . . ],
+			"b_c": <blue channel PWM pin>,
+			"b_t": [ . . . ],
+			"b_v": [ . . . ]
+		}
+		. . .
+	}
+}	
