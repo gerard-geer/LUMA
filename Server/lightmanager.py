@@ -181,12 +181,12 @@ class LightManager(object):
 			return True
 		return False
 			
-	def deleteLight(self, name):
+	def deleteLight(self, id):
 		"""
 		Deletes a light.
 		
 		Parameters:
-			name(String): The name of the light to delete.
+			id(String): The ID of the light to delete.
 		
 		Returns:
 			True if deleted, false otherwise.
@@ -195,11 +195,11 @@ class LightManager(object):
 			The light should exist if you want this to go off without a hitch.
 			
 		Postconditions:
-			The light is wiped from local storage. The representation on the
+			The light is wiped from server knowledge. The representation on the
 			client still remains.
 		"""
-		if name in self._lights.keys():
-			del self._lights[name]
+		if id in self._lights.keys():
+			del self._lights[id]
 			return True
 		return False
 			
