@@ -361,7 +361,7 @@ class LUMA(object):
 			req (Dictionary): The decoded request Dictionary.
 			
 		Returns:
-			A JSON String encoding the response to this reqeust.
+			A JSON String encoding the response to this request.
 			
 		Preconditions:
 			The request is valid.
