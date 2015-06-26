@@ -235,11 +235,12 @@ class LUMA(object):
 		return l
 		
 		
-	def _changeLight(self, name, rtimes, rvals, gtimes, gvals, btimes, bvals):
+	def _changeLight(self, id, rtimes, rvals, gtimes, gvals, btimes, bvals):
 		"""
-		Change the state of a Light instance by name.
+		Change the state of a Light instance by ID.
 		
 		Parameters:
+			id (String): The ID of the light to change.
 			rtimes (List): The list of transition durations for the red channel.
 			rvals (List): The list of brightness values for the red channel.
 			gtimes (List): The list of transition durations for the 
@@ -261,7 +262,7 @@ class LUMA(object):
 		"""
 		# Acquire the lock so that we can access the lights.
 		self.lightLock.acquire(True)
-		self.lights[name].change(rtimes, rvals, gtimes, gvals, btimes, bvals)
+		self.lights[id].change(rtimes, rvals, gtimes, gvals, btimes, bvals)
 		self.lightLock.release()
 		
 	def _updateLights(self):
