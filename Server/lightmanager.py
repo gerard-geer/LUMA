@@ -290,12 +290,12 @@ class LightManager(object):
 		"""
 		return id in self._lights.keys()
 		
-	def getLight(self, name):
+	def getLight(self, id):
 		"""
-		Returns a light given a name.
+		Returns a light given an ID.
 		
 		Parameters:
-			name (String): The name of the light.
+			id (String): The ID of the light.
 		
 		Returns:
 			The light or None, depending on its existence.
@@ -307,7 +307,7 @@ class LightManager(object):
 			None.
 		"""
 		try:
-			return self._lights[name]
+			return self._lights[id]
 		except KeyError:
 			return None
 		
