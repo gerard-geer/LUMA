@@ -93,17 +93,17 @@ class RequestHandler(object):
 			The state of the lights supplied is updated, if they exist.
 		"""					
 		# Get the light.
-		light = self._lm.getLight(req['name'])
+		light = self._lm.getLight(req['id'])
 		if light == None:
 			return {'success': False,
 					'message': 'Light does not exist.',
-					'name': req['name']}
+					'id': req['id']}
 					
 		# Check to see if the user can access the light.
-		if not self._lm.isAllowed(req['uuid'], req['name']):
+		if not self._lm.isAllowed(req['uuid'], req['id']):
 			return {'success': False,
 					'message': 'User not allowed to access light.',
-					'name': req['name']}
+					'id': req['id']}
 		
 		# Try to parlay an address from the client alias. If we can't,
 		# that's another problem.
@@ -112,16 +112,18 @@ class RequestHandler(object):
 			return {'success': False,
 					'message': 'Client alias not recognized.',
 					'name': req['name'],
+					'id': req['id'],
 					'client': light['client']}
 		
 		# If we can, well, that's good.
-		res = self._cm.sendStatusRequest(address, req['name'])
+		res = self._cm.sendStatusRequest(address, req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
 			return {'success': False,
 					'message': 'Could not connect to client.',
 					'name': req['name'],
+					'id': req['id'],
 					'client': light['client']}
 		else:
 			print('merging dicts')
