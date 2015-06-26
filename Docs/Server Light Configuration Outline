@@ -6,10 +6,12 @@ it stores the following characteristics:
 
 * The name of the parent LUMA client.
 * The name of the light itself.
+* The light's ID.
 * A whitelist listing the UUIDs of the users allowed to manipulate the light.
 
 The file is a JSON object containing each light and its attributes as a JSON
-object within it.
+object within it. The key is the light's ID, and is stored redundantly within
+the light's object. 
 
 ********************************************************************************
 
@@ -26,9 +28,10 @@ Example object: As with the client config file, don't mess with keys in quotes.
 
 {
 	. . .
-	<light name>: {
+	<light id>: {
 		"client": 	<client name>,
 		"name":		<light name>,
+		"id":		<light id>,
 		"permitted": [ . . . ]
 	}
 	. . .
