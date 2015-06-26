@@ -200,12 +200,12 @@ class LUMA(object):
 		self.lightLock.release()
 		return e
 	
-	def _getLight(self, lightName=None):
+	def _getLight(self, lightID=None):
 		"""
 		A thread safe way to get one or all lights.
 		
 		Parameters:
-			lightName (String, default=None): The name of the Light to get. If
+			lightID (String, default=None): The ID of the Light to get. If
 			omitted, a list of copies of all lights are returned.
 			
 		Returns:
@@ -218,7 +218,9 @@ class LUMA(object):
 		Postconditions:
 			Copies are made of one or all Lights.
 		"""
-		if lightName == None:
+		
+		# Return all lights if the ID given is None.
+		if lightID == None:
 			l = []
 			self.lightLock.acquire(True)
 			for light in self.lights.values():
@@ -226,8 +228,9 @@ class LUMA(object):
 			self.lightLock.release()
 			return l
 		
+		# Otherwise we return the specific light.
 		self.lightLock.acquire(True)
-		l = self.lights[lightName]
+		l = self.lights[lightID]
 		self.lightLock.release()
 		return l
 		
