@@ -43,7 +43,7 @@ with. Values in brackets are user configurable.
 {
 	"lights": {
 		. . .
-		<light name>: {
+		<light ID>: {
 			"name": <light name>,
 			"id":   <light id>,
 			"r_c":  <red channel PWM pin>,
