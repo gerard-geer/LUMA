@@ -1,0 +1,17 @@
+********************************************************************************
+
+The Aliases configuration file is simply a lookup table pairing client names and
+(static) IP addresses.
+
+The server looks at what light an update is for, sees which client that light
+is on, looks up that client's IP and sends it out.
+
+********************************************************************************
+
+Example object:
+
+{
+	. . .
+	<client name>: <client IP address>,
+	. . .
+}
