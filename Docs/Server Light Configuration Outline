@@ -1,0 +1,37 @@
+********************************************************************************
+
+The server's light configuration file stores several elements of key information
+for the server. It is a record of each light in the system, and for each light
+it stores the following characteristics:
+
+* The name of the parent LUMA client.
+* The name of the light itself.
+* A whitelist listing the UUIDs of the users allowed to manipulate the light.
+
+The file is a JSON object containing each light and its attributes as a JSON
+object within it.
+
+********************************************************************************
+
+Light object keys, types and descriptions:
+
+	client (String):	The name of the client the light is bound to.
+	name (String): 		The name of the light.
+	permitted (List):	A list of strings that are the UUIDs of the users
+						allowed to use the light.
+
+********************************************************************************
+
+Example object: As with the client config file, don't mess with keys in quotes.
+
+{
+	. . .
+	<light name>: {
+		"client": 	<client name>,
+		"name":		<light name>,
+		"permitted": [ . . . ]
+	}
+	. . .
+}
+		
+
