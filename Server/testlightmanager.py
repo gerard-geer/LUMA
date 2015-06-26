@@ -4,6 +4,7 @@ Tests the LightManager module.
 from lightmanager import LightManager
 uuid = '6'
 validLight = {
+	'id': '1234',
 	'r_t':[1,1.0],
 	'r_v':[1,1.0],
 	'g_t':[1,1.0],
@@ -14,6 +15,7 @@ validLight = {
 	'client': 'client'
 	}
 invalidLightA = {
+	'id': '1234',
 	'r_t':['a', 'a'],
 	'r_v':[1,1.0],
 	'g_t':[1,1.0],
@@ -24,6 +26,7 @@ invalidLightA = {
 	'client': 'client'
 	}
 invalidLightB = {
+	'id': '1234',
 	'r_t':[1,1.0],
 	'r_v':[1,1.0],
 	'g_t':[1,1.0],
@@ -34,6 +37,7 @@ invalidLightB = {
 	'client': 'client'
 	}
 invalidLightC = {
+	'id': '1234',
 	'r_t':[1,1.0],
 	'r_v':[1,1.0],
 	'g_v':[1,1.0],
@@ -43,6 +47,7 @@ invalidLightC = {
 	'client': 'client'
 	}
 invalidLightD = {
+	'id': '1234',
 	'r_t':[1,1.0],
 	'r_v':[1,1.0],
 	'g_t':'a',
@@ -53,6 +58,7 @@ invalidLightD = {
 	'client': 'client'
 	}
 invalidLightE = {
+	'id': '1234',
 	'r_x':[1,1.0],
 	'r_v':[1,1.0],
 	'g_t':[1,1.0],
@@ -63,6 +69,7 @@ invalidLightE = {
 	'client': 'client'
 	}
 invalidLightF = {
+	'id': '1234',
 	'r_t':[1,1.0],
 	'r_v':[1,1.0],
 	'g_t':[1,1.0],
@@ -70,6 +77,38 @@ invalidLightF = {
 	'b_t':[1,1.0],
 	'b_v':[1,1.0],
 	'name': [1.0],
+	'client': 'client'
+	}
+invalidLightG = {
+	'id': [1, 1],
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightH = {
+	'id': 1,
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightI = {
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
 	'client': 'client'
 	}
 	
@@ -99,3 +138,6 @@ if __name__ == '__main__':
 	print(lm.validateLight(invalidLightD) == 'g_t is not a list.')
 	print(lm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')
 	print(lm.validateLight(invalidLightF) == 'name not a string.')
+	print(lm.validateLight(invalidLightG))# == 'name not a string.')
+	print(lm.validateLight(invalidLightH))# == 'name not a string.')
+	print(lm.validateLight(invalidLightI))# == 'name not a string.')
