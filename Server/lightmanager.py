@@ -203,14 +203,14 @@ class LightManager(object):
 			return True
 		return False
 			
-	def addUUIDtoSubset(self, uuid, names):
+	def addUUIDtoSubset(self, uuid, ids):
 		"""
-		Adds the given UUID to each of the lights specified by the list of
-		names.
+		Adds the given user UUID to each of the lights specified by the list of
+		light IDs.
 		
 		Parameters:
 			uuid(String): The UUID to add.
-			names([String]): The list of light names.
+			ids([String]): The list of light IDs.
 			
 		Returns:
 			A dictionary describing the results of each add operation.
@@ -223,19 +223,19 @@ class LightManager(object):
 			already exist.
 		"""
 		result = {}
-		for name in names:
-			result[name] = {}
-			if name in self._lights.keys():
-				if uuid not in self._lights[name]['permitted']:
-					self._lights[name]['permitted'].append(uuid)
-					result[name]['success']=True
-					result[name]['message']=None
+		for id in ids:
+			result[id] = {}
+			if id in self._lights.keys():
+				if uuid not in self._lights[id]['permitted']:
+					self._lights[id]['permitted'].append(uuid)
+					result[id]['success']=True
+					result[id]['message']=None
 				else:
-					result[name]['success'] = False
-					result[name]['message'] = 'UUID already exists.'
+					result[id]['success'] = False
+					result[id]['message'] = 'UUID already exists.'
 			else:
-				result[name]['success'] = False
-				result[name]['message'] = 'UUID already exists.'
+				result[id]['success'] = False
+				result[id]['message'] = 'UUID already exists.'
 		return result
 					
 	def removeUUIDfromSubset(self, uuid, names):
