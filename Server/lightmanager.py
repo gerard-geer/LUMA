@@ -311,13 +311,13 @@ class LightManager(object):
 		except KeyError:
 			return None
 		
-	def isAllowed(self, uuid, name):
+	def isAllowed(self, uuid, id):
 		"""
 		Returns whether or not the given UUID can access the given light.
 		
 		Parameters:
 			uuid (String): The UUID to check for.
-			name (String): The name of the light to check in.
+			id (String): The ID of the light to check in.
 			
 		Returns:
 			True if the light is accessible, false otherwise.
@@ -328,7 +328,7 @@ class LightManager(object):
 		Postconditions:
 			None.
 		"""
-		if name in self._lights.keys():
-			if uuid in self._lights[name]['permitted']:
+		if id in self._lights.keys():
+			if uuid in self._lights[id]['permitted']:
 				return True
 		return False
