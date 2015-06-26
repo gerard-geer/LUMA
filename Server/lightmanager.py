@@ -235,7 +235,7 @@ class LightManager(object):
 					result[id]['message'] = 'UUID already exists.'
 			else:
 				result[id]['success'] = False
-				result[id]['message'] = 'UUID already exists.'
+				result[id]['message'] = 'Light does not exist.'
 		return result
 					
 	def removeUUIDfromSubset(self, uuid, names):
