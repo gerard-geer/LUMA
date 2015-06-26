@@ -107,14 +107,14 @@ def decodeRequest(r):
 		r (String): The request. It should be a JSON String that encodes:
 		{
 			"type":"status"|"change"
-			"data":<light name>|null
+			"data":<encoded light object>|null
 		}
 		
 	Returns:
 		A dictionary that contains the following items:
 		{
 			"type":"status"|"change"
-			"data":<light name>|None
+			"data":<decoded light object>|None
 		}
 		
 	Preconditions:
