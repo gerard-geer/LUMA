@@ -8,7 +8,7 @@ from lumajson import *
 HOST = ''
 PORT = 8641
 FILE = 'config/lights.json'
-
+DATAREAD = 16384
 luma = LUMA(FILE)
 
 class LUMATCPHandler(BaseRequestHandler):
@@ -38,12 +38,10 @@ class LUMATCPHandler(BaseRequestHandler):
 		print('Connection from '+str(self.client_address[0])+'.')
 		
 		# Gotta store the accumulated response somewhere.
-		req = ''
-		# We loop on reading data until having no data received breaks us out.
-		
+		req = ''		
 		# Receive some data. In Python 2 recv returns a String instead of a
 		# byte array. This makes sterilization really easy.
-		req = self.request.recv(4096)
+		req = self.request.recv(DATAREAD)
 		print("request: "+req)
 		# Now we need to act upon the request.
 		res = luma.onRequest(req)
