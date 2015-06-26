@@ -238,14 +238,14 @@ class LightManager(object):
 				result[id]['message'] = 'Light does not exist.'
 		return result
 					
-	def removeUUIDfromSubset(self, uuid, names):
+	def removeUUIDfromSubset(self, uuid, ids):
 		"""
-		Removes the given UUID from each of the lights specified by the list of
-		names.
+		Removes the given user UUID from each of the lights specified by the
+		list of light IDs.
 		
 		Parameters:
 			uuid(String): The UUID to remove.
-			names(String]): The list of light names.
+			ids(String]): The list of light IDs.
 			
 		Returns:
 			A dictionary describing the results of each remove operation.
@@ -257,20 +257,19 @@ class LightManager(object):
 			The UUID is removed from each light that exists, where it exists.
 		"""
 		result = {}
-		for name in names:
-			result[name] = {}
-			if name in self._lights.keys():
-				new=[id for id in self._lights[name]['permitted'] if id != uuid]
-				old = self._lights[name]['permitted']
-				if len(new) == len(old):
-					result[name]['success'] = False
-					result[name]['message'] = 'UUID does not exist.'
+		for id in ids:
+			result[id] = {}
+			if id in self._lights.keys():
+				if uuid in self._lights[id]['permitted']:
+					self._lights[id]['permitted'].remove(uuid)
+					result[id]['success'] = True
+					result[id]['message'] = None
 				else:
-					result[name]['success'] = True
-					result[name]['message'] = None
+					result[id]['success'] = False
+					result[id]['message'] = 'UUID does not exist.'
 			else:
-				result[name]['success'] = False
-				result[name]['message'] = 'Light does not exist.'
+				result[id]['success'] = False
+				result[id]['message'] = 'Light does not exist.'
 		return result
 		
 	def lightExists(self, name):
