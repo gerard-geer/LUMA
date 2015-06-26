@@ -20,6 +20,7 @@ EXAMPLE RESPONSE:
 {
 	"lights": [
 		{
+			"id": "<example light id number>",
 			"name": "<example light name>",
 			"client": "<example client name>"
 		}
@@ -29,13 +30,14 @@ EXAMPLE RESPONSE:
 
 EXAMPLE STATE REQUEST
 {
-	"name": "<example light name>",
+	"id": "<example light ID number>",
 	"uuid": "<example UUID>"
 }
 EXAMPLE RESPONSE
 {
 	"success": <True | False>,
-	"message": "<possible message>"
+	"message": "<possible message>",
+	"id": "<example light id number>",
 	"name": "<example light name>",
 	"client": "<example client name>",
 	"r_t": [<red channel timings>],
@@ -54,6 +56,7 @@ EXAMPLE LIGHTING UPDATE:
 	"uuid": "<example UUID>",
 	"lights": [
 		{
+			"id": "<example light id number>"
 			"name": "<example light name>",
 			"client": "<example client name>",
 			"r_t": [<red channel timings>],
@@ -86,13 +89,13 @@ EXAMPLE UUID ADD:
 {
 	"uuid": "<example UUID>"
 	"lights": [
-		"<example light name>",
+		"<example light id>",
 		. . .
 	]
 }
 EXAMPLE RESPONSE:
 {
-	"<light name>": {
+	"<light id>": {
 		"success": <True | False>,
 		"message": <None | "<Example message>">
 		}
@@ -103,13 +106,13 @@ EXAMPLE UUID REMOVE:
 {
 	"uuid": "<example UUID>"
 	"lights": [
-		"<example light name>",
+		"<example light id>",
 		. . .
 	]
 }
 EXAMPLE RESPONSE:
 {
-	"<light name>": {
+	"<light id>": {
 		"success": <True | False>,
 		"message": <None | "<Example message>">
 		}
@@ -129,12 +132,12 @@ EXAMPLE LIGHT ADD:
 EXAMPLE RESPONSE:
 {
 	"success":<True | False>,
-	"message": <None | "<Example message>">
+	"message": <"<new id> | "<Example message>">
 }
 
 EXAMPLE LIGHT REMOVE:
 {
-	"name": "<example light name>"
+	"name": "<example light id>"
 }
 EXAMPLE RESPONSE:
 {
