@@ -159,12 +159,12 @@ class LightManager(object):
 			return True
 		return False
 			
-	def changeLightClient(self, name, client):
+	def changeLightClient(self, id, client):
 		"""
 		Change the client alias stored with a light.
 		
 		Parameters:
-			name (String): The name of the light to change.
+			id (String): The ID of the light to change.
 			client (String): The new client alias.
 			
 		Returns:
@@ -176,8 +176,8 @@ class LightManager(object):
 		Postconditions:
 			The light's client alias has been changed.
 		"""
-		if name in self._lights.keys():
-			self._lights[name]['client'] = client
+		if id in self._lights.keys():
+			self._lights[id]['client'] = client
 			return True
 		return False
 			
