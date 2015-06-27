@@ -13,6 +13,7 @@ bad_addr = 'not a good address'
 
 cr = {	\
 			'name': None,	\
+			'id': None,
 			'r_t': [9, 6],	\
 			'r_v': [8, 6],	\
 			'g_t': [9, 6],	\
@@ -26,19 +27,23 @@ if __name__ == '__main__':
 	# Test getting the status of multiple lights, and
 	# lights that don't exist, and ones on bad clients.
 	print('STATUS TESTING')
-	print(cm.sendStatusRequest(good_addr, 'testA'))
-	print(cm.sendStatusRequest(good_addr, 'testB'))
+	print(cm.sendStatusRequest(good_addr, '200001'))
+	print(cm.sendStatusRequest(good_addr, '200002'))
 	print(cm.sendStatusRequest(good_addr, 'doesntexist'))
-	print(cm.sendStatusRequest('bad addr', 'testA'))
+	print(cm.sendStatusRequest('bad addr', '200001'))
 	
 	# Try every thing that can happen when changing a light.
 	print('CHANGE TESTING')
 	print(cm.sendChangeRequest(good_addr, cr))
-	cr['name'] = 'testA'
+	cr['id'] = '200001'
+	print(cm.sendChangeRequest(good_addr, cr))
+	cr['id'] = '200002'
 	print(cm.sendChangeRequest(good_addr, cr))
 	cr['name'] = 'testB'
 	print(cm.sendChangeRequest(good_addr, cr))
-	cr['name'] = 'nonexistent light'
+	cr['name'] = 'testA'
+	print(cm.sendChangeRequest(good_addr, cr))
+	cr['id'] = 'nonexistent id'
 	print(cm.sendChangeRequest(good_addr, cr))
 	print(cm.sendChangeRequest(bad_addr, cr))
 	

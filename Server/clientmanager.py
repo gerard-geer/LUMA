@@ -68,7 +68,7 @@ class ClientManager(object):
 			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
-		except timeout:
+		except:
 			_CONN_ERR['data'] = 'Could not connect to address '+str(address)
 			return _CONN_ERR
 			
