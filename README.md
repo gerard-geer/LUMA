@@ -47,15 +47,12 @@ The web interface is a web interface. If you have an HTML5 browser it should be 
 
 Dependencies
 ------------
-**Client**
-The client requires the Adafruit PWM library, and also that i2c be enabled. This is a bit of a chore, and I'm trying
-to make it easier for you guys using LUMA. The client needs Python 2.7.6.
-**Server**
-The server uses Python 2.7.6 like the client. It also needs Flask. (0.10.1 should work.)
-**Web Interface**
-The web interface uses Angular.JS (Truth be told the entire point of this project for me was to dirty my hands 
-with Angular and Flask) being pulled down over AJAX from Google APIs. Should you want to serve Angular for the
-interface on your own watch, it will probably be best to stick with version 1.3.15. 
+* **Client:** The client requires the Adafruit PWM library, and also that i2c be enabled. This is a bit of a chore,
+and I'm trying to make it easier for you guys using LUMA. The client needs Python 2.7.6.
+* **Server:** The server uses Python 2.7.6 like the client. It also needs Flask. (0.10.1 should work.)
+* **Web Interface:** The web interface uses Angular.JS (Truth be told the entire point of this project for me 
+was to dirty my hands with Angular and Flask) being pulled down over AJAX from Google APIs. Should you want to 
+serve Angular for the interface on your own watch, it will probably be best to stick with version 1.3.15. 
 
 Configuration
 -------------
