@@ -11,6 +11,116 @@ from clientmanager import ClientManager
 good_addr = '127.0.0.1'
 bad_addr = 'not a good address'
 
+
+validLight = {
+	'id': '1234',
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightA = {
+	'id': '1234',
+	'r_t':['a', 'a'],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightB = {
+	'id': '1234',
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'not in server',
+	'client': 'client'
+	}
+invalidLightC = {
+	'id': '1234',
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightD = {
+	'id': '1234',
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':'a',
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightE = {
+	'id': '1234',
+	'r_x':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightF = {
+	'id': '1234',
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': [1.0],
+	'client': 'client'
+	}
+invalidLightG = {
+	'id': [1, 1],
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightH = {
+	'id': 1,
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+invalidLightI = {
+	'r_t':[1,1.0],
+	'r_v':[1,1.0],
+	'g_t':[1,1.0],
+	'g_v':[1,1.0],
+	'b_t':[1,1.0],
+	'b_v':[1,1.0],
+	'name': 'Ceiling',
+	'client': 'client'
+	}
+
 cr = {	\
 			'name': None,	\
 			'id': None,
@@ -30,7 +140,8 @@ if __name__ == '__main__':
 	print(cm.sendStatusRequest(good_addr, '200001'))
 	print(cm.sendStatusRequest(good_addr, '200002'))
 	print(cm.sendStatusRequest(good_addr, 'doesntexist'))
-	print(cm.sendStatusRequest('bad addr', '200001'))
+	print(cm.sendStatusRequest(bad_addr, 'doesntexist'))
+	print(cm.sendStatusRequest(bad_addr, '200001'))
 	
 	# Try every thing that can happen when changing a light.
 	print('CHANGE TESTING')
@@ -48,13 +159,13 @@ if __name__ == '__main__':
 	print(cm.sendChangeRequest(bad_addr, cr))
 	
 	# Test light validation.
-	print(lm.validateLight(validLight) == None)
-	print(lm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')
-	print(lm.validateLight(invalidLightB) == 'Light not in server.')
-	print(lm.validateLight(invalidLightC) == 'Incorrect number of keys.')
-	print(lm.validateLight(invalidLightD) == 'g_t is not a list.')
-	print(lm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')
-	print(lm.validateLight(invalidLightF) == 'name not a string.')
-	print(lm.validateLight(invalidLightG))# == 'name not a string.')
-	print(lm.validateLight(invalidLightH))# == 'name not a string.')
-	print(lm.validateLight(invalidLightI))# == 'name not a string.')
+	print(cm.validateLight(validLight) == None)
+	print(cm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')
+	print(cm.validateLight(invalidLightB) == 'Light not in server.')
+	print(cm.validateLight(invalidLightC) == 'Incorrect number of keys.')
+	print(cm.validateLight(invalidLightD) == 'g_t is not a list.')
+	print(cm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')
+	print(cm.validateLight(invalidLightF) == 'name not a string.')
+	print(cm.validateLight(invalidLightG))# == 'name not a string.')
+	print(cm.validateLight(invalidLightH))# == 'name not a string.')
+	print(cm.validateLight(invalidLightI))# == 'name not a string.')
