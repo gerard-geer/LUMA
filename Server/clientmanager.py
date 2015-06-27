@@ -151,6 +151,6 @@ class ClientManager(object):
 		# Others not a string?
 		for test in ['name','client','id']:
 			if not isinstance(dict[test], str):
-				return test+' his not a string.'
+				return test+' is not a string.'
 				
 		return None
