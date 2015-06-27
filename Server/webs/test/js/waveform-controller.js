@@ -112,7 +112,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		vals.length = 0;
 		for(var i = 0; i < length; ++i)
 		{
-			vals.push( Math.floor( 2.0*(i/128) ) );
+			vals.push( Math.floor( 2.0*(i/length) ) );
 		}
 		updateAll(ctx, vals);
 	}
