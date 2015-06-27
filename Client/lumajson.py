@@ -26,6 +26,7 @@ def _encode_light(l):
 	"""
 	d = {}
 	d['name'] = l.name
+	d['id'] = l.id
 	d['r_c'] = l.r.chan
 	d['r_t'] = l.r.times.aslist()
 	d['r_v'] = l.r.vals.aslist()
@@ -87,7 +88,7 @@ def _decode_light(d):
 	g = ColorChannel(d['g_t'], d['g_v'], d['g_c'])
 	b = ColorChannel(d['b_t'], d['b_v'], d['b_c'])
 	# Construct and return the Light instance that wraps the ColorChannels.
-	return Light(r, g, b, d['name'])
+	return Light(r, g, b, d['name'], d['id'])
 
 def decodeRequest(r):
 	"""
@@ -106,14 +107,14 @@ def decodeRequest(r):
 		r (String): The request. It should be a JSON String that encodes:
 		{
 			"type":"status"|"change"
-			"data":<light name>|null
+			"data":<encoded light object>|null
 		}
 		
 	Returns:
 		A dictionary that contains the following items:
 		{
 			"type":"status"|"change"
-			"data":<light name>|None
+			"data":<decoded light object>|None
 		}
 		
 	Preconditions:
@@ -250,7 +251,7 @@ def decodeState(state):
 	for d in j['lights'].values():
 		print(d)
 		l = _decode_light(d)
-		lights[l.name] = l
+		lights[l.id] = l
 		
 	# Finally we return the lights.
 	return j['name'], lights

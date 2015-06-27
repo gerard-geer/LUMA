@@ -1,6 +1,7 @@
 #module lightmanager.py
 
 from json import load, dump
+from uuid import uuid4
 from singleton import Singleton
 
 @Singleton
@@ -110,7 +111,10 @@ class LightManager(object):
 		
 	def addLight(self, name, client, permitted):
 		"""
-		Adds a new light.
+		Adds a new light, creating a UUID to uniquely identify it. The
+		permitted list is not manipulated, but shallow copied into
+		the new light.
+		Also, the light is keyed into the light dictionary by its id.
 		
 		Parameters:
 			name (String): The name of the new light.
@@ -121,25 +125,24 @@ class LightManager(object):
 			True if the light was added, False otherwise.
 		
 		Preconditions:
-			The name is not already taken, and the lights loaded.
+			The lights are loaded.
 			
 		Postconditions:
 			The light is added to the list.
 		"""
-		if name in self._lights.keys():
-			return False
+		id = str(uuid4())
 			
-		light = {'name':name,'client':client,'permitted':[]}
+		light = {'id':id, 'name':name,'client':client,'permitted':[]}
 		light['permitted'].extend(permitted)
-		self._lights[light['name']] = light
+		self._lights[id] = light
 		return True
 		
-	def changeLightName(self, original, new):
+	def changeLightName(self, id, new):
 		"""
 		Changes the name of a light.
 		
 		Parameters:
-			original (String): The original (existing) light name.
+			id (String): The light's ID.
 			new (String): The new name for the light.
 			
 		Returns:
@@ -151,18 +154,17 @@ class LightManager(object):
 		Postconditions:
 			The light's name has been changed.
 		"""
-		if original in self._lights.keys():
-			self._lights[new] = self._lights.pop(original)
-			self._lights[new]['name'] = new
+		if id in self._lights.keys():
+			self._lights[id]['name'] = new
 			return True
 		return False
 			
-	def changeLightClient(self, name, client):
+	def changeLightClient(self, id, client):
 		"""
 		Change the client alias stored with a light.
 		
 		Parameters:
-			name (String): The name of the light to change.
+			id (String): The ID of the light to change.
 			client (String): The new client alias.
 			
 		Returns:
@@ -174,17 +176,17 @@ class LightManager(object):
 		Postconditions:
 			The light's client alias has been changed.
 		"""
-		if name in self._lights.keys():
-			self._lights[name]['client'] = client
+		if id in self._lights.keys():
+			self._lights[id]['client'] = client
 			return True
 		return False
 			
-	def deleteLight(self, name):
+	def deleteLight(self, id):
 		"""
 		Deletes a light.
 		
 		Parameters:
-			name(String): The name of the light to delete.
+			id(String): The ID of the light to delete.
 		
 		Returns:
 			True if deleted, false otherwise.
@@ -193,22 +195,22 @@ class LightManager(object):
 			The light should exist if you want this to go off without a hitch.
 			
 		Postconditions:
-			The light is wiped from local storage. The representation on the
+			The light is wiped from server knowledge. The representation on the
 			client still remains.
 		"""
-		if name in self._lights.keys():
-			del self._lights[name]
+		if id in self._lights.keys():
+			del self._lights[id]
 			return True
 		return False
 			
-	def addUUIDtoSubset(self, uuid, names):
+	def addUUIDtoSubset(self, uuid, ids):
 		"""
-		Adds the given UUID to each of the lights specified by the list of
-		names.
+		Adds the given user UUID to each of the lights specified by the list of
+		light IDs.
 		
 		Parameters:
 			uuid(String): The UUID to add.
-			names([String]): The list of light names.
+			ids([String]): The list of light IDs.
 			
 		Returns:
 			A dictionary describing the results of each add operation.
@@ -221,29 +223,29 @@ class LightManager(object):
 			already exist.
 		"""
 		result = {}
-		for name in names:
-			result[name] = {}
-			if name in self._lights.keys():
-				if uuid not in self._lights[name]['permitted']:
-					self._lights[name]['permitted'].append(uuid)
-					result[name]['success']=True
-					result[name]['message']=None
+		for id in ids:
+			result[id] = {}
+			if id in self._lights.keys():
+				if uuid not in self._lights[id]['permitted']:
+					self._lights[id]['permitted'].append(uuid)
+					result[id]['success']=True
+					result[id]['message']=None
 				else:
-					result[name]['success'] = False
-					result[name]['message'] = 'UUID already exists.'
+					result[id]['success'] = False
+					result[id]['message'] = 'UUID already exists.'
 			else:
-				result[name]['success'] = False
-				result[name]['message'] = 'UUID already exists.'
+				result[id]['success'] = False
+				result[id]['message'] = 'Light does not exist.'
 		return result
 					
-	def removeUUIDfromSubset(self, uuid, names):
+	def removeUUIDfromSubset(self, uuid, ids):
 		"""
-		Removes the given UUID from each of the lights specified by the list of
-		names.
+		Removes the given user UUID from each of the lights specified by the
+		list of light IDs.
 		
 		Parameters:
 			uuid(String): The UUID to remove.
-			names(String]): The list of light names.
+			ids(String]): The list of light IDs.
 			
 		Returns:
 			A dictionary describing the results of each remove operation.
@@ -255,28 +257,27 @@ class LightManager(object):
 			The UUID is removed from each light that exists, where it exists.
 		"""
 		result = {}
-		for name in names:
-			result[name] = {}
-			if name in self._lights.keys():
-				new=[id for id in self._lights[name]['permitted'] if id != uuid]
-				old = self._lights[name]['permitted']
-				if len(new) == len(old):
-					result[name]['success'] = False
-					result[name]['message'] = 'UUID does not exist.'
+		for id in ids:
+			result[id] = {}
+			if id in self._lights.keys():
+				if uuid in self._lights[id]['permitted']:
+					self._lights[id]['permitted'].remove(uuid)
+					result[id]['success'] = True
+					result[id]['message'] = None
 				else:
-					result[name]['success'] = True
-					result[name]['message'] = None
+					result[id]['success'] = False
+					result[id]['message'] = 'UUID does not exist.'
 			else:
-				result[name]['success'] = False
-				result[name]['message'] = 'Light does not exist.'
+				result[id]['success'] = False
+				result[id]['message'] = 'Light does not exist.'
 		return result
 		
-	def lightExists(self, name):
+	def lightExists(self, id):
 		"""
 		Returns whether or not the light exists on the server.
 		
 		Parameters:
-			name (String): The name of the light to check for.
+			id (String): The ID of the light to check for.
 			
 		Returns:
 			True if the light exists, false otherwise.
@@ -287,14 +288,14 @@ class LightManager(object):
 		Postconditions:
 			None.
 		"""
-		return name in self._lights.keys()
+		return id in self._lights.keys()
 		
-	def getLight(self, name):
+	def getLight(self, id):
 		"""
-		Returns a light given a name.
+		Returns a light given an ID.
 		
 		Parameters:
-			name (String): The name of the light.
+			id (String): The ID of the light.
 		
 		Returns:
 			The light or None, depending on its existence.
@@ -306,17 +307,17 @@ class LightManager(object):
 			None.
 		"""
 		try:
-			return self._lights[name]
+			return self._lights[id]
 		except KeyError:
 			return None
 		
-	def isAllowed(self, uuid, name):
+	def isAllowed(self, uuid, id):
 		"""
 		Returns whether or not the given UUID can access the given light.
 		
 		Parameters:
 			uuid (String): The UUID to check for.
-			name (String): The name of the light to check in.
+			id (String): The ID of the light to check in.
 			
 		Returns:
 			True if the light is accessible, false otherwise.
@@ -327,7 +328,7 @@ class LightManager(object):
 		Postconditions:
 			None.
 		"""
-		if name in self._lights.keys():
-			if uuid in self._lights[name]['permitted']:
+		if id in self._lights.keys():
+			if uuid in self._lights[id]['permitted']:
 				return True
 		return False

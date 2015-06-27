@@ -4,17 +4,18 @@ from colorchannel import ColorChannel
 class Light(object):
 	"""
 	Encapsulates the red, green, and blue ColorChannels into a Light, with
-	a name and location field as a well.
+	a name and ID field as a well.
 	
 	Slots:
 		r (ColorChannel): The red ColorChannel.
 		g (ColorChannel): The green ColorChannel.
 		b (ColorChannel): The blue ColorChannel.
 		name (String): The name of this Light.
+		id (String): The ID number of this light.
 	"""
-	__slots__ = ('r', 'g', 'b', 'name')
+	__slots__ = ('r', 'g', 'b', 'name', 'id')
 
-	def __init__(self, r, g, b, name):
+	def __init__(self, r, g, b, name, id):
 		"""
 		Initializes this Light.
 		
@@ -23,6 +24,7 @@ class Light(object):
 			g (ColorChannel): The green ColorChannel.
 			b (ColorChannel): The blue ColorChannel.
 			name (String): The name of this Light.
+			id (String): This light's ID.
 		
 		Returns:
 			None.
@@ -37,6 +39,7 @@ class Light(object):
 		self.g = g
 		self.b = b
 		self.name = name
+		self.id = id
 
 	def update(self, pwm):
 		"""

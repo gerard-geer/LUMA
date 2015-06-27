@@ -46,7 +46,10 @@ class RequestHandler(object):
 		"""
 		requested = []
 		
+		# Get the subset of all allowed lights.
 		allowed = self._lm.getAllowedSubset(req['uuid'])
+		
+		# Gets possible aliases should the query be an IP address.
 		possible = self._am.getPossibleAliases(req['query'])
 		
 		# If the user just sends us nothing, we just send all that's possible.
@@ -55,12 +58,20 @@ class RequestHandler(object):
 		
 		else:
 			for light in allowed:
-				if req['query'] in light['name'] or req['query'] in light['client']:
-					requested.append({'name':light['name'], 'client':light['client']})
+				if 	req['query'] in light['name'] or	\
+					req['query'] in	light['id'] or 		\
+					req['query'] in light['client']:
+					
+					requested.append({'id':light['id'],		\
+									'name':light['name'],	\
+									'client':light['client']})
 				else:
+				
 					for alias in possible:
 						if alias in light['client']:
-							requested.append({'name':light['name'],	\
+							
+							requested.append({'id':light['id'],		\
+											'name':light['name'],	\
 											'client':light['client']})
 		
 		return {'lights':requested}
@@ -82,17 +93,17 @@ class RequestHandler(object):
 			The state of the lights supplied is updated, if they exist.
 		"""					
 		# Get the light.
-		light = self._lm.getLight(req['name'])
+		light = self._lm.getLight(req['id'])
 		if light == None:
 			return {'success': False,
 					'message': 'Light does not exist.',
-					'name': req['name']}
+					'id': req['id']}
 					
 		# Check to see if the user can access the light.
-		if not self._lm.isAllowed(req['uuid'], req['name']):
+		if not self._lm.isAllowed(req['uuid'], req['id']):
 			return {'success': False,
 					'message': 'User not allowed to access light.',
-					'name': req['name']}
+					'id': req['id']}
 		
 		# Try to parlay an address from the client alias. If we can't,
 		# that's another problem.
@@ -101,16 +112,18 @@ class RequestHandler(object):
 			return {'success': False,
 					'message': 'Client alias not recognized.',
 					'name': req['name'],
+					'id': req['id'],
 					'client': light['client']}
 		
 		# If we can, well, that's good.
-		res = self._cm.sendStatusRequest(address, req['name'])
+		res = self._cm.sendStatusRequest(address, req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
 			return {'success': False,
 					'message': 'Could not connect to client.',
 					'name': req['name'],
+					'id': req['id'],
 					'client': light['client']}
 		else:
 			print('merging dicts')
@@ -142,7 +155,7 @@ class RequestHandler(object):
 		for light in req['lights']:
 		
 			# Get the light from the manager.
-			l = self._lm.getLight(light['name'])
+			l = self._lm.getLight(light['id'])
 			if l == None:
 				light['success'] = False
 				light['message'] = 'Light does not exist.'
@@ -150,14 +163,14 @@ class RequestHandler(object):
 				continue
 				
 			# Make sure the user can access the light.
-			if not self._lm.isAllowed(req['uuid'], light['name']):
+			if not self._lm.isAllowed(req['uuid'], light['id']):
 				light['success'] = False
 				light['message'] = 'User not allowed to access light.'
 				updated.append(light)
 				continue
 
-			# We need to translate the alias.
-			address = self._am.getAddress(l['client'])
+			# We need to translate the client name/alias to an IP.
+			address = self._am.getAddress(light['client'])
 			if address == None:
 				light['success'] = False
 				light['message'] = 'Alias not recognized.'
@@ -260,10 +273,10 @@ class RequestHandler(object):
 		Postconditions:
 			The light specified is removed if it existed.
 		"""
-		if not self._lm.isAllowed(req['uuid'], req['name']):
+		if not self._lm.isAllowed(req['uuid'], req['id']):
 			return {'success':False,	\
 					'message': 'User not allowed to access light.'}
-		if self._lm.deleteLight(req['name']):
+		if self._lm.deleteLight(req['id']):
 			return {'success':True,'message':None}
 		return {'success':False,'message':'Light does not exist.'}
 	

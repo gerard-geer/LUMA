@@ -13,9 +13,9 @@ if __name__ == '__main__':
 	print(am.getAddress("Gerard's Hoom")==None)
 	
 	# Test getting aliases from parts of addresses.
-	print(len(am.getPossibleAliases('2'))==2)
-	print(len(am.getPossibleAliases('3'))==3)
-	print(len(am.getPossibleAliases('1'))==1)
+	print(len(am.getPossibleAliases('2'))==3)
+	print(len(am.getPossibleAliases('3'))==2)
+	print(len(am.getPossibleAliases('127'))==1)
 	
 	# Test adding an alias, if it doesn't already exist
 	# and if it does.
@@ -23,10 +23,10 @@ if __name__ == '__main__':
 	print(not am.addAlias('added', '7.7.7.7'))
 	
 	# Test to see if we can get the newly added alias.
-	print(am.getPossibleAliases('7'))
+	print(am.getPossibleAliases('7')==['added','DUMMYNAME'])
 	
 	# Try to get the new alias' address.
-	print(am.getAddress('added'))
+	print(am.getAddress('added')=='7.7.7.7')
 	
 	# Try to delete that alias.
 	print(am.deleteAlias('added'))
@@ -34,5 +34,5 @@ if __name__ == '__main__':
 	# Make sure we don't double-delete.
 	print(not am.deleteAlias('added'))
 	
-	# Is it still there?
-	print(am.getPossibleAliases('7'))
+	# It better not still be there.
+	print(am.getPossibleAliases('7')==['DUMMYNAME'])

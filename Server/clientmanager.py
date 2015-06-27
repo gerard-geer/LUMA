@@ -6,6 +6,7 @@ from json import dumps, loads
 
 _CONN_ERR = {'type': 'error',	\
 			'data': None}
+_DATAREAD = 16384
 @Singleton
 class ClientManager(object):
 	"""
@@ -38,14 +39,14 @@ class ClientManager(object):
 		self._PORT = 8641
 		
 		
-	def sendStatusRequest(self, address, name):
+	def sendStatusRequest(self, address, id):
 		"""
 		Sends a status request to the client at the given address and returns
 		its response.
 		
 		Parameters:
 			address (String): The address of the client.
-			name (String): The name of the lighting fixture whose status is
+			id (String): The ID of the lighting fixture whose status is
 				desired. Passing None returns the status of all lights.
 				
 		Returns:	
@@ -58,16 +59,16 @@ class ClientManager(object):
 			A message is sent to the address specified on port 8641, and its
 			response is returned.
 		"""
-		req = {'type':'status', 'data':name}
+		req = {'type':'status', 'data':id}
 		try:
 			s = socket(AF_INET, SOCK_STREAM)
 			s.settimeout(.5)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
-			res = s.recv(4096)
+			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
-		except timeout:
+		except:
 			_CONN_ERR['data'] = 'Could not connect to address '+str(address)
 			return _CONN_ERR
 			
@@ -81,6 +82,7 @@ class ClientManager(object):
 			dict(Dictionary): A dictionary containing the to-be lighting state,
 				formatted as follows:
 				{
+					'id': The ID of the light.
 					'name': The name of the light.
 					'r_t': List of red timings.
 					'r_v': List of red values.
@@ -106,7 +108,7 @@ class ClientManager(object):
 			s.settimeout(.5)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
-			res = s.recv(4096)
+			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
 		except Exception:
@@ -131,10 +133,10 @@ class ClientManager(object):
 			None.
 		"""
 		# Incorrect number of keys.
-		if len(dict.keys()) != 7:
+		if len(dict.keys()) != 9:
 			return 'Incorrect number of keys.'
 		# Check for necessary keys.
-		for test in ['r_t','r_v','g_t','g_v','b_t','b_v','name']:
+		for test in ['r_t','r_v','g_t','g_v','b_t','b_v','name','client','id']:
 			if test not in dict.keys():
 				return 'Light does not contain a '+test+' key.'
 		# Test each list key.
@@ -147,8 +149,8 @@ class ClientManager(object):
 				if not isinstance(val, (int, float)):
 					return test+' does not contain only numbers.'
 		# Others not a string?
-		for test in ['name']:
+		for test in ['name','client','id']:
 			if not isinstance(dict[test], str):
-				return test+' not a string.'
+				return test+' is not a string.'
 				
 		return None

@@ -179,12 +179,12 @@ class LUMA(object):
 			self.running = False
 			self.runLock.release()
 			
-	def _exists(self, lightName):
+	def _exists(self, lightID):
 		"""
 		A thread safe way to check if a light is present.
 		
 		Parameters:
-			lightName (String): The name of the Light to question.
+			lightID (String): The ID of the Light to question.
 			
 		Returns:
 			Whether or not the Light is present.
@@ -196,16 +196,16 @@ class LUMA(object):
 			None.
 		"""
 		self.lightLock.acquire(True)
-		e = lightName in self.lights.keys()
+		e = ( lightID in self.lights.keys() )
 		self.lightLock.release()
 		return e
 	
-	def _getLight(self, lightName=None):
+	def _getLight(self, lightID=None):
 		"""
 		A thread safe way to get one or all lights.
 		
 		Parameters:
-			lightName (String, default=None): The name of the Light to get. If
+			lightID (String, default=None): The ID of the Light to get. If
 			omitted, a list of copies of all lights are returned.
 			
 		Returns:
@@ -218,7 +218,9 @@ class LUMA(object):
 		Postconditions:
 			Copies are made of one or all Lights.
 		"""
-		if lightName == None:
+		
+		# Return all lights if the ID given is None.
+		if lightID == None:
 			l = []
 			self.lightLock.acquire(True)
 			for light in self.lights.values():
@@ -226,17 +228,19 @@ class LUMA(object):
 			self.lightLock.release()
 			return l
 		
+		# Otherwise we return the specific light.
 		self.lightLock.acquire(True)
-		l = self.lights[lightName]
+		l = self.lights[lightID]
 		self.lightLock.release()
 		return l
 		
 		
-	def _changeLight(self, name, rtimes, rvals, gtimes, gvals, btimes, bvals):
+	def _changeLight(self, id, rtimes, rvals, gtimes, gvals, btimes, bvals):
 		"""
-		Change the state of a Light instance by name.
+		Change the state of a Light instance by ID.
 		
 		Parameters:
+			id (String): The ID of the light to change.
 			rtimes (List): The list of transition durations for the red channel.
 			rvals (List): The list of brightness values for the red channel.
 			gtimes (List): The list of transition durations for the 
@@ -258,7 +262,7 @@ class LUMA(object):
 		"""
 		# Acquire the lock so that we can access the lights.
 		self.lightLock.acquire(True)
-		self.lights[name].change(rtimes, rvals, gtimes, gvals, btimes, bvals)
+		self.lights[id].change(rtimes, rvals, gtimes, gvals, btimes, bvals)
 		self.lightLock.release()
 		
 	def _updateLights(self):
@@ -337,7 +341,7 @@ class LUMA(object):
 			return encodeResponse('status', self._getLight(),	\
 			'Status returned.')
 		
-		# OH MAN WHOA GET GOT A NAME THAT MATCHES LET'S DO OUR BEST!
+		# OH MAN WHOA GET GOT A ID THAT MATCHES LET'S DO OUR BEST!
 		if self._exists(req['data']):
 			return encodeResponse('status', self._getLight(req['data']),	\
 			'Status returned.')
@@ -357,7 +361,7 @@ class LUMA(object):
 			req (Dictionary): The decoded request Dictionary.
 			
 		Returns:
-			A JSON String encoding the response to this reqeust.
+			A JSON String encoding the response to this request.
 			
 		Preconditions:
 			The request is valid.
@@ -366,19 +370,19 @@ class LUMA(object):
 			None.
 		"""
 		# OH MAN THIS LIGHT UPDATE MATCHES ONE OF MY LIGHTS I'M SO HAPPY
-		if self._exists(req['data']['name']):
-			self._changeLight( req['data']['name'], \
+		if self._exists(req['data']['id']):
+			self._changeLight( req['data']['id'], \
 			req['data']['r_t'], req['data']['r_v'],	\
 			req['data']['g_t'], req['data']['g_v'],	\
 			req['data']['b_t'], req['data']['b_v'] )
 			return encodeResponse('success',\
-					self._getLight(req['data']['name']),\
+					self._getLight(req['data']['id']),\
 					'State updated.')
 			
 		# Whelp the requested Light off and skedaddled.
 		else:
 			return encodeResponse('error', None,	\
-			'Light '+str(req['data']['name'])+' does not exist on client '+	\
+			'Light '+str(req['data']['id'])+' does not exist on client '+	\
 			str(self.name))
 		
 	def onRequest(self, s):
