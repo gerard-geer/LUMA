@@ -5,6 +5,7 @@ from socket import socket, AF_INET, SOCK_STREAM, timeout
 from json import dumps, loads
 
 _CONN_ERR = {'type': 'error',	\
+			'message': None,	\
 			'data': None}
 _DATAREAD = 16384
 @Singleton
