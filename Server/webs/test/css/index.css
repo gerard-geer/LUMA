@@ -287,7 +287,7 @@ input:focus
 	display:inline-block;
 	font-weight: bold;
 	color: #FFFFFF;
-	width: 4em;
+	width: 5em;
 	margin: 0;
 	padding: .2em;
 }
@@ -303,11 +303,20 @@ input:focus
 {
 	background-color: #0000FF;
 }
+.wavelength_title
+{
+	display: inline;
+}
+.wavelength_unit
+{
+	display: inline;
+	font-size: .5em;
+}
 .wavelength_input
 {
 	display:inline-block;
 	border-width: 0px;
-	width: 12em;
+	width: 11em;
 }
 #wavelength_canvas
 {
