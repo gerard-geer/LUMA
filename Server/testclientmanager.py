@@ -134,7 +134,7 @@ base = {	\
 change = {	\
 			'name': None,	\
 			'id': 'testA',
-			'r_t': [9, 6],	\
+			'r_t': [10, 6],	\
 			'r_v': [8, 6],	\
 			'g_t': [9, 6],	\
 			'g_v': [8, 6],	\
@@ -165,42 +165,43 @@ if __name__ == '__main__':
 	a = None
 	b = None
 	
+	
+	# The ID is still none, so a change request should error out.
+	a = cm.sendChangeRequest(good_addr, base)
+	print(a['type']=='error' and 'does not exist' in a['message'])
+	
 	# Change all lights to the base light and verify.
 	base['id'] = '200001'
 	a = cm.sendChangeRequest(good_addr, base)['data']
 	base['name'] = a['name'] # Names are not changed.
-	print(a)
-	print(base)
-	"""
-	# The ID is still none, so a change request should error out.
-	a = cm.sendChangeRequest(good_addr, cr)
-	print(a['type']=='error' and 'does not exist' in a['message'])
+	print(a==base)
+	base['id'] = '200002'
+	a = cm.sendChangeRequest(good_addr, base)['data']
+	base['name'] = a['name'] # Names are not changed.
+	print(a==base)
 	
-	# Give our test object an existent id get its status before and after a 
-	# change.
-	cr['id'] = '200001'
-	a = cm.sendStatusRequest(good_addr, cr['id'])
-	b = cm.sendChangeRequest(good_addr, cr);
-	print(a['data'])
-	print(b['data'])
-	print('test1' + str(a['data'] != b['data']))
+	# Go to the first object and try changing it.
+	base['id'] = '200001'
+	change['id'] = '200001'
+	b = cm.sendChangeRequest(good_addr, change)['data']
+	print(b['r_t'][0]!=base['r_t'][0])
 	
 	# Moving over to the other object.
-	cr['id'] = '200002'
-	cr['name'] = 'testB'
-	a = cm.sendStatusRequest(good_addr, cr['id'])
-	b = cm.sendChangeRequest(good_addr, cr)
-	print(a['data'] != b['data'])
+	base['id'] = '200001'
+	change['id'] = '200001'
+	b = cm.sendChangeRequest(good_addr, change)['data']
+	print(b['r_t'][0]!=base['r_t'][0])
 	
 	# Make sure we can make a non-change change.
-	a = cm.sendStatusRequest(good_addr, cr['id'])
-	b = cm.sendChangeRequest(good_addr, a['data'])
-	print(a['data'] == b['data'])
+	a = cm.sendStatusRequest(good_addr, change['id'])
+	b = cm.sendChangeRequest(good_addr, change)['data']
+	print(b['r_t'][0]!=base['r_t'][0])
 	
-	cr['id'] = 'nonexistent id'
-	print(cm.sendChangeRequest(good_addr, cr))
-	print(cm.sendChangeRequest(bad_addr, cr))
-	"""
+	# Check bad IDs and disconnected clients.
+	base['id'] = 'nonexistent id'
+	print('does not exist' in cm.sendChangeRequest(good_addr, base)['message'])
+	print('Could not connect' in cm.sendChangeRequest(bad_addr, base)['message'])
+	
 	# Test light validation.
 	print('LIGHT VALIDATION TESTING')
 	print(cm.validateLight(validLight) == None)
