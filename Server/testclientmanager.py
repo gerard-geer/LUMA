@@ -168,7 +168,9 @@ if __name__ == '__main__':
 	# Change all lights to the base light and verify.
 	base['id'] = '200001'
 	a = cm.sendChangeRequest(good_addr, base)['data']
-	print(base == a)
+	base['name'] = a['name'] # Names are not changed.
+	print(a)
+	print(base)
 	"""
 	# The ID is still none, so a change request should error out.
 	a = cm.sendChangeRequest(good_addr, cr)
@@ -200,6 +202,7 @@ if __name__ == '__main__':
 	print(cm.sendChangeRequest(bad_addr, cr))
 	"""
 	# Test light validation.
+	print('LIGHT VALIDATION TESTING')
 	print(cm.validateLight(validLight) == None)
 	print(cm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')
 	print(cm.validateLight(invalidLightC) == 'Incorrect number of keys.')
