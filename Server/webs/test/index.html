@@ -152,7 +152,10 @@
 				id='wavelength_form' name='wavelength_form' novalidate>
 					<!-- Each text input is wrapped up with a label.		 -->
 					<div class='wavelength_container'>
-						<p class='wavelength_label red'>Red</p>
+						<div class='wavelength_label red'>
+						<p class='wavelength_title'>Red</p>
+						<p class='wavelength_unit'>(sec)</p>
+						</div>
 						<input
 						ng-model='rLambda'
 						ng-change='wctrl.updatePreview()'
@@ -161,7 +164,10 @@
 						class='wavelength_input' type='text'/>
 					</div>
 					<div class='wavelength_container'>
-						<p class='wavelength_label green'>Green</p>
+						<div class='wavelength_label green'>
+						<p class='wavelength_title'>Green</p>
+						<p class='wavelength_unit'>(sec)</p>
+						</div>
 						<input 
 						ng-model='gLambda'
 						ng-change='wctrl.updatePreview()'
@@ -170,7 +176,10 @@
 						class='wavelength_input' type='text'/>
 					</div>
 					<div class='wavelength_container'>
-						<p class='wavelength_label blue'>Blue</p>
+						<div class='wavelength_label blue'>
+						<p class='wavelength_title'>Blue</p>
+						<p class='wavelength_unit'>(sec)</p>
+						</div>
 						<input 
 						ng-model='bLambda'
 						ng-change='wctrl.updatePreview()'

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from requesthandler import RequestHandler
 
 """
@@ -13,31 +13,39 @@ Responsive? If it's your lucky day.
 """
 app = Flask(__name__)
 rh = RequestHandler.Instance()
+indexPage = ''
+f = open("webs/test/index.html")
+for line in f:
+	indexPage += line
 
+# Index page.
+@app.route('/')
+def fetchHTML():
+	return send_from_directory('webs/test/', 'index.html')
 # CSS
 @app.route('/css/<path:filename>')
-def fetchCSS():
-	return app.send_static_file(filename)
+def fetchCSS(filename):
+	return send_from_directory('webs/test/css/', filename)
 	
 # JavaScript
 @app.route('/js/<path:filename>')
-def fetchJS():
-	return app.send_static_file(filename)
+def fetchJS(filename):
+	return send_from_directory('webs/test/js/', filename)
 	
 # Light queries.
-@app.route('/resources/lights', methods=['GET'])
+@app.route('/resources/lights/<light_query>', methods=['GET'])
 def lightQueries():
-    return rh.lightQuery(request.get_json())
+    return rh.lightQuery(request.get_json(light_query))
 
 # Get light state.
-@app.route('/resources/lights/state', methods=['GET'])
-def stateQuery():
-    return rh.stateQuery(request.get_json())
+@app.route('/resources/lights/state/<light_state_query>', methods=['GET'])
+def stateQuery(light_state_query):
+    return rh.stateQuery(request.get_json(light_state_query))
 	
 # Set light state.
-@app.route('/resources/lights/state', methods=['POST'])
-def stateUpdate():
-    return rh.lightUpdate(request.get_json())
+@app.route('/resources/lights/state/<light_state_query>', methods=['POST'])
+def stateUpdate(light_state_query):
+    return rh.lightUpdate(request.get_json(light_state_query))
 	
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
