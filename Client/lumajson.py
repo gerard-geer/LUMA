@@ -27,13 +27,10 @@ def _encode_light(l):
 	d = {}
 	d['name'] = l.name
 	d['id'] = l.id
-	d['r_c'] = l.r.chan
 	d['r_t'] = l.r.times.aslist()
 	d['r_v'] = l.r.vals.aslist()
-	d['g_c'] = l.g.chan
 	d['g_t'] = l.g.times.aslist()
 	d['g_v'] = l.g.vals.aslist()
-	d['b_c'] = l.b.chan
 	d['b_t'] = l.b.times.aslist()
 	d['b_v'] = l.b.vals.aslist()
 	return d
