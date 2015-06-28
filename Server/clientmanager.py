@@ -70,7 +70,7 @@ class ClientManager(object):
 			s.close()
 			return loads(res)
 		except:
-			_CONN_ERR['data'] = 'Could not connect to address '+str(address)
+			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
 			return _CONN_ERR
 			
 	def sendChangeRequest(self, address, dict):
@@ -113,7 +113,7 @@ class ClientManager(object):
 			s.close()
 			return loads(res)
 		except Exception:
-			_CONN_ERR['data'] = 'Could not connect to address '+str(address)
+			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
 			return _CONN_ERR\
 			
 	def validateLight(self, dict):
