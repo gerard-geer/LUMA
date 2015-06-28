@@ -13,7 +13,15 @@ Responsive? If it's your lucky day.
 """
 app = Flask(__name__)
 rh = RequestHandler.Instance()
+indexPage = ''
+f = open("webs/test/index.html")
+for line in f:
+	indexPage += line
 
+# Index page.
+@app.route('/')
+def fetchHTML():
+	return indexPage
 # CSS
 @app.route('/css/<path:filename>')
 def fetchCSS():
