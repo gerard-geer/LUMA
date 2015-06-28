@@ -147,20 +147,18 @@ if __name__ == '__main__':
 	# Test getting the status of multiple lights, and
 	# lights that don't exist, and ones on bad clients.
 	status = None
-	print('STATUS TESTING')
+	print('SERVER TO CLIENT SYSTEM TESTING (REQUESTING)')
 	status = cm.sendStatusRequest(good_addr, '200001')
-	print(status['type']=='status')
-	status = cm.sendStatusRequest(good_addr, '200002')
-	print(status['type']=='status')
+	print(str(status['type']=='status')+' (Make sure we got a status on valid.)')
 	status = cm.sendStatusRequest(good_addr, 'doesntexist')
-	print(status['type']=='error' and 'does not exist on client' in status['message'])
+	print(str(status['type']=='error' and 'does not exist on client' in status['message'])+' (non-existent light.)')
 	status = cm.sendStatusRequest(bad_addr, 'doesntexist')
-	print(status['type']=='error' and  'Could not connect' in status['message'])
+	print(str(status['type']=='error' and  'Could not connect' in status['message'])+' (non-existent client and light.)')
 	status = cm.sendStatusRequest(bad_addr, '200001')
-	print(status['type']=='error' and 'Could not connect' in status['message'])
+	print(str(status['type']=='error' and 'Could not connect' in status['message'])+' (non-existent client.)')
 	
 	# Try every thing that can happen when changing a light.
-	print('CHANGE TESTING')
+	print('SERVER TO CLIENT SYSTEM TESTING (EDITING)')
 	# Objects to store the before and after states of a change.
 	a = None
 	b = None
@@ -168,48 +166,50 @@ if __name__ == '__main__':
 	
 	# The ID is still none, so a change request should error out.
 	a = cm.sendChangeRequest(good_addr, base)
-	print(a['type']=='error' and 'does not exist' in a['message'])
+	print(str(a['type']=='error' and 'does not exist' in a['message'])+' (Null ID)')
 	
 	# Change all lights to the base light and verify.
 	base['id'] = '200001'
 	a = cm.sendChangeRequest(good_addr, base)['data']
 	base['name'] = a['name'] # Names are not changed.
-	print(a==base)
+	print(str(a==base) + ' (change 20001 to base.)')
 	base['id'] = '200002'
 	a = cm.sendChangeRequest(good_addr, base)['data']
 	base['name'] = a['name'] # Names are not changed.
-	print(a==base)
+	print(str(a==base) + ' (change 20002 to base.)')
 	
 	# Go to the first object and try changing it.
 	base['id'] = '200001'
 	change['id'] = '200001'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(b['r_t'][0]!=base['r_t'][0])
+	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 20001 and verify change.)')
 	
 	# Moving over to the other object.
 	base['id'] = '200001'
 	change['id'] = '200001'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(b['r_t'][0]!=base['r_t'][0])
+	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 20002 and verify change.)')
 	
 	# Make sure we can make a non-change change.
 	a = cm.sendStatusRequest(good_addr, change['id'])
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(b['r_t'][0]!=base['r_t'][0])
+	print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 20002 to itself and verify that it hasn't changed'.)")
 	
 	# Check bad IDs and disconnected clients.
 	base['id'] = 'nonexistent id'
-	print('does not exist' in cm.sendChangeRequest(good_addr, base)['message'])
-	print('Could not connect' in cm.sendChangeRequest(bad_addr, base)['message'])
+	a = cm.sendChangeRequest(good_addr, base)['message']
+	print(str('does not exist' in a) + ' (non-existent light)')	
+	a = cm.sendChangeRequest(bad_addr, base)['message']
+	print(str('Could not connect' in a) + ' (non-existent client)')
 	
 	# Test light validation.
-	print('LIGHT VALIDATION TESTING')
-	print(cm.validateLight(validLight) == None)
-	print(cm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')
-	print(cm.validateLight(invalidLightC) == 'Incorrect number of keys.')
-	print(cm.validateLight(invalidLightD) == 'g_t is not a list.')
-	print(cm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')
-	print(cm.validateLight(invalidLightF) == 'name is not a string.')
-	print(cm.validateLight(invalidLightG) == 'id is not a string.')
-	print(cm.validateLight(invalidLightH) == 'id is not a string.')
-	print(cm.validateLight(invalidLightI) == 'Incorrect number of keys.')
+	print('LIGHT VALIDATION UNIT TESTING')
+	print(str(cm.validateLight(validLight) == None)+' (valid light.)')
+	print(str(cm.validateLight(invalidLightA) == 'r_t does not contain only numbers.')+' (Bad timing values.)')
+	print(str(cm.validateLight(invalidLightC) == 'Incorrect number of keys.')+' (No green channel timings.)')
+	print(str(cm.validateLight(invalidLightD) == 'g_t is not a list.')+' (g_t is not a list.)')
+	print(str(cm.validateLight(invalidLightE) == 'Light does not contain a r_t key.')+' (No r_t key.)')
+	print(str(cm.validateLight(invalidLightF) == 'name is not a string.')+' (name is not a string.)')
+	print(str(cm.validateLight(invalidLightG) == 'id is not a string.')+' (id is an integer list.)')
+	print(str(cm.validateLight(invalidLightH) == 'id is not a string.')+' (id is an integer.)')
+	print(str(cm.validateLight(invalidLightI) == 'Incorrect number of keys.')+' (No client key.)')
