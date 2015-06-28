@@ -136,12 +136,18 @@ if __name__ == '__main__':
 	
 	# Test getting the status of multiple lights, and
 	# lights that don't exist, and ones on bad clients.
+	status = None
 	print('STATUS TESTING')
-	print(cm.sendStatusRequest(good_addr, '200001'))
-	print(cm.sendStatusRequest(good_addr, '200002'))
-	print(cm.sendStatusRequest(good_addr, 'doesntexist'))
-	print(cm.sendStatusRequest(bad_addr, 'doesntexist'))
-	print(cm.sendStatusRequest(bad_addr, '200001'))
+	status = cm.sendStatusRequest(good_addr, '200001')
+	print(status['type']=='status')
+	status = cm.sendStatusRequest(good_addr, '200002')
+	print(status['type']=='status')
+	status = cm.sendStatusRequest(good_addr, 'doesntexist')
+	print(status['type']=='error' and 'does not exist on client' in status['message'])
+	status = cm.sendStatusRequest(bad_addr, 'doesntexist')
+	print(status['type']=='error' and  'could not connect' in status['message'])
+	status = cm.sendStatusRequest(bad_addr, '200001')
+	print(status['type']=='error' and 'could not connect' in status['message'])
 	
 	# Try every thing that can happen when changing a light.
 	print('CHANGE TESTING')
