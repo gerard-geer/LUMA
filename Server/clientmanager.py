@@ -1,4 +1,5 @@
 #module clientmanager.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 
 from singleton import Singleton
 from socket import socket, AF_INET, SOCK_STREAM, timeout

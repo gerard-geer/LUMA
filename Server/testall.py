@@ -1,3 +1,5 @@
+# LUMA copyright (C) Gerard Geer 2014-2015
+
 from testaliasmanager import testAliasManager
 from testlightmanager import testLightManager
 from testclientmanager import testClientManager

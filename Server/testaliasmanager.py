@@ -1,4 +1,5 @@
 #module testaliasmanager.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 
 """
 Tests the AliasManager Module.

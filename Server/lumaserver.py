@@ -1,3 +1,5 @@
+# LUMA copyright (C) Gerard Geer 2014-2015
+
 from flask import Flask, send_from_directory
 from requesthandler import RequestHandler
 

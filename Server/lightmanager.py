@@ -1,4 +1,5 @@
 #module lightmanager.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 
 from json import load, dump
 from uuid import uuid4

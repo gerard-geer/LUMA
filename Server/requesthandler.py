@@ -1,4 +1,6 @@
 #module: requesthandler.py
+# LUMA copyright (C) Gerard Geer 2014-2015
+
 from datetime import datetime
 from lightmanager import LightManager
 from aliasmanager import AliasManager
