@@ -167,7 +167,7 @@ class RequestHandler(object):
 		# Sanitize the request.
 		if not self._sanitizeStateQuery(req):
 			return {'success': False,
-					'message': 'Invalid query/request.',
+					'message': 'Invalid query.',
 					'id': None}
 		# Get the light.
 		light = self._lm.getLight(req['id'])
