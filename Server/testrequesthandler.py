@@ -32,14 +32,24 @@ stateQueries = [	# Test valid state queries from a privileged user.
 					{'uuid':'1', 'id': "100001"},
 					{'uuid':'1', 'id': "100004"},
 					# Test valid state queries for a client that isn't accessible.
+					# (privileged user)
 					{'uuid':'3', 'id': "100003"},
 					# Test invalid state queries from a privileged user.
 					{'uuid':'1', 'id': "10000X"},
+					# Test state queries for a light that exists but the client
+					# isn't in the alias manager from a privileged user.
+					{'uuid':'1', 'id': "100006"},
 					# Test valid state queries from a non-privileged user.
 					{'uuid':'X', 'id': "100001"},
 					{'uuid':'X', 'id': "100004"},
 					# Test invalid state queries from a non-privileged user.
-					{'uuid':'X', 'id': "10000X"}
+					{'uuid':'X', 'id': "10000X"},
+					# Test valid state queries for a client that isn't accessible.
+					# (non-privileged user)
+					{'uuid':'X', 'id': "100003"},
+					# Test state queries for a light that exists but the client
+					# isn't in the alias manager from a privileged user.
+					{'uuid':'X', 'id': "100006"}
 				]
 
 if __name__ == '__main__':
