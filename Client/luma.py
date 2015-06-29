@@ -86,6 +86,12 @@ class LUMA(object):
 		s = ''
 		f = open(self.file, 'r')
 		for line in f:
+			# Split the line to see if its first token is a comment delimiter.
+			tokens = line.split()
+			# If it is a comment delimiter, we skip the line.
+			if len(tokens) > 0 and tokens[0] in ['#','//',';']:
+				continue
+			# Otherwise, we take the line and append it to the JSON string.
 			s+=line
 		# Close the file.
 		f.close()
