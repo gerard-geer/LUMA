@@ -1,3 +1,5 @@
+#module testaliasmanager.py
+
 """
 Tests the AliasManager Module.
 
