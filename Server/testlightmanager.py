@@ -22,15 +22,15 @@ if __name__ == '__main__':
 	print(str(lm.lightExists('100001'))+' (Verify existence testing.)')
 	print(str(not lm.lightExists('fake ID'))+' (Verify existence testing.)')
 	print(str(not lm.deleteLight('fake ID'))+' (Delete fake light.)')
-	print(str(lm.deleteLight('100001'))+' (Delete real light.)')
-	print(str(not lm.getLight('100001'))+' (Verify deletion.)')
-	print(str(not lm.deleteLight('100001'))+' (Check double delete.)')
+	print(str(lm.deleteLight('100003'))+' (Delete real light.)')
+	print(str(not lm.getLight('100003'))+' (Verify deletion.)')
+	print(str(not lm.deleteLight('100003'))+' (Check double delete.)')
 	print(str(not lm.isAllowed('3', '100002'))+' (Check light whitelisting.)')
 	print(str(lm.isAllowed('6', '100002'))+' (Check light whitelisting.)')
-	print(str(lm.isAllowed('3', '100003'))+' (Check light whitelisting.)')
-	print(str(not lm.isAllowed('999', '100003'))+' (Check light whitelisting.)')
+	print(str(lm.isAllowed('3', '100001'))+' (Check light whitelisting.)')
+	print(str(not lm.isAllowed('999', '100001'))+' (Check light whitelisting.)')
 	
-	result = lm.addUUIDtoSubset('new UUID', ['100002', '100003','100004'])
+	result = lm.addUUIDtoSubset('new UUID', ['100001', '100002','100004'])
 	test = True
 	for light in result.values():
 		test = test and light['success']
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	print(str(lm.isAllowed('new UUID', '100002'))+' (Verify add.)')
 	print(str(not lm.isAllowed('new UUID', '100005'))+' (Verify add.)')
 	
-	result = lm.removeUUIDfromSubset('new UUID', ['100002', '100003','100004'])
+	result = lm.removeUUIDfromSubset('new UUID', ['100001', '100002','100004'])
 	test = True
 	for light in result.values():
 		test = test and light['success']
