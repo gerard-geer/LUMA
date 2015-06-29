@@ -509,8 +509,6 @@ class LUMA(object):
 		Postconditions:
 			If the command was valid, it was obeyed.
 		"""
-		# Create a String to build our response in.
-		res = ''
 		
 		# Try to decode the request.
 		try:
