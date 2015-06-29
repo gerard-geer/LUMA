@@ -34,7 +34,7 @@ function($scope, LUMAServerService, LUMAStateService){
 		// We also need to get the state of the light we selected.
 		
 		// Finally we get the state of the light.
-		LUMAServerService.requestLightState('<uuid>',
+		LUMAServerService.requestLightState('1',
 			LUMAStateService.selectedLight);
 	};
 }]);
