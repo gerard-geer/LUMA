@@ -37,7 +37,7 @@ class LUMATCPHandler(BaseRequestHandler):
 			as the request. The response to this request is then sent back.
 		"""
 		print('-------------------------------------------------------------------------------')
-		print('Connection from '+str(self.client_address[0]))
+		print('Connection from: '+str(self.client_address[0]))
 		print('Time: '+str(datetime.now()))
 		
 		# Gotta store the accumulated response somewhere.

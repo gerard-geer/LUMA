@@ -420,7 +420,7 @@ class LUMA(object):
 			None.
 		"""
 		# Log some info. 
-		print('for light id='+req['data'])
+		print('For: id='+req['data'])
 		
 		# If the light name is None, then all lights are sought.
 		if req['data'] == None:
@@ -456,9 +456,9 @@ class LUMA(object):
 			None.
 		"""
 		# Similarly log some info.
-		print(	'for light id='+str(req['data']['id'])+	\
-				' name='+str(req['data']['name'])+		\
-				'('+str(type(req['data']['name']))+')'	)
+		print(	"For: id='"+str(req['data']['id'])+"'"+	\
+				" name='"+str(req['data']['name'])+"'"+	\
+				" ("+str(type(req['data']['name']))+")"	)
 
 		# OH MAN THIS LIGHT UPDATE MATCHES ONE OF MY LIGHTS I'M SO HAPPY
 		if self._exists(req['data']['id']):
