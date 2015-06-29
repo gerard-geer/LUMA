@@ -63,12 +63,12 @@
 		<!-- The "hey man that was a crappy search try again buddy" dialog.	 -->
 		<!-- It's only shown when there are no results, according to		 -->
 		<!-- query.NoResults.												 -->
-		<div class='error_dialog' id='no_result' ng-show='state.noResults'>
+		<div class='error_dialog' ng-show='state.noResults'>
 			<p>No LUMA lights or clients found. Try a different search.</p>
 		</div>
 		<!-- The "hey man something happened on my part and here's what it 	 -->
 		<!-- that may be" dialog that wraps and displays errors.			 -->
-		<div class='error_dialog' id='state_error' ng-show='state.isError'>
+		<div class='error_dialog' ng-show='state.isError'>
 			<p>{{state.errorMessage}}</p>
 		</div>
 		
