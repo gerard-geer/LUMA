@@ -5,7 +5,7 @@ This requires a running client on the local machine, or if
 one wants to test another connection, one can change the
 [good_addr] variable. 
 This also requires that the client and server are using
-the test configuration files, stored in "LUMA/test/"
+the test configuration files, stored in "LUMA/Test Configs/"
 """
 from clientmanager import ClientManager
 

@@ -1,0 +1,61 @@
+{
+    "100001": {
+        "client": "Research Room", 
+        "name": "Ceiling", 
+		"id": "100001",
+        "permitted": [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5", 
+            "6", 
+            "7"
+        ]
+    }, 
+    "100002": {
+        "client": "Gerard's Room", 
+        "name": "Gerard's Desk", 
+		"id": "100002",
+        "permitted": [
+            "6", 
+            "7"
+        ]
+    }, 
+    "100003": {
+        "client": "DUMMYNAME", 
+        "name": "Max's Couch", 
+		"id": "100003",
+        "permitted": [
+            "3"
+        ]
+    }, 
+    "100004": {
+        "client": "Research Room", 
+        "name": "Shelves", 
+		"id": "100004",
+        "permitted": [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5", 
+            "6", 
+            "7"
+        ]
+    }, 
+    "100005": {
+        "client": "Research Room", 
+        "name": "Under Countertop", 
+		"id": "100005",
+        "permitted": [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5", 
+            "6", 
+            "7"
+        ]
+    }
+}
