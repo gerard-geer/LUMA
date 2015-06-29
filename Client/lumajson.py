@@ -122,6 +122,52 @@ def decodeRequest(r):
 	"""
 	return loads(r)
 	
+def sanitizeRequest(r):
+	"""
+	Sanitizes a request.
+	
+	Parameters:
+		r (JSON): The JSON request dictionary to sanitize.
+		
+	Returns:
+		None if there was nothing wrong, an error message otherwise.
+	
+	Preconditions:
+		None.
+		
+	Postconditions:
+		None.
+	"""
+	# Make sure the request is a dictionary.
+	if not isinstance(r, dict):
+		return 'not a dictionary.'
+		
+	# Make sure all expected keys are present.
+	for key in ['type', 'data']:
+		if key not in r.keys():
+			return key+' not in keys.'
+	
+	# Make sure the type key points to a String.
+	if not (isinstance(r['type'], str) or isinstance(r['type'], unicode)):
+		return 'Type not a string. Type: '+str(type(r['type']))
+	
+	# There are only two acceptable type values at this point in time.
+	# THIS LIST MAY NEED EXPANSION LATER.
+	if r['type'] != 'status' and r['type'] != 'change':
+		return 'Type is not "status" or "change" Type is '+str(r['type'])
+		
+	# Status requests require an ID in their data field.
+	if r['type'] == 'status' and 			\
+	(not isinstance(r['data'], str)) and 	\
+	(not isinstance(r['data'], unicode)):
+		return 'Type is "status" but data is not an ID string. Type: '+str(type(r['data']))
+		
+	# Change requests require a dict of light data.
+	if r['type'] == 'change' and (not isinstance(r['data'], dict)):
+		return 'Type is "change" but data is not a dictionary. Type: '+str(type(r['data']))
+		
+	return None
+	
 def encodeResponse(type, light_s, message):
 	"""
 	Takes a response type, light, and encodes them into a JSON
@@ -155,6 +201,10 @@ def encodeResponse(type, light_s, message):
 	r['type'] = type
 	r['data'] = light_s
 	r['message'] = message
+	
+	print("Response:")
+	print("  Type:    "+str(r['type']))
+	print("  Message: "+str(r['message']))
 	return dumps(r, cls=_LightEncoder)
 	
 def encodeLight(light):
@@ -235,18 +285,13 @@ def decodeState(state):
 	
 	# Load the json object from a string. At this point it should be a list of
 	# dictionaries, each dictionary a light.
-	print('json parsing')
 	j = loads(state)
-	print(type(j['lights']))
 	# Create a dictionary to store all the new Light instances.
 	lights = {}
 	
 	# For each dictionary in the json, we decode the dictionary and append it to
 	# the lights list.
-	print('light parsing')
-	print('numlights: '+str(len(j['lights'].values())))
 	for d in j['lights'].values():
-		print(d)
 		l = _decode_light(d)
 		lights[l.id] = l
 		

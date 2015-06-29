@@ -8,6 +8,11 @@ from time import sleep
 
 # from Adafruit_PWM_Servo_Driver import PWM
 
+SANITIZE_ERR = {'type': 'error',
+				'message': 'Request failed sanitation.',
+				'data': None}
+EPS_THRESHOLD = 5
+
 class LUMA(object):
 	"""
 	The LUMA device class. This manages all lighting instances; loading and
@@ -86,7 +91,6 @@ class LUMA(object):
 		
 		self.lightLock.acquire(True)
 		self.name, self.lights = decodeState(s)
-		print(self.name)
 		self.lightLock.release()
 		
 	def save(self):
@@ -319,6 +323,94 @@ class LUMA(object):
 			# Have the update thread sleep.
 			sleep(.001)
 			
+	def _inspectDiff(self, req):
+		"""
+		Upon a change request one should inspect the changes being made.
+		This function takes the request, the current state of the light
+		to be changed, and prints the changes.
+		
+		Parameters:
+			req (JSON): The dictionary containing the change request.
+		
+		Returns:
+			None.
+			
+		Preconditions:
+			The request must be a change request, and the change request
+			changes a light that exists.
+			
+		Postconditions:
+			The elements to be changed are logged to output.
+		"""
+		print('Items changed:')
+		changed = req['data']
+		current = self._getLight(changed['id'])
+		changeList = []
+		
+		# Test the red channel. Overflowing the light's lists doesn't matter
+		# since they're FloatLists and circular.
+		for i in range(len(changed['r_v'])):
+			if(changed['r_v'][i] != current.r.vals[i]):
+				changeList.append('  Red values.')
+				break
+		for i in range(len(changed['r_t'])):
+			if(changed['r_t'][i] != current.r.times[i]):
+				changeList.append('  Red timings.')
+				break
+				
+		# Now for the green channel.
+		for i in range(len(changed['r_v'])):
+			if(changed['g_v'][i] != current.g.vals[i]):
+				changeList.append('  Green values.')
+				break
+		for i in range(len(changed['r_t'])):
+			if(changed['g_t'][i] != current.g.times[i]):
+				changeList.append('  Green timings.')
+				break
+				
+		# And the blue.
+		for i in range(len(changed['r_v'])):
+			if(changed['b_v'][i] != current.b.vals[i]):
+				changeList.append('  Blue values.')
+				break
+		for i in range(len(changed['r_t'])):
+			if(changed['b_t'][i] != current.b.times[i]):
+				changeList.append('  Blue timings.')
+				break
+				
+		if len(changeList) == 0:
+			print('  None')
+		else:
+			for change in changeList:
+				print(change)
+				
+	def _epsTest(self):
+		"""
+		This device allows for people to make patterns of flashing lights.
+		This function is an epilepsy test.
+		As of right now it tests for a change of light faster than a
+		threshold.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			None.
+			
+		Preconditions:
+			The EPS_THRESHOLD variable is defined.
+			
+		Postconditions:
+			Prints a warning to the output should the test fail.
+		"""
+		lights = self._getLight()
+		for light in lights:
+			maxD1 = light.getMaximumD1()
+			if maxD1 > EPS_THRESHOLD:
+				print(	"#### EPILEPSY WARNING on "+str(light.name)+	\
+						" (max delt: %4.2f"%maxD1 +")"+
+						" (Thresh.: %4.2f"%EPS_THRESHOLD +") ####"				)
+		
 	def _onStatusRequest(self, req):
 		"""
 		Defines behaviour when given a status request.
@@ -335,6 +427,8 @@ class LUMA(object):
 		Postconditions:
 			None.
 		"""
+		# Log some info. 
+		print('For: id='+req['data'])
 		
 		# If the light name is None, then all lights are sought.
 		if req['data'] == None:
@@ -369,12 +463,27 @@ class LUMA(object):
 		Postconditions:
 			None.
 		"""
+		# Similarly log some info.
+		print(	"For: id='"+str(req['data']['id'])+"'"+	\
+				" name='"+str(req['data']['name'])+"'"+	\
+				" ("+str(type(req['data']['name']))+")"	)
+
 		# OH MAN THIS LIGHT UPDATE MATCHES ONE OF MY LIGHTS I'M SO HAPPY
 		if self._exists(req['data']['id']):
+			
+			# Print the differential.
+			self._inspectDiff(req)
+			
+			# Change the light.
 			self._changeLight( req['data']['id'], \
 			req['data']['r_t'], req['data']['r_v'],	\
 			req['data']['g_t'], req['data']['g_v'],	\
 			req['data']['b_t'], req['data']['b_v'] )
+			
+			# Run the epilepsy test.
+			self._epsTest()
+			
+			# Return a response to this request.
 			return encodeResponse('success',\
 					self._getLight(req['data']['id']),\
 					'State updated.')
@@ -401,13 +510,25 @@ class LUMA(object):
 		Postconditions:
 			If the command was valid, it was obeyed.
 		"""
-		res = ''
+		
+		# Try to decode the request.
 		try:
 			r = decodeRequest(s)
 		except Exception as e:
 			return encodeResponse('error', None, 'Request sent to '+
 				'client '+str(self.name)+' could not be decoded. Error: '+str(e))
-			
+				
+		# Sanitize the request.
+		e = sanitizeRequest(r)
+		if e != None:
+			print('Request Failed sanitization. Error: '+e)
+			return encodeResponse('error', None, 'Request sent to '+
+				'client '+str(self.name)+' failed sanitation. Error: '+str(e))
+		
+		# Log the request type.
+		print('Request type: '+r['type'])
+				
+		# Act appropriately for the request.
 		if r['type'] == 'status':
 			return self._onStatusRequest(r)
 		elif r['type'] == 'change':
