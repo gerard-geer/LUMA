@@ -1,3 +1,5 @@
+#module testclientmanager.py
+
 """
 Tests the ClientManager module.
 
