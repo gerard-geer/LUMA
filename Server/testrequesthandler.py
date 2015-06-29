@@ -31,6 +31,8 @@ lightQueries = [	# Test good queries from a privileged user.
 stateQueries = [	# Test valid state queries from a privileged user.
 					{'uuid':'1', 'id': "100001"},
 					{'uuid':'1', 'id': "100004"},
+					# Test valid state queries for a client that isn't accessible.
+					{'uuid':'3', 'id': "100003"},
 					# Test invalid state queries from a privileged user.
 					{'uuid':'1', 'id': "10000X"},
 					# Test valid state queries from a non-privileged user.

@@ -122,7 +122,6 @@ class RequestHandler(object):
 		if res['type'] == 'error':
 			return {'success': False,
 					'message': 'Could not connect to client.',
-					'name': req['name'],
 					'id': req['id'],
 					'client': light['client']}
 		else:
