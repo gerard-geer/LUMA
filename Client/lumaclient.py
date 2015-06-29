@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 # LUMA copyright (C) Gerard Geer 2014-2015
 
 """
