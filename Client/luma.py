@@ -375,7 +375,28 @@ class LUMA(object):
 			if(changed['b_t'][i] != current.b.times[i]):
 				print('\tBlue timings.')
 				break
+				
+	def _epsTest(self):
+		"""
+		This device allows for people to make patterns of flashing lights.
+		This function is an epilepsy test.
+		As of right now it tests for a change of light faster than a
+		threshold.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			None.
 			
+		Preconditions:
+			The EPS_THRESHOLD variable is defined.
+			
+		Postconditions:
+			Prints a warning to the output should the test fail.
+		"""
+		lights = self._getLights()
+		
 	def _onStatusRequest(self, req):
 		"""
 		Defines behaviour when given a status request.
