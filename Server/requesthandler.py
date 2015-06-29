@@ -111,7 +111,6 @@ class RequestHandler(object):
 		if address == None:
 			return {'success': False,
 					'message': 'Client alias not recognized.',
-					'name': req['name'],
 					'id': req['id'],
 					'client': light['client']}
 		
