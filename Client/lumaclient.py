@@ -35,6 +35,7 @@ class LUMATCPHandler(BaseRequestHandler):
 			the data is decoded as a JSON object, which is then processed
 			as the request. The response to this request is then sent back.
 		"""
+		print('-------------------------------------------------------------------------------')
 		print('Connection from '+str(self.client_address[0])+'.')
 		
 		# Gotta store the accumulated response somewhere.
