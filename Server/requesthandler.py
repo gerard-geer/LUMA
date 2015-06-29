@@ -98,11 +98,11 @@ class RequestHandler(object):
 		
 		# Verify the types of the keys' values.
 		if  not isinstance(req['uuid'], str) and	\
-			not isinstance(req['query'], unicode):
+			not isinstance(req['uuid'], unicode):
 			print('uuid not string')
 			return False
-		if  not isinstance(req['query'], str) and	\
-			not isinstance(req['query'], unicode):
+		if  not isinstance(req['id'], str) and	\
+			not isinstance(req['id'], unicode):
 			print('id not string.')
 			return False
 			
@@ -114,7 +114,7 @@ class RequestHandler(object):
 		Handles a query for light instances.
 		
 		Parameters:
-			req (JSON): The Dictionary that contains the request.
+			req (JSON String): The JSON String that describes the request.
 			
 		Returns:
 			A dictionary containing the response to the request.
@@ -173,7 +173,7 @@ class RequestHandler(object):
 		Handles a request for a light's state.
 		
 		Parameters:
-			req (JSON): The Dictionary that contains the request.
+			req (JSON String): The JSON String that describes the request.
 			
 		Returns:
 			A dictionary containing the response to the request.
