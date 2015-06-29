@@ -168,7 +168,7 @@ stateQueryExpectedMessages = [
 					'Invalid query.'
 				]
 				
-if __name__ == '__main__':
+def testRequestHandler():
 	rh = RequestHandler.Instance()
 	
 	# Light query testing.
@@ -186,4 +186,7 @@ if __name__ == '__main__':
 		e = stateQueryExpectedMessages[i]
 		c = stateQueryComments[i]
 		print(str(rh.stateQuery(q)['message']==e)+c)
+	
+if __name__ == '__main__':
+	testRequestHandler()
 	
