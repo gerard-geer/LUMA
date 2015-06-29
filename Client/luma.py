@@ -86,7 +86,6 @@ class LUMA(object):
 		
 		self.lightLock.acquire(True)
 		self.name, self.lights = decodeState(s)
-		print(self.name)
 		self.lightLock.release()
 		
 	def save(self):

@@ -235,18 +235,13 @@ def decodeState(state):
 	
 	# Load the json object from a string. At this point it should be a list of
 	# dictionaries, each dictionary a light.
-	print('json parsing')
 	j = loads(state)
-	print(type(j['lights']))
 	# Create a dictionary to store all the new Light instances.
 	lights = {}
 	
 	# For each dictionary in the json, we decode the dictionary and append it to
 	# the lights list.
-	print('light parsing')
-	print('numlights: '+str(len(j['lights'].values())))
 	for d in j['lights'].values():
-		print(d)
 		l = _decode_light(d)
 		lights[l.id] = l
 		
