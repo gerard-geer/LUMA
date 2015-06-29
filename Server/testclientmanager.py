@@ -144,7 +144,8 @@ change = {	\
 			'b_t': [9, 6],	\
 			'b_v': [8, 6]	\
 	}
-if __name__ == '__main__':
+	
+def testClientManager():
 	cm = ClientManager.Instance()
 	
 	# Test getting the status of multiple lights, and
@@ -216,3 +217,6 @@ if __name__ == '__main__':
 	print(str(cm.validateLight(invalidLightG) == 'id is not a string.')+' (id is an integer list.)')
 	print(str(cm.validateLight(invalidLightH) == 'id is not a string.')+' (id is an integer.)')
 	print(str(cm.validateLight(invalidLightI) == 'Incorrect number of keys.')+' (No client key.)')
+
+if __name__ == '__main__':
+	testClientManager()
