@@ -109,5 +109,5 @@ class Light(object):
 		Postconditions:
 			None.
 		"""
-		return max(max(self.r.getMaximumD1(), self.g.getMaximumD1()), self.b.getMaximum())
+		return max(max(self.r.getMaximumD1(), self.g.getMaximumD1()), self.b.getMaximumD1())
 		

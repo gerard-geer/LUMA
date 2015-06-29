@@ -11,7 +11,7 @@ from time import sleep
 SANITIZE_ERR = {'type': 'error',
 				'message': 'Request failed sanitation.',
 				'data': None}
-EPS_THRESHHOLD = 15
+EPS_THRESHOLD = 15
 
 class LUMA(object):
 	"""
