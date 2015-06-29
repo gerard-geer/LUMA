@@ -396,7 +396,7 @@ class LUMA(object):
 		Postconditions:
 			Prints a warning to the output should the test fail.
 		"""
-		lights = self._getLights()
+		lights = self._getLight()
 		for light in lights:
 			if light.getMaximumD1() > EPS_THRESHOLD:
 				print("#### EPILEPSY WARNING ####")
@@ -469,6 +469,9 @@ class LUMA(object):
 			req['data']['r_t'], req['data']['r_v'],	\
 			req['data']['g_t'], req['data']['g_v'],	\
 			req['data']['b_t'], req['data']['b_v'] )
+			
+			# Run the epilepsy test.
+			self._epsTest()
 			
 			# Return a response to this request.
 			return encodeResponse('success',\
