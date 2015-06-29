@@ -5,8 +5,8 @@
 	result.
 */
 angular.module('LUMAClient').controller('ResultController', 
-['$scope','$http','LUMAServerService','LUMAStateService', 
-function($scope, $http, LUMAServerService, LUMAStateService){
+['$scope','LUMAServerService','LUMAStateService', 
+function($scope, LUMAServerService, LUMAStateService){
 	
 	// Bind the state service to the controller's scope so that
 	// yet again we can access it in the DOM.
