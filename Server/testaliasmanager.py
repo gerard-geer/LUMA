@@ -1,5 +1,7 @@
 """
 Tests the AliasManager Module.
+
+This requires that the server is using the test configuration files.
 """
 
 from aliasmanager import AliasManager
@@ -7,32 +9,32 @@ from aliasmanager import AliasManager
 if __name__ == '__main__':
 	am = AliasManager.Instance()
 	am.load()
-	
+	print('ALIAS MANAGER UNIT TESTING')
 	# Test getting an existent and non-existent address.
-	print(am.getAddress("Gerard's Room")=='1.2.3.4')
-	print(am.getAddress("Gerard's Hoom")==None)
+	print(str(am.getAddress("Gerard's Room")=='1.2.3.4')+' (Get address for existent client.)')
+	print(str(am.getAddress("Gerard's Hoom")==None)+' (Get null address for non-existend client.)')
 	
 	# Test getting aliases from parts of addresses.
-	print(len(am.getPossibleAliases('2'))==3)
-	print(len(am.getPossibleAliases('3'))==2)
-	print(len(am.getPossibleAliases('127'))==1)
+	print(str(len(am.getPossibleAliases('2'))==3)+' (Two aliases have addrs with "3" in them.)')
+	print(str(len(am.getPossibleAliases('3'))==2)+' (Three aliases have addrs with "2" in them.)')
+	print(str(len(am.getPossibleAliases('127'))==1)+' (One possible alias with "127")')
 	
 	# Test adding an alias, if it doesn't already exist
 	# and if it does.
-	print(am.addAlias('added', '7.7.7.7'))
-	print(not am.addAlias('added', '7.7.7.7'))
+	print(str(am.addAlias('added', '7.7.7.7'))+' (Light successfully added.)')
+	print(str(not am.addAlias('added', '7.7.7.7'))+' (Duplicate rejected)')
 	
 	# Test to see if we can get the newly added alias.
-	print(am.getPossibleAliases('7')==['added','DUMMYNAME'])
+	print(str(am.getAddress('added')=='7.7.7.7')+' (Retrieve added alias.)')
 	
 	# Try to get the new alias' address.
-	print(am.getAddress('added')=='7.7.7.7')
+	print(str(am.getAddress('added')=='7.7.7.7')+" (Get added alias' address.)")
 	
 	# Try to delete that alias.
-	print(am.deleteAlias('added'))
+	print(str(am.deleteAlias('added'))+' (Delete added alias.)')
 	
 	# Make sure we don't double-delete.
-	print(not am.deleteAlias('added'))
+	print(str(not am.deleteAlias('added'))+' (Cannot double delete.)')
 	
 	# It better not still be there.
-	print(am.getPossibleAliases('7')==['DUMMYNAME'])
+	print(str(am.getAddress('added')==None)+' (Verify deletion.)')

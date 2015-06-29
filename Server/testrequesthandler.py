@@ -4,31 +4,78 @@ Tests the RequestHandler module.
 
 from requesthandler import RequestHandler
 
-lightQueries = [	{'uuid':'1', 'query':''},
-					{'uuid':'1', 'query':'Research'},
+lightQueries = [	# Test good queries from a privileged user.
 					{'uuid':'1', 'query':'Research Room'},
+					{'uuid':'1', 'query':'Research'},
+					{'uuid':'1', 'query':'Rese'},
 					{'uuid':'1', 'query':'Ceiling'},
-					{'uuid':'1', 'query':'Gerard'},
-					{'uuid':'6', 'query':''},
-					{'uuid':'3', 'query':'Max'},
-					{'uuid':'3', 'query':"Gerard's Desk"},
-					{'uuid':'3', 'query':'Shelves'},
-					{'uuid':'6', 'query':'.3'}
+					{'uuid':'1', 'query':'Under Countertop'},
+					{'uuid':'1', 'query':'Under'},
+					{'uuid':'1', 'query':'Unde'},
+					{'uuid':'1', 'query':'127.0.0'},
+					# Test bad queries from a valid user.
+					{'uuid':'1', 'query':'not a worthwhile query'},
+					# Test good queries from a non-privileged user.
+					{'uuid':'X', 'query':'Research Room'},
+					{'uuid':'X', 'query':'Research'},
+					{'uuid':'X', 'query':'Rese'},
+					{'uuid':'X', 'query':'Ceiling'},
+					{'uuid':'X', 'query':'Under Countertop'},
+					{'uuid':'X', 'query':'Under'},
+					{'uuid':'X', 'query':'Unde'},
+					{'uuid':'X', 'query':'127.0.0'},
+					# Test bad queries from a non-privileged user.
+					{'uuid':'X', 'query':'not a valid query'},
+					# Test badly formed query objects.
+					{},
+					{'asdfasd':'asdfasfd'},
+					{'uuid':'1'},
+					{'uuid':'x'},
+					{'uuid':1},
+					{'query':'ohno'},
+					{'query':5}
 				]
 
-stateQueries = [
-					{'uuid':'3', 'name': "Max's Couch"}
+stateQueries = [	# Test valid state queries from a privileged user.
+					{'uuid':'1', 'id': "100001"},
+					{'uuid':'1', 'id': "100004"},
+					# Test valid state queries for a client that isn't accessible.
+					# (privileged user)
+					{'uuid':'3', 'id': "100003"},
+					# Test invalid state queries from a privileged user.
+					{'uuid':'1', 'id': "10000X"},
+					# Test state queries for a light that exists but the client
+					# isn't in the alias manager from a privileged user.
+					{'uuid':'1', 'id': "100006"},
+					# Test valid state queries from a non-privileged user.
+					{'uuid':'X', 'id': "100001"},
+					{'uuid':'X', 'id': "100004"},
+					# Test invalid state queries from a non-privileged user.
+					{'uuid':'X', 'id': "10000X"},
+					# Test valid state queries for a client that isn't accessible.
+					# (non-privileged user)
+					{'uuid':'X', 'id': "100003"},
+					# Test state queries for a light that exists but the client
+					# isn't in the alias manager from a privileged user.
+					{'uuid':'X', 'id': "100006"},
+					# Test badly formed state query objects.
+					{},
+					{'astf':'asdf'},
+					{'uuid':'1'},
+					{'uuid':'x'},
+					{'uuid':1},
+					{'id':'ohno'},
+					{'id':5}
+					
 				]
 
 if __name__ == '__main__':
 	rh = RequestHandler.Instance()
-	# Make all the test queries.
+	# Make all the test light queries.
 	for q in lightQueries:
-		printme = []
-		for light in rh.lightQuery(q)['lights']:
-			printme.append(light['name'])
-		print(printme)
-		
+		print(rh.lightQuery(q))
+	
 	# Make all the test state queries.
 	for q in stateQueries:
 		print(rh.stateQuery(q))
+	

@@ -57,19 +57,5 @@
             "6", 
             "7"
         ]
-    }, 
-    "100006": {
-        "client": "Client does not exist", 
-        "name": "client not in AliasManager", 
-		"id": "100006",
-        "permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
     }
 }

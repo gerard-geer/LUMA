@@ -5,6 +5,7 @@ from socket import socket, AF_INET, SOCK_STREAM, timeout
 from json import dumps, loads
 
 _CONN_ERR = {'type': 'error',	\
+			'message': None,	\
 			'data': None}
 _DATAREAD = 16384
 @Singleton
@@ -69,7 +70,7 @@ class ClientManager(object):
 			s.close()
 			return loads(res)
 		except:
-			_CONN_ERR['data'] = 'Could not connect to address '+str(address)
+			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
 			return _CONN_ERR
 			
 	def sendChangeRequest(self, address, dict):
@@ -112,7 +113,7 @@ class ClientManager(object):
 			s.close()
 			return loads(res)
 		except Exception:
-			_CONN_ERR['data'] = 'Could not connect to address '+str(address)
+			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
 			return _CONN_ERR\
 			
 	def validateLight(self, dict):
