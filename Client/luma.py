@@ -8,6 +8,10 @@ from time import sleep
 
 # from Adafruit_PWM_Servo_Driver import PWM
 
+SANITIZE_ERR = {'type': 'error',
+				'message': 'Request failed sanitation.',
+				'data': None}
+
 class LUMA(object):
 	"""
 	The LUMA device class. This manages all lighting instances; loading and
@@ -410,6 +414,13 @@ class LUMA(object):
 			return encodeResponse('error', None, 'Request sent to '+
 				'client '+str(self.name)+' could not be decoded. Error: '+str(e))
 				
+		# Sanitize the request.
+		e = sanitizeRequest(r)
+		if e != None:
+			print('Request Failed sanitization. Error: '+e)
+			return encodeResponse('error', None, 'Request sent to '+
+				'client '+str(self.name)+' failed sanitation. Error: '+str(e))
+		
 		# Log the request type.
 		print('Request type: '+r['type'])
 		
