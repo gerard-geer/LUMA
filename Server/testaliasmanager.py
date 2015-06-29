@@ -25,7 +25,7 @@ if __name__ == '__main__':
 	print(str(not am.addAlias('added', '7.7.7.7'))+' (Duplicate rejected)')
 	
 	# Test to see if we can get the newly added alias.
-	print(str(am.getPossibleAliases('7')==['added','DUMMYNAME'])+' (Retrieve added alias.)')
+	print(str(am.getAddress('added')=='7.7.7.7')+' (Retrieve added alias.)')
 	
 	# Try to get the new alias' address.
 	print(str(am.getAddress('added')=='7.7.7.7')+" (Get added alias' address.)")
@@ -37,4 +37,4 @@ if __name__ == '__main__':
 	print(str(not am.deleteAlias('added'))+' (Cannot double delete.)')
 	
 	# It better not still be there.
-	print(str(am.getPossibleAliases('7')==['DUMMYNAME'])+' (Verify deletion.)')
+	print(str(am.getAddress('added')==None)+' (Verify deletion.)')
