@@ -345,37 +345,44 @@ class LUMA(object):
 		print('Items changed:')
 		changed = req['data']
 		current = self._getLight(changed['id'])
+		changeList = []
 		
 		# Test the red channel. Overflowing the light's lists doesn't matter
 		# since they're FloatLists and circular.
 		for i in range(len(changed['r_v'])):
 			if(changed['r_v'][i] != current.r.vals[i]):
-				print('\tRed values.')
+				changeList.append('  Red values.')
 				break
 		for i in range(len(changed['r_t'])):
 			if(changed['r_t'][i] != current.r.times[i]):
-				print('\tRed timings.')
+				changeList.append('  Red timings.')
 				break
 				
 		# Now for the green channel.
 		for i in range(len(changed['r_v'])):
 			if(changed['g_v'][i] != current.g.vals[i]):
-				print('\tGreen values.')
+				changeList.append('  Green values.')
 				break
 		for i in range(len(changed['r_t'])):
 			if(changed['g_t'][i] != current.g.times[i]):
-				print('\tGreen timings.')
+				changeList.append('  Green timings.')
 				break
 				
 		# And the blue.
 		for i in range(len(changed['r_v'])):
 			if(changed['b_v'][i] != current.b.vals[i]):
-				print('\tBlue values.')
+				changeList.append('  Blue values.')
 				break
 		for i in range(len(changed['r_t'])):
 			if(changed['b_t'][i] != current.b.times[i]):
-				print('\tBlue timings.')
+				changeList.append('  Blue timings.')
 				break
+				
+		if len(changeList) == 0:
+			print('  None')
+		else:
+			for change in changeList:
+				print(change)
 				
 	def _epsTest(self):
 		"""
