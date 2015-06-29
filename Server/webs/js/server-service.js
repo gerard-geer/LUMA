@@ -56,6 +56,19 @@ angular.module('LUMAClient').factory('LUMAServerService',
 	// "Requests from the server the state of the light."
 	function performStateQuery(uuid, light)
 	{
+		// Go ahead and clear out the old light state.
+		LUMAStateService.lightState = null;
+		
+		// Stringify our request terms for transmission.
+		request = JSON.stringify({'uuid':uuid,'id':light})
+		
+		// Send the request!
+		$http.get('resources/lights/state/'+request)
+		.success(function(response)
+		{
+			console.log('STATE REQUEST!');
+		});
+		
 		LUMAStateService.lightState = testState;
 	}
 
