@@ -41,9 +41,14 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		$http.get('resources/lights/'+request)
 		.success(function(response)
 		{
+			// Get the lights for ease of use.
 			lights = response['lights'];
+			
+			// Set the interface state's query results to the actual results.
 			LUMAStateService.queryResults = 
 				LUMAStateService.queryResults.concat(lights)
+				
+			// If there were no results we want to display the sad dialog.
 			LUMAStateService.noResults = (lights.length == 0);
 		});
 	}
