@@ -400,13 +400,20 @@ class LUMA(object):
 		Postconditions:
 			If the command was valid, it was obeyed.
 		"""
+		# Create a String to build our response in.
 		res = ''
+		
+		# Try to decode the request.
 		try:
 			r = decodeRequest(s)
 		except Exception as e:
 			return encodeResponse('error', None, 'Request sent to '+
 				'client '+str(self.name)+' could not be decoded. Error: '+str(e))
-			
+				
+		# Log the request type.
+		print('Request type: '+r['type'])
+		
+		# Act appropriately for the request.
 		if r['type'] == 'status':
 			return self._onStatusRequest(r)
 		elif r['type'] == 'change':
