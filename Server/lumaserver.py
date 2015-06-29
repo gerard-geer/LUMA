@@ -15,24 +15,20 @@ Responsive? If it's your lucky day.
 """
 app = Flask(__name__)
 rh = RequestHandler.Instance()
-indexPage = ''
-f = open("webs/test/index.html")
-for line in f:
-	indexPage += line
 
 # Index page.
 @app.route('/')
 def fetchHTML():
-	return send_from_directory('webs/test/', 'index.html')
+	return send_from_directory('webs/', 'index.html')
 # CSS
 @app.route('/css/<path:filename>')
 def fetchCSS(filename):
-	return send_from_directory('webs/test/css/', filename)
+	return send_from_directory('webs/css/', filename)
 	
 # JavaScript
 @app.route('/js/<path:filename>')
 def fetchJS(filename):
-	return send_from_directory('webs/test/js/', filename)
+	return send_from_directory('webs/js/', filename)
 	
 # Light queries.
 @app.route('/resources/lights/<light_query>', methods=['GET'])
