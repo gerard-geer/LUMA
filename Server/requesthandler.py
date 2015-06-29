@@ -5,6 +5,7 @@ from datetime import datetime
 from lightmanager import LightManager
 from aliasmanager import AliasManager
 from clientmanager import ClientManager
+from json import loads, dumps
 
 from singleton import Singleton
 
@@ -47,17 +48,23 @@ class RequestHandler(object):
 		"""
 		# Make sure the request is a Dictionary.
 		if not isinstance(req, dict):
+			print('Not a dictionary.')
 			return False
 			
 		# Make sure all required keys are present.
 		for key in ['uuid', 'query']:
 			if key not in req.keys():
+				print(key + ' not in req.keys()')
 				return False
 		
 		# Verify the types of the keys' values.
-		if not isinstance(req['uuid'], str):
+		if  not isinstance(req['uuid'], str) and	\
+			not isinstance(req['uuid'], unicode):
+			print('uuid not string. Type: '+str(type(req['uuid'])))
 			return False
-		if not isinstance(req['query'], str):
+		if  not isinstance(req['query'], str) and	\
+			not isinstance(req['query'], unicode):
+			print('query not string.')
 			return False
 			
 		# Finally after all that checks out we can return True.
@@ -80,17 +87,21 @@ class RequestHandler(object):
 		"""
 		# Make sure the request is a Dictionary.
 		if not isinstance(req, dict):
+			print('Not a dictionary.')
 			return False
 			
 		# Make sure all required keys are present.
 		for key in ['uuid', 'id']:
 			if key not in req.keys():
+				print(key + ' not in req.keys()')
 				return False
 		
 		# Verify the types of the keys' values.
 		if not isinstance(req['uuid'], str):
+			print('uuid not string')
 			return False
 		if not isinstance(req['id'], str):
+			print('id not string.')
 			return False
 			
 		# Finally after all that checks out we can return True.
@@ -112,10 +123,16 @@ class RequestHandler(object):
 		Postconditions:
 			None.
 		"""
+		# Try to decode the JSON.
+		try:
+			req = loads(req)
+		except:
+			return dumps({'lights':[]})
+			
 		# If the request was invalid, we need to transparently return
 		# nothing.
 		if not self._sanitizeLightQuery(req):
-			return {'lights':[]}
+			return dumps({'lights':[]})
 			
 		requested = []
 		
@@ -147,7 +164,7 @@ class RequestHandler(object):
 											'name':light['name'],	\
 											'client':light['client']})
 		
-		return {'lights':requested}
+		return dumps({'lights':requested})
 		
 	def stateQuery(self, req):
 		"""

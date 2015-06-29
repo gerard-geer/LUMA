@@ -37,7 +37,7 @@ def fetchJS(filename):
 def lightQueries(light_query):
 	print("### QUERY: "+light_query)
 	print("### QUERY TYPE: "+str(type(light_query)))
-	return rh.lightQuery(light_query)
+	return str(rh.lightQuery(light_query))
 
 # Get light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['GET'])
