@@ -82,7 +82,8 @@ angular.module('LUMAClient').factory('LUMAServerService',
 			else
 			{
 				// We store the error message,
-				LUMAStateService.errorMessage = response['message'];
+				LUMAStateService.errorMessage =
+					'Error retrieving light state: '+response['message'];
 				// And set the error flag.
 				LUMAStateService.isError = true;
 			}
