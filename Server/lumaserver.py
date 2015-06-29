@@ -44,7 +44,7 @@ def lightQueries(light_query):
 def stateQuery(light_state_query):
 	print("### STATE QUERY: "+light_state_query)
 	print("### STATE QUERY TYPE: "+str(type(light_state_query)))
-	return rh.stateQuery(request.get_json(light_state_query))
+	return str(rh.stateQuery(light_state_query))
 	
 # Set light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['POST'])
