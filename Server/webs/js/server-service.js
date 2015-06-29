@@ -42,7 +42,7 @@ angular.module('LUMAClient').factory('LUMAServerService',
 	// user."
 	function performLightQuery(uuid, query)
 	{
-		$http.get('resources/lights/'+query)
+		$http.get('resources/lights/'+'{"uuid":"3", "query":"'+query+'"}')
 		.success(function(response)
 		{
 			console.log(response);

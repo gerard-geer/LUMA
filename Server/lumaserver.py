@@ -34,13 +34,17 @@ def fetchJS(filename):
 	
 # Light queries.
 @app.route('/resources/lights/<light_query>', methods=['GET'])
-def lightQueries():
-    return rh.lightQuery(request.get_json(light_query))
+def lightQueries(light_query):
+	print("### QUERY: "+light_query)
+	print("### QUERY TYPE: "+str(type(light_query)))
+	return rh.lightQuery(light_query)
 
 # Get light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['GET'])
 def stateQuery(light_state_query):
-    return rh.stateQuery(request.get_json(light_state_query))
+	print("### STATE QUERY: "+light_state_query)
+	print("### STATE QUERY TYPE: "+str(type(light_state_query)))
+	return rh.stateQuery(request.get_json(light_state_query))
 	
 # Set light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['POST'])
