@@ -349,31 +349,31 @@ class LUMA(object):
 		# since they're FloatLists and circular.
 		for i in range(len(changed['r_v'])):
 			if(changed['r_v'][i] != current.r.vals[i]):
-				print('Red values.')
+				print('\tRed values.')
 				break
 		for i in range(len(changed['r_t'])):
 			if(changed['r_t'][i] != current.r.times[i]):
-				print('Red timings.')
+				print('\tRed timings.')
 				break
 				
 		# Now for the green channel.
 		for i in range(len(changed['r_v'])):
 			if(changed['g_v'][i] != current.g.vals[i]):
-				print('Green values.')
+				print('\tGreen values.')
 				break
 		for i in range(len(changed['r_t'])):
 			if(changed['g_t'][i] != current.g.times[i]):
-				print('Green timings.')
+				print('\tGreen timings.')
 				break
 				
 		# And the blue.
 		for i in range(len(changed['r_v'])):
 			if(changed['b_v'][i] != current.b.vals[i]):
-				print('Blue values.')
+				print('\tBlue values.')
 				break
 		for i in range(len(changed['r_t'])):
 			if(changed['b_t'][i] != current.b.times[i]):
-				print('Blue timings.')
+				print('\tBlue timings.')
 				break
 			
 	def _onStatusRequest(self, req):
