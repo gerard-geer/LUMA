@@ -4,20 +4,33 @@ Tests the RequestHandler module.
 
 from requesthandler import RequestHandler
 
-lightQueries = [	{'uuid':'1', 'query':''},
-					{'uuid':'1', 'query':'Research'},
+lightQueries = [	# Test good queries from a privileged user.
 					{'uuid':'1', 'query':'Research Room'},
+					{'uuid':'1', 'query':'Research'},
+					{'uuid':'1', 'query':'Rese'},
 					{'uuid':'1', 'query':'Ceiling'},
-					{'uuid':'1', 'query':'Gerard'},
-					{'uuid':'6', 'query':''},
-					{'uuid':'3', 'query':'Max'},
-					{'uuid':'3', 'query':"Gerard's Desk"},
-					{'uuid':'3', 'query':'Shelves'},
-					{'uuid':'6', 'query':'.3'}
-				]
+					{'uuid':'1', 'query':'Under Countertop'},
+					{'uuid':'1', 'query':'Under'},
+					{'uuid':'1', 'query':'Unde'},
+					{'uuid':'1', 'query':'127.0.0'},
+					# Test bad queries from a valid user.
+					{'uuid':'1', 'query':'not a worthwhile query'},
+					# Test good queries from a non-privileged user.
+					{'uuid':'x', 'query':'Research Room'},
+					{'uuid':'x', 'query':'Research'},
+					{'uuid':'x', 'query':'Rese'},
+					{'uuid':'x', 'query':'Ceiling'},
+					{'uuid':'x', 'query':'Under Countertop'},
+					{'uuid':'x', 'query':'Under'},
+					{'uuid':'x', 'query':'Unde'},
+					{'uuid':'x', 'query':'127.0.0'},
+					# Test bad queries from a non-privileged user.
+					{'uuid':'1', 'query':'not a valid query'}
 
 stateQueries = [
-					{'uuid':'3', 'name': "Max's Couch"}
+					{'uuid':'1', 'id': "100001"}
+					{'uuid':'1', 'id': "100001"}
+					{'uuid':'1', 'id': "100001"}
 				]
 
 if __name__ == '__main__':
