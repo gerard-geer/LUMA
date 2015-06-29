@@ -1,5 +1,9 @@
+#module testrequesthandler.py
+
 """
-Tests the RequestHandler module.
+Tests the RequestHandler module. Like the other test suites,
+this requires that the client and manager are using the test
+configuration files.
 """
 
 from requesthandler import RequestHandler
@@ -35,6 +39,62 @@ lightQueries = [	# Test good queries from a privileged user.
 					{'query':'ohno'},
 					{'query':5}
 				]
+lightQueryComments = [
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Good query from a privileged user.)',
+					' (Bad query from a privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Good query from a non-privileged user.)',
+					' (Bad query from a non-privileged user.)',
+					' (Badly formed object.)',
+					' (Badly formed object.)',
+					' (Badly formed object.)',
+					' (Badly formed object.)',
+					' (Badly formed object.)',
+					' (Badly formed object.)',
+					' (Badly formed object.)'
+				]
+				
+lightQueryExpectedLengths = [
+					3,
+					3,
+					3,
+					1,
+					1,
+					1,
+					1,
+					3,
+					0,
+					0,
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0, 
+					0
+				]
+					
 
 stateQueries = [	# Test valid state queries from a privileged user.
 					{'uuid':'1', 'id': "100001"},
@@ -65,17 +125,65 @@ stateQueries = [	# Test valid state queries from a privileged user.
 					{'uuid':'x'},
 					{'uuid':1},
 					{'id':'ohno'},
-					{'id':5}
-					
+					{'id':5}	
 				]
-
+				
+stateQueryComments = [
+					' (Valid state query from privileged user.)',
+					' (Valid state query from privileged user.)',
+					' (Valid state query from privileged user--inaccessible client.)',
+					' (Invalid state query from privileged user.)',
+					' (Valid state query from privileged user--light not in alias manager.)',
+					' (Valid state query from non-privileged user.)',
+					' (Valid state query from non-privileged user.)',
+					' (Invalid state query from non-privileged user.)',
+					' (Valid state query from non-privileged user--inaccessible client.)',
+					' (Valid state query from non-privileged user--light not in alias manager.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)',
+					' (Badly formed query object.)'
+				]
+stateQueryExpectedMessages = [
+					'Status returned.',
+					'Status returned.',
+					'Could not connect to client.',
+					'Light does not exist.',
+					'Client alias not recognized.',
+					'User not allowed to access light.',
+					'User not allowed to access light.',
+					'Light does not exist.',
+					'User not allowed to access light.',
+					'User not allowed to access light.',
+					'Invalid query.',
+					'Invalid query.',
+					'Invalid query.',
+					'Invalid query.',
+					'Invalid query.',
+					'Invalid query.',
+					'Invalid query.'
+				]
+				
 if __name__ == '__main__':
 	rh = RequestHandler.Instance()
-	# Make all the test light queries.
-	for q in lightQueries:
-		print(rh.lightQuery(q))
+	
+	# Light query testing.
+	print('LIGHT QUERY TESTING')
+	for i in range(len(lightQueries)):
+		q = lightQueries[i]
+		e = lightQueryExpectedLengths[i]
+		c = lightQueryComments[i]
+		print(str(len(rh.lightQuery(q)['lights'])==e)+c)
 	
 	# Make all the test state queries.
-	for q in stateQueries:
-		print(rh.stateQuery(q))
+	print('STATE QUERY TESTING')
+	for i in range(len(stateQueries)):
+		q = stateQueries[i]
+		e = stateQueryExpectedMessages[i]
+		c = stateQueryComments[i]
+		print(str(rh.stateQuery(q)['message']==e)+c)
 	
