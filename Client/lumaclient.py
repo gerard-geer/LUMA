@@ -42,11 +42,33 @@ class LUMATCPHandler(BaseRequestHandler):
 		# Receive some data. In Python 2 recv returns a String instead of a
 		# byte array. This makes sterilization really easy.
 		req = self.request.recv(DATAREAD)
-		print("request: "+req)
 		# Now we need to act upon the request.
 		res = luma.onRequest(req)
 		# Fire the response back.
 		self.request.sendall(res)
+		
+def printWelcomeHeader(luma):
+	"""
+	Prints a simple welcome header for the LUMA client.
+	
+	Parameters:
+		luma (LUMA): The Luma instance being used.
+		
+	Returns:
+		None:
+	
+	Preconditions:
+		The Luma instance has been initialized and loaded.
+		
+	Postconditions:
+		None
+	"""
+	print('*******************************************************************************')
+	print(" You're now running a LUMA Client!")
+	print(" Client name: '"+str(luma.name)+"'")
+	print(" Configuration file: '"+str(FILE)+"'")
+	print(" Host: '"+str(HOST)+"' Port: '"+str(PORT)+"' Data red per TCP action: '"+str(DATAREAD)+"'")
+	print('*******************************************************************************')
 	
 if __name__ == '__main__':
 	"""
@@ -70,6 +92,9 @@ if __name__ == '__main__':
 	
 	# Create the SocketServer client.
 	client = TCPServer((HOST, PORT), LUMATCPHandler)
+	
+	# Go ahead and print some info about this client.
+	printWelcomeHeader(luma)
 	
 	# Now that everything is all set up and going, we start the webs portion.
 	try:
