@@ -30,6 +30,7 @@ angular.module('LUMAClient').factory('LUMAServerService',
 	{
 		// Pre-emptively clear out the Query Result array.
 		LUMAStateService.queryResults.length = 0;
+		
 		// Go ahead and clear out the old light state and errors.
 		LUMAStateService.lightState = null;
 		LUMAStateService.isEditing = false;
