@@ -11,7 +11,7 @@ from time import sleep
 SANITIZE_ERR = {'type': 'error',
 				'message': 'Request failed sanitation.',
 				'data': None}
-EPS_THRESHOLD = 15
+EPS_THRESHOLD = 5
 
 class LUMA(object):
 	"""
@@ -398,8 +398,10 @@ class LUMA(object):
 		"""
 		lights = self._getLight()
 		for light in lights:
-			if light.getMaximumD1() > EPS_THRESHOLD:
-				print("#### EPILEPSY WARNING ####")
+			maxD1 = light.getMaximumD1()
+			if maxD1 > EPS_THRESHOLD:
+				print(	"#### EPILEPSY WARNING on "+str(light.name)+	\
+						" (max delta: "+str(maxD1)+") ####"				)
 		
 	def _onStatusRequest(self, req):
 		"""
