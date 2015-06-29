@@ -338,6 +338,8 @@ class LUMA(object):
 		Postconditions:
 			None.
 		"""
+		# Log some info. 
+		print('for light id='+req['data'])
 		
 		# If the light name is None, then all lights are sought.
 		if req['data'] == None:
@@ -372,6 +374,11 @@ class LUMA(object):
 		Postconditions:
 			None.
 		"""
+		# Similarly log some info.
+		print(	'for light id='+str(req['data']['id'])+	\
+				' name='+str(req['data']['name'])+		\
+				'('+str(type(req['data']['name']))+')'	)
+
 		# OH MAN THIS LIGHT UPDATE MATCHES ONE OF MY LIGHTS I'M SO HAPPY
 		if self._exists(req['data']['id']):
 			self._changeLight( req['data']['id'], \
@@ -423,7 +430,7 @@ class LUMA(object):
 		
 		# Log the request type.
 		print('Request type: '+r['type'])
-		
+				
 		# Act appropriately for the request.
 		if r['type'] == 'status':
 			return self._onStatusRequest(r)
