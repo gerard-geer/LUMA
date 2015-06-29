@@ -7,8 +7,8 @@ This requires that the server is using the test configuration files.
 """
 
 from aliasmanager import AliasManager
-	
-if __name__ == '__main__':
+
+def testAliasManager():
 	am = AliasManager.Instance()
 	am.load()
 	print('ALIAS MANAGER UNIT TESTING')
@@ -40,3 +40,6 @@ if __name__ == '__main__':
 	
 	# It better not still be there.
 	print(str(am.getAddress('added')==None)+' (Verify deletion.)')
+	
+if __name__ == '__main__':
+	testAliasManager()
