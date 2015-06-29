@@ -5,8 +5,8 @@
 	the querying of the light server for valid light instances.
 */
 angular.module('LUMAClient').controller('QueryController', 
-[ '$scope', 'LUMAServerService', 'LUMAStateService', 
-function($scope, LUMAServerService,LUMAStateService){
+[ '$scope','$http','LUMAServerService','LUMAStateService', 
+function($scope, $http, LUMAServerService,LUMAStateService){
 	
 	// Bind the state service to the scope so we can access it in the dom.
 	$scope.state = LUMAStateService;
