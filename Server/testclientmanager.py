@@ -3,8 +3,9 @@ Tests the ClientManager module.
 
 This requires a running client on the local machine, or if
 one wants to test another connection, one can change the
-[good_addr] variable. That client should also be using the
-test configuration.
+[good_addr] variable. 
+This also requires that the client and server are using
+the test configuration files, stored in "LUMA/test/"
 """
 from clientmanager import ClientManager
 
