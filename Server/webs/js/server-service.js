@@ -42,6 +42,11 @@ angular.module('LUMAClient').factory('LUMAServerService',
 	// user."
 	function performLightQuery(uuid, query)
 	{
+		$http.get('resources/lights/'+query)
+		.success(function(response)
+		{
+			console.log(response);
+		});
 		// Pre-emptively clear out the Query Result array.
 		LUMAStateService.queryResults.length = 0;
 		// Convert the query to lower-case for better comparison.
