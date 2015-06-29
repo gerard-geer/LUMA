@@ -408,7 +408,8 @@ class LUMA(object):
 			maxD1 = light.getMaximumD1()
 			if maxD1 > EPS_THRESHOLD:
 				print(	"#### EPILEPSY WARNING on "+str(light.name)+	\
-						" (max delta: "+str(maxD1)+") ####"				)
+						" (max delt: %4.2f"%maxD1 +")"+
+						" (Thresh.: %4.2f"%EPS_THRESHOLD +") ####"				)
 		
 	def _onStatusRequest(self, req):
 		"""
