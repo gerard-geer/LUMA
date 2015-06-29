@@ -1,7 +1,7 @@
 #module aliasmanager.py
 # LUMA copyright (C) Gerard Geer 2014-2015
 
-from json import load, dump
+from json import loads, dump
 from singleton import Singleton
 
 @Singleton
@@ -61,7 +61,16 @@ class AliasManager(object):
 			The aliases are loaded into the internal dictionary.
 		"""
 		file = open(self._filename, 'r')
-		self._aliases = load(file)
+		s = ''
+		for line in file:
+			# Split the line to see if its first token is a comment delimiter.
+			tokens = line.split()
+			# If it is a comment delimiter, we skip the line.
+			if len(tokens) > 0 and tokens[0] in ['#','//',';']:
+				continue
+			# Otherwise, we take the line and append it to the JSON string.
+			s += line
+		self._aliases = loads(s)
 		file.close()
 	
 	def save(self, filename=None):
