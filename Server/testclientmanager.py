@@ -1,3 +1,5 @@
+#module testclientmanager.py
+
 """
 Tests the ClientManager module.
 
@@ -142,7 +144,8 @@ change = {	\
 			'b_t': [9, 6],	\
 			'b_v': [8, 6]	\
 	}
-if __name__ == '__main__':
+	
+def testClientManager():
 	cm = ClientManager.Instance()
 	
 	# Test getting the status of multiple lights, and
@@ -172,29 +175,40 @@ if __name__ == '__main__':
 	# Change all lights to the base light and verify.
 	base['id'] = '100001'
 	a = cm.sendChangeRequest(good_addr, base)['data']
-	base['name'] = a['name'] # Names are not changed.
-	print(str(a==base) + ' (change 20001 to base.)')
+	if a != None:
+		base['name'] = a['name'] # Names are not changed.
+	print(str(a==base) + ' (change 100001 to base.)')
 	base['id'] = '100004'
 	a = cm.sendChangeRequest(good_addr, base)['data']
-	base['name'] = a['name'] # Names are not changed.
-	print(str(a==base) + ' (change 20002 to base.)')
+	if a != None:
+		base['name'] = a['name'] # Names are not changed.
+	print(str(a==base) + ' (change 100004 to base.)')
 	
 	# Go to the first object and try changing it.
 	base['id'] = '100001'
 	change['id'] = '100001'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10001 and verify change.)')
+	if b == None:
+		print(str(False) + ' (change 100001 and verify change.)')
+	else:
+		print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 100001 and verify change.)')
 	
 	# Moving over to the other object.
 	base['id'] = '100004'
 	change['id'] = '100004'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10004 and verify change.)')
+	if b == None:
+		print(str(False) + ' (change 100004 and verify change.)')
+	else:
+		print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 100004 and verify change.)')
 	
 	# Make sure we can make a non-change change.
 	a = cm.sendStatusRequest(good_addr, change['id'])
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 10004 to itself and verify that it hasn't changed'.)")
+	if b == None:
+		print(str(False) + " (change 100004 to itself and verify that it hasn't changed'.)")
+	else:
+		print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 100004 to itself and verify that it hasn't changed'.)")
 	
 	# Check bad IDs and disconnected clients.
 	base['id'] = 'nonexistent id'
@@ -214,3 +228,6 @@ if __name__ == '__main__':
 	print(str(cm.validateLight(invalidLightG) == 'id is not a string.')+' (id is an integer list.)')
 	print(str(cm.validateLight(invalidLightH) == 'id is not a string.')+' (id is an integer.)')
 	print(str(cm.validateLight(invalidLightI) == 'Incorrect number of keys.')+' (No client key.)')
+
+if __name__ == '__main__':
+	testClientManager()

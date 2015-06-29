@@ -1,10 +1,12 @@
+#module testlightmanager.py
+
 """
 Tests the LightManager module.
 """
 from lightmanager import LightManager
 uuid = '6'
-	
-if __name__ == '__main__':
+
+def testLightManager():
 	lm = LightManager.Instance()
 	lm.load()
 	
@@ -47,3 +49,6 @@ if __name__ == '__main__':
 	print(str(test)+' (Test removing UUID from multiple lights.')
 	print(str(not lm.isAllowed('new UUID', '100002'))+' (Verify removal.)')
 	print(str(not lm.isAllowed('new UUID', '100005'))+' (Verify removal.)')
+
+if __name__ == '__main__':
+	testLightManager()
