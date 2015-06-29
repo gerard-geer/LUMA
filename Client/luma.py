@@ -322,6 +322,60 @@ class LUMA(object):
 			# Have the update thread sleep.
 			sleep(.001)
 			
+	def _inspectDiff(self, req):
+		"""
+		Upon a change request one should inspect the changes being made.
+		This function takes the request, the current state of the light
+		to be changed, and prints the changes.
+		
+		Parameters:
+			req (JSON): The dictionary containing the change request.
+		
+		Returns:
+			None.
+			
+		Preconditions:
+			The request must be a change request, and the change request
+			changes a light that exists.
+			
+		Postconditions:
+			The elements to be changed are logged to output.
+		"""
+		print('Items changed:')
+		changed = req['data']
+		current = self._getLight(changed['id'])
+		
+		# Test the red channel. Overflowing the light's lists doesn't matter
+		# since they're FloatLists and circular.
+		for i in range(len(changed['r_v'])):
+			if(changed['r_v'][i] != current.r.vals[i]):
+				print('Red values.')
+				break
+		for i in range(len(changed['r_t'])):
+			if(changed['r_t'][i] != current.r.times[i]):
+				print('Red timings.')
+				break
+				
+		# Now for the green channel.
+		for i in range(len(changed['r_v'])):
+			if(changed['g_v'][i] != current.g.vals[i]):
+				print('Green values.')
+				break
+		for i in range(len(changed['r_t'])):
+			if(changed['g_t'][i] != current.g.times[i]):
+				print('Green timings.')
+				break
+				
+		# And the blue.
+		for i in range(len(changed['r_v'])):
+			if(changed['b_v'][i] != current.b.vals[i]):
+				print('Blue values.')
+				break
+		for i in range(len(changed['r_t'])):
+			if(changed['b_t'][i] != current.b.times[i]):
+				print('Blue timings.')
+				break
+			
 	def _onStatusRequest(self, req):
 		"""
 		Defines behaviour when given a status request.
@@ -381,10 +435,17 @@ class LUMA(object):
 
 		# OH MAN THIS LIGHT UPDATE MATCHES ONE OF MY LIGHTS I'M SO HAPPY
 		if self._exists(req['data']['id']):
+			
+			# Print the differential.
+			self._inspectDiff(req)
+			
+			# Change the light.
 			self._changeLight( req['data']['id'], \
 			req['data']['r_t'], req['data']['r_v'],	\
 			req['data']['g_t'], req['data']['g_v'],	\
 			req['data']['b_t'], req['data']['b_v'] )
+			
+			# Return a response to this request.
 			return encodeResponse('success',\
 					self._getLight(req['data']['id']),\
 					'State updated.')
