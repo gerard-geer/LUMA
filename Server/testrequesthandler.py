@@ -25,7 +25,13 @@ lightQueries = [	# Test good queries from a privileged user.
 					{'uuid':'X', 'query':'Unde'},
 					{'uuid':'X', 'query':'127.0.0'},
 					# Test bad queries from a non-privileged user.
-					{'uuid':'1', 'query':'not a valid query'}
+					{'uuid':'1', 'query':'not a valid query'},
+					# Test badly formed query objects.
+					{},
+					{'asdfasd':'asdfasfd'},
+					{'uuid':'1'},
+					{'uuid':'x'},
+					{'query':'ohno'}
 				]
 
 stateQueries = [	# Test valid state queries from a privileged user.
