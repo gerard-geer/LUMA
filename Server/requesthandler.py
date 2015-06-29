@@ -119,7 +119,6 @@ class RequestHandler(object):
 		
 		# Get the subset of all allowed lights.
 		allowed = self._lm.getAllowedSubset(req['uuid'])
-		print('num allowed: '+str(len(allowed)))
 		
 		# Gets possible aliases should the query be an IP address.
 		possible = self._am.getPossibleAliases(req['query'])
@@ -201,7 +200,6 @@ class RequestHandler(object):
 					'id': req['id'],
 					'client': light['client']}
 		else:
-			print('merging dicts')
 			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
 					'client': light['client']}
