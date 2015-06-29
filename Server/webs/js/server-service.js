@@ -60,12 +60,13 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		LUMAStateService.lightState = null;
 		
 		// Stringify our request terms for transmission.
-		request = JSON.stringify({'uuid':uuid,'id':light})
+		request = JSON.stringify({'uuid':uuid,'id':light['id']})
 		
 		// Send the request!
 		$http.get('resources/lights/state/'+request)
 		.success(function(response)
 		{
+			console.log(response);
 			console.log('STATE REQUEST!');
 		});
 		
