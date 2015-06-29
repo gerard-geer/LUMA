@@ -4,6 +4,7 @@ LUMA Raspberry Pi client.
 from SocketServer import TCPServer, BaseRequestHandler
 from luma import LUMA
 from lumajson import *
+from datetime import datetime
 
 HOST = ''
 PORT = 8641
@@ -36,7 +37,8 @@ class LUMATCPHandler(BaseRequestHandler):
 			as the request. The response to this request is then sent back.
 		"""
 		print('-------------------------------------------------------------------------------')
-		print('Connection from '+str(self.client_address[0])+'.')
+		print('Connection from '+str(self.client_address[0]))
+		print('Time: '+str(datetime.now()))
 		
 		# Gotta store the accumulated response somewhere.
 		req = ''		
