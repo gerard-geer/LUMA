@@ -149,13 +149,13 @@ if __name__ == '__main__':
 	# lights that don't exist, and ones on bad clients.
 	status = None
 	print('SERVER TO CLIENT SYSTEM TESTING (REQUESTING)')
-	status = cm.sendStatusRequest(good_addr, '200001')
+	status = cm.sendStatusRequest(good_addr, '100001')
 	print(str(status['type']=='status')+' (Make sure we got a status on valid.)')
 	status = cm.sendStatusRequest(good_addr, 'doesntexist')
 	print(str(status['type']=='error' and 'does not exist on client' in status['message'])+' (non-existent light.)')
 	status = cm.sendStatusRequest(bad_addr, 'doesntexist')
 	print(str(status['type']=='error' and  'Could not connect' in status['message'])+' (non-existent client and light.)')
-	status = cm.sendStatusRequest(bad_addr, '200001')
+	status = cm.sendStatusRequest(bad_addr, '100001')
 	print(str(status['type']=='error' and 'Could not connect' in status['message'])+' (non-existent client.)')
 	
 	# Try every thing that can happen when changing a light.
@@ -170,31 +170,31 @@ if __name__ == '__main__':
 	print(str(a['type']=='error' and 'does not exist' in a['message'])+' (Null ID)')
 	
 	# Change all lights to the base light and verify.
-	base['id'] = '200001'
+	base['id'] = '100001'
 	a = cm.sendChangeRequest(good_addr, base)['data']
 	base['name'] = a['name'] # Names are not changed.
 	print(str(a==base) + ' (change 20001 to base.)')
-	base['id'] = '200002'
+	base['id'] = '100004'
 	a = cm.sendChangeRequest(good_addr, base)['data']
 	base['name'] = a['name'] # Names are not changed.
 	print(str(a==base) + ' (change 20002 to base.)')
 	
 	# Go to the first object and try changing it.
-	base['id'] = '200001'
-	change['id'] = '200001'
+	base['id'] = '100001'
+	change['id'] = '100001'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 20001 and verify change.)')
+	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10001 and verify change.)')
 	
 	# Moving over to the other object.
-	base['id'] = '200001'
-	change['id'] = '200001'
+	base['id'] = '100004'
+	change['id'] = '100004'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 20002 and verify change.)')
+	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10004 and verify change.)')
 	
 	# Make sure we can make a non-change change.
 	a = cm.sendStatusRequest(good_addr, change['id'])
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 20002 to itself and verify that it hasn't changed'.)")
+	print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 10004 to itself and verify that it hasn't changed'.)")
 	
 	# Check bad IDs and disconnected clients.
 	base['id'] = 'nonexistent id'
