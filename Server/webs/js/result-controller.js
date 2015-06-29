@@ -24,10 +24,6 @@ function($scope, LUMAServerService, LUMAStateService){
 		// light.
 		LUMAStateService.query = LUMAStateService.selectedLight.name;
 		
-		// Now that we've selected a light we flag that the user
-		// is now editing the light.
-		LUMAStateService.isEditing = true;
-		
 		// Also we clear out all the query results.
 		LUMAStateService.queryResults.length = 0;
 		

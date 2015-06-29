@@ -56,8 +56,11 @@ angular.module('LUMAClient').factory('LUMAServerService',
 	// "Requests from the server the state of the light."
 	function performStateQuery(uuid, light)
 	{
-		// Go ahead and clear out the old light state.
+		// Go ahead and clear out the old light state and errors.
 		LUMAStateService.lightState = null;
+		LUMAStateService.isEditing = false;
+		LUMAStateService.errorMessage = '';
+		LUMAStateService.isError = false;
 		
 		// Stringify our request terms for transmission.
 		request = JSON.stringify({'uuid':uuid,'id':light['id']})
@@ -67,10 +70,23 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		.success(function(response)
 		{
 			console.log(response);
-			LUMAStateService.lightState = response;
-		});
-		
-		LUMAStateService.lightState = testState;
+			// If the state query was successful...
+			if(response['success'])
+			{
+				// We set the light state to edit to the response,
+				LUMAStateService.lightState = response;
+				// And we flag that we should now be editing.
+				LUMAStateService.isEditing = true;
+			}
+			// If the state query was unsuccessful...
+			else
+			{
+				// We store the error message,
+				LUMAStateService.errorMessage = response['message'];
+				// And set the error flag.
+				LUMAStateService.isError = true;
+			}
+		});		
 	}
 
     return {
