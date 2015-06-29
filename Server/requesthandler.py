@@ -61,6 +61,39 @@ class RequestHandler(object):
 		# Finally after all that checks out we can return True.
 		return True
 		
+	def _sanitizeStateQuery(self, req):
+		"""
+		Sanitizes a state query. This makes sure that a state query is a
+		JSON Dictionary, then that it has the required keys, and the data 
+		types of those keys' values	are correct.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+		"""
+		# Make sure the request is a Dictionary.
+		if not isinstance(req, dict):
+			return False
+			
+		# Make sure all required keys are present.
+		for key in ['uuid', 'id']:
+			if key not in req.keys():
+				return False
+		
+		# Verify the types of the keys' values.
+		if not isinstance(req['uuid'], str):
+			return False
+		if not isinstance(req['id'], str):
+			return False
+			
+		# Finally after all that checks out we can return True.
+		return True
+		
 	def lightQuery(self, req):
 		"""
 		Handles a query for light instances.
@@ -131,6 +164,11 @@ class RequestHandler(object):
 		Postconditions:
 			The state of the lights supplied is updated, if they exist.
 		"""					
+		# Sanitize the request.
+		if not self._sanitizeStateQuery(req):
+			return {'success': False,
+					'message': 'Invalid query/request.',
+					'id': None}
 		# Get the light.
 		light = self._lm.getLight(req['id'])
 		if light == None:
