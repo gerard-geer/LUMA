@@ -25,13 +25,15 @@ lightQueries = [	# Test good queries from a privileged user.
 					{'uuid':'X', 'query':'Unde'},
 					{'uuid':'X', 'query':'127.0.0'},
 					# Test bad queries from a non-privileged user.
-					{'uuid':'1', 'query':'not a valid query'},
+					{'uuid':'X', 'query':'not a valid query'},
 					# Test badly formed query objects.
 					{},
 					{'asdfasd':'asdfasfd'},
 					{'uuid':'1'},
 					{'uuid':'x'},
-					{'query':'ohno'}
+					{'uuid':1},
+					{'query':'ohno'},
+					{'query':5}
 				]
 
 stateQueries = [	# Test valid state queries from a privileged user.
@@ -62,8 +64,7 @@ if __name__ == '__main__':
 	rh = RequestHandler.Instance()
 	# Make all the test light queries.
 	for q in lightQueries:
-		for light in rh.lightQuery(q)['lights']:
-			print(light)
+		print(rh.lightQuery(q))
 	
 	# Make all the test state queries.
 	for q in stateQueries:

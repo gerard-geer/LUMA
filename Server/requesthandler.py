@@ -28,6 +28,39 @@ class RequestHandler(object):
 		self._lm.load()
 		self._am.load()
 		
+	def _sanitizeLightQuery(self, req):
+		"""
+		Sanitizes a light query. This makes sure that a light query is a
+		JSON Dictionary, then that it has the required keys, and the data 
+		types of those keys' values	are correct.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+		"""
+		# Make sure the request is a Dictionary.
+		if not isinstance(req, dict):
+			return False
+			
+		# Make sure all required keys are present.
+		for key in ['uuid', 'query']:
+			if key not in req.keys():
+				return False
+		
+		# Verify the types of the keys' values.
+		if not isinstance(req['uuid'], str):
+			return False
+		if not isinstance(req['query'], str):
+			return False
+			
+		# Finally after all that checks out we can return True.
+		return True
+		
 	def lightQuery(self, req):
 		"""
 		Handles a query for light instances.
@@ -44,10 +77,16 @@ class RequestHandler(object):
 		Postconditions:
 			None.
 		"""
+		# If the request was invalid, we need to transparently return
+		# nothing.
+		if not self._sanitizeLightQuery(req):
+			return {'lights':[]}
+			
 		requested = []
 		
 		# Get the subset of all allowed lights.
 		allowed = self._lm.getAllowedSubset(req['uuid'])
+		print('num allowed: '+str(len(allowed)))
 		
 		# Gets possible aliases should the query be an IP address.
 		possible = self._am.getPossibleAliases(req['query'])
