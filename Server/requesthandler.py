@@ -64,7 +64,7 @@ class RequestHandler(object):
 			return False
 		if  not isinstance(req['query'], str) and	\
 			not isinstance(req['query'], unicode):
-			print('query not string.')
+			print('query not string. Type: '+str(type(req['uuid'])))
 			return False
 			
 		# Finally after all that checks out we can return True.
@@ -97,10 +97,12 @@ class RequestHandler(object):
 				return False
 		
 		# Verify the types of the keys' values.
-		if not isinstance(req['uuid'], str):
+		if  not isinstance(req['uuid'], str) and	\
+			not isinstance(req['query'], unicode):
 			print('uuid not string')
 			return False
-		if not isinstance(req['id'], str):
+		if  not isinstance(req['query'], str) and	\
+			not isinstance(req['query'], unicode):
 			print('id not string.')
 			return False
 			
