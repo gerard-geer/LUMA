@@ -183,49 +183,58 @@ class RequestHandler(object):
 			
 		Postconditions:
 			The state of the lights supplied is updated, if they exist.
-		"""					
+		"""	
+		# Try to decode the JSON.
+		try:
+			req = loads(req)
+		except:
+			return dumps({'success': False,
+					'message': 'Invalid query.',
+					'id': None})
+			
 		# Sanitize the request.
 		if not self._sanitizeStateQuery(req):
-			return {'success': False,
+			return dumps({'success': False,
 					'message': 'Invalid query.',
-					'id': None}
+					'id': None})
+					
 		# Get the light.
 		light = self._lm.getLight(req['id'])
 		if light == None:
-			return {'success': False,
+			return dumps({'success': False,
 					'message': 'Light does not exist.',
-					'id': req['id']}
+					'id': req['id']})
 					
 		# Check to see if the user can access the light.
 		if not self._lm.isAllowed(req['uuid'], req['id']):
-			return {'success': False,
+			return dumps({'success': False,
 					'message': 'User not allowed to access light.',
-					'id': req['id']}
+					'id': req['id']})
 		
 		# Try to parlay an address from the client alias. If we can't,
 		# that's another problem.
 		address = self._am.getAddress(light['client'])
 		if address == None:
-			return {'success': False,
+			return dumps({'success': False,
 					'message': 'Client alias not recognized.',
 					'id': req['id'],
-					'client': light['client']}
+					'client': light['client']})
 		
 		# If we can, well, that's good.
 		res = self._cm.sendStatusRequest(address, req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
-			return {'success': False,
+			return dumps({'success': False,
 					'message': 'Could not connect to client.',
 					'id': req['id'],
-					'client': light['client']}
+					'client': light['client']})
 		else:
 			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
 					'client': light['client']}
 			resp.update(res['data'])
-			return resp
+			return dumps(resp)
 				
 	def lightUpdate(self, req):
 		"""
