@@ -92,3 +92,29 @@ class ColorChannel(object):
 		"""
 		self.times = FloatList(timings, False)
 		self.vals = FloatList(values)
+	
+	def getMaximimumD1(self):
+		"""
+		Returns the maximum rate of change for this color channel.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			the maximum rate of change for this color channel.
+		
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		maxRate = 0
+		for i in range(len(self.vals)):
+			# We have to account for zero-length times.
+			rate = self.vals[i]/(self.times[i]+.0001)
+			# Update the maximum rate should we need to.
+			if rate > maxRate:
+				maxRate = rate
+				
+		return maxRate
