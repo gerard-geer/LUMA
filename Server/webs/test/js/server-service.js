@@ -1,3 +1,4 @@
+// LUMA Copyright (c) Gerard Geer 2014-2015 
 
 // Just a simple bank of test lights.
 var testLights = [ 	{id:"55e0ed38-2e14-45c2-aac9-c81740b16be1", name:"Gerard's Desk", client:"Gerard and Josh's Room"},

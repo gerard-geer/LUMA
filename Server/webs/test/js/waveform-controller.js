@@ -1,3 +1,5 @@
+// LUMA Copyright (c) Gerard Geer 2014-2015 
+
 /*
 	The Waveform Controller. Handles the functionality of the waveform
 	paradigm editing widget.

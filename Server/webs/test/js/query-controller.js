@@ -1,3 +1,5 @@
+// LUMA Copyright (c) Gerard Geer 2014-2015 
+
 /*
 	The QueryController. Handles functionality regarding
 	the querying of the light server for valid light instances.

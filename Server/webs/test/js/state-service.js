@@ -1,3 +1,5 @@
+// LUMA Copyright (c) Gerard Geer 2014-2015 
+
 /*
 	The LUMA Editor State Service. This stores what the user selected,
 	whether or not they are editing a light, etc.
