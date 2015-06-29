@@ -92,3 +92,22 @@ class Light(object):
 		self.r.change(rtimes, rvals)
 		self.g.change(gtimes, gvals)
 		self.b.change(btimes, bvals)
+		
+	def getMaximumD1(self):
+		"""
+		Returns the maximum rate of change for the light.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			The maximum rate of change for the light.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		return max(max(self.r.getMaximumD1(), self.g.getMaximumD1()), self.b.getMaximum())
+		

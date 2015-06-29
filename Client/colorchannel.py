@@ -114,7 +114,6 @@ class ColorChannel(object):
 			# We have to account for zero-length times.
 			rate = self.vals[i]/(self.times[i]+.0001)
 			# Update the maximum rate should we need to.
-			if rate > maxRate:
-				maxRate = rate
+			maxRate = max(rate, maxRate)
 				
 		return maxRate
