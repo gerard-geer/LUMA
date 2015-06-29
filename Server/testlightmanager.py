@@ -1,3 +1,5 @@
+#module testlightmanager.py
+
 """
 Tests the LightManager module.
 """
