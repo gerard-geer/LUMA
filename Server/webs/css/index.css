@@ -60,7 +60,7 @@ input:focus
 	padding: auto;
 }
 
-#error_dialog
+.error_dialog
 {
 	width: 600px;
 	height: 40px;
