@@ -122,6 +122,55 @@ def decodeRequest(r):
 	"""
 	return loads(r)
 	
+def sanitizeRequest(r):
+	"""
+	Sanitizes a request.
+	
+	Parameters:
+		r (JSON): The JSON request dictionary to sanitize.
+		
+	Returns:
+		True if the request is valid, false otherwise.
+	
+	Preconditions:
+		None.
+		
+	Postconditions:
+		None.
+	"""
+	# Make sure the request is a dictionary.
+	if not isinstance(r, dict):
+		print('not a dictionary.')
+		return False
+		
+	# Make sure all expected keys are present.
+	for key in ['type', 'data']:
+		if key not in r.keys():
+			print(key+' not in keys.')
+			return False
+	
+	# Make sure the type key points to a String.
+	if not isinstance(r['type'], str):
+		print('Type not a string.')
+		return False
+	
+	# There are only two acceptable type values at this point in time.
+	# THIS LIST MAY NEED EXPANSION LATER.
+	if r['type'] != 'status' and r['type'] != 'change':
+		print('Type is not "status" or "change"')
+		return False
+		
+	# Status requests require an ID in their data field.
+	if r['type'] == 'status' and (not isinstance(r['data'], str)):
+		print('Type is "status" but data is not an ID string.')
+		print(type(r['data']))
+		return False
+	# Change requests require a dict of light data.
+	if r['type'] == 'change' and (not isinstance(r['data'], dict)):
+		print('Type is "change" but data is not a dictionary.')
+		print(type(r['data']))
+		return False
+	
 def encodeResponse(type, light_s, message):
 	"""
 	Takes a response type, light, and encodes them into a JSON
