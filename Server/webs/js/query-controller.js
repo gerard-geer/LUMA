@@ -27,7 +27,7 @@ function($scope, LUMAServerService,LUMAStateService){
 		LUMAStateService.queryResults.length = 0;
 		
 		// Submit the light query.
-		LUMAServerService.submitLightQuery('<uuid>', LUMAStateService.query);
+		LUMAServerService.submitLightQuery('1', LUMAStateService.query);
 		
 		// Decide whether or not we need to display the sadness dialog.
 		if(LUMAStateService.queryResults.length == 0)
