@@ -67,7 +67,7 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		.success(function(response)
 		{
 			console.log(response);
-			console.log('STATE REQUEST!');
+			LUMAStateService.lightState = response;
 		});
 		
 		LUMAStateService.lightState = testState;
