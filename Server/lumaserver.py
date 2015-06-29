@@ -49,7 +49,7 @@ def stateQuery(light_state_query):
 # Set light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['POST'])
 def stateUpdate(light_state_query):
-    return rh.lightUpdate(request.get_json(light_state_query))
+    return str(rh.lightUpdate(light_state_query))
 	
 if __name__ == '__main__':
     app.run(debug=True)
