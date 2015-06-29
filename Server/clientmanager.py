@@ -114,7 +114,7 @@ class ClientManager(object):
 			return loads(res)
 		except Exception:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
-			return _CONN_ERR\
+			return _CONN_ERR
 			
 	def validateLight(self, dict):
 		"""

@@ -175,29 +175,40 @@ def testClientManager():
 	# Change all lights to the base light and verify.
 	base['id'] = '100001'
 	a = cm.sendChangeRequest(good_addr, base)['data']
-	base['name'] = a['name'] # Names are not changed.
+	if a != None:
+		base['name'] = a['name'] # Names are not changed.
 	print(str(a==base) + ' (change 20001 to base.)')
 	base['id'] = '100004'
 	a = cm.sendChangeRequest(good_addr, base)['data']
-	base['name'] = a['name'] # Names are not changed.
+	if a != None:
+		base['name'] = a['name'] # Names are not changed.
 	print(str(a==base) + ' (change 20002 to base.)')
 	
 	# Go to the first object and try changing it.
 	base['id'] = '100001'
 	change['id'] = '100001'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10001 and verify change.)')
+	if b == None:
+		print(str(False) + ' (change 10001 and verify change.)')
+	else:
+		print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10001 and verify change.)')
 	
 	# Moving over to the other object.
 	base['id'] = '100004'
 	change['id'] = '100004'
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10004 and verify change.)')
+	if b == None:
+		print(str(False) + ' (change 100004 and verify change.)')
+	else:
+		print(str(b['r_t'][0]!=base['r_t'][0]) + ' (change 10004 and verify change.)')
 	
 	# Make sure we can make a non-change change.
 	a = cm.sendStatusRequest(good_addr, change['id'])
 	b = cm.sendChangeRequest(good_addr, change)['data']
-	print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 10004 to itself and verify that it hasn't changed'.)")
+	if b == None:
+		print(str(False) + " (change 10004 to itself and verify that it hasn't changed'.)")
+	else:
+		print(str(b['r_t'][0]!=base['r_t'][0]) + " (change 10004 to itself and verify that it hasn't changed'.)")
 	
 	# Check bad IDs and disconnected clients.
 	base['id'] = 'nonexistent id'
