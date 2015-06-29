@@ -1,4 +1,5 @@
 #module: light.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 
 from colorchannel import ColorChannel
 class Light(object):

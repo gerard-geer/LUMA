@@ -1,4 +1,5 @@
 #module: floatlist.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 """
 Decorates Python's standard list with the ability to index into it at 
 floating point indices, with the option to interpret those floating point

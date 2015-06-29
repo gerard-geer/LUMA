@@ -1,4 +1,5 @@
 #module: colorchannel.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 
 from floatlist import FloatList
 # from Adafruit_PWM_Servo_Driver import PWM

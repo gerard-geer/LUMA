@@ -1,4 +1,5 @@
 #module: luma.py
+# LUMA copyright (C) Gerard Geer 2014-2015
 
 from threading import Lock, Thread, Timer
 from lumajson import *
