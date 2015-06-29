@@ -57,7 +57,16 @@ stateQueries = [	# Test valid state queries from a privileged user.
 					{'uuid':'X', 'id': "100003"},
 					# Test state queries for a light that exists but the client
 					# isn't in the alias manager from a privileged user.
-					{'uuid':'X', 'id': "100006"}
+					{'uuid':'X', 'id': "100006"},
+					# Test badly formed state query objects.
+					{},
+					{'astf':'asdf'},
+					{'uuid':'1'},
+					{'uuid':'x'},
+					{'uuid':1},
+					{'id':'ohno'},
+					{'id':5}
+					
 				]
 
 if __name__ == '__main__':
