@@ -105,7 +105,17 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		LUMAStateService.errorMessage = '';
 		
 		// Format the light state into an object accepted by the API.
-		var state = LUMAStateService.lightState;
+		var state = {
+			'r_t': 	  LUMAStateService.lightState['r_t'],
+			'r_v': 	  LUMAStateService.lightState['r_v'],
+			'g_t': 	  LUMAStateService.lightState['g_t'],
+			'g_v': 	  LUMAStateService.lightState['g_v'],
+			'b_t': 	  LUMAStateService.lightState['b_t'],
+			'b_v': 	  LUMAStateService.lightState['b_v'],
+			'name':	  LUMAStateService.lightState['name'],
+			'id': 	  LUMAStateService.lightState['id'],
+			'client': LUMAStateService.lightState['client']
+		}
 		var request = {'uuid':uuid,'lights':[state]};
 		console.log('REQUEST:');
 		console.log(request);
