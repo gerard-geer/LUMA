@@ -95,11 +95,32 @@ angular.module('LUMAClient').factory('LUMAServerService',
 			}
 		});		
 	}
+	
+	// Submits a lighting pattern to the server.
+	function performStateSubmit(uuid)
+	{
+		// Stop editing while we are submitting.
+		LUMAStateService.isEditing = false;
+		LUMAStateService.isError = false;
+		LUMAStateService.errorMessage = '';
+		
+		// Format the light state into an object accepted by the API.
+		var state = LUMAStateService.lightState;
+		var response = {'uuid':uuid,'lights':[state]};
+		console.log(response);
+		
+		// Send our stuff!
+		
+		
+	}
+	
 
     return {
 		// The function to submit a light query to the server.
 		submitLightQuery: function(uuid, query){performLightQuery(uuid, query);},
 		// The function to submit a light state query to the server.
-		requestLightState: function(uuid, light){performStateQuery(uuid, light);}
+		requestLightState: function(uuid, light){performStateQuery(uuid, light);},
+		// The function to submit an updated light state to the server.
+		submitLightState: function(uuid){performStateSubmit(uuid);}
     };
 }]);
