@@ -236,6 +236,20 @@ input:focus
 	color: #FF0000;
 }
 
+#submit_state
+{
+	border-color: #00FFFF;
+	-webkit-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+	transition: color .2s, border-bottom-width .2s, padding-bottom .2s;
+}
+#submit_state:hover
+{
+	color: #00FFFF;
+}
+	
 #red_select
 {
 	border-color: #FF0000;
