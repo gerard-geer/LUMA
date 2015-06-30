@@ -89,7 +89,7 @@
 	"100010": {
         "client": "Research Room", 
 		"id": "100010",
-		"name": "Shelves", 
+		"name": "Chair", 
 		"permitted": [
             "1", 
             "2", 
@@ -103,7 +103,7 @@
 	"100011": {
         "client": "Research Room", 
 		"id": "100011",
-		"name": "Shelves",
+		"name": "Left Window",
 		"permitted": [
             "1", 
             "2", 
@@ -117,7 +117,7 @@
 	"100012": {
         "client": "Research Room", 
 		"id": "100012",
-		"name": "Shelves", 
+		"name": "Right Window", 
 		"permitted": [
             "1", 
             "2", 
@@ -131,7 +131,7 @@
 	"100013": {
         "client": "Research Room", 
 		"id": "100013",
-		"name": "Shelves", 
+		"name": "Under Cabinet", 
 		"permitted": [
             "1", 
             "2", 
@@ -145,7 +145,7 @@
 	"100014": {
         "client": "Research Room", 
 		"id": "100014",
-		"name": "Shelves", 
+		"name": "On Top Of Cabinet", 
 		"permitted": [
             "1", 
             "2", 
@@ -159,7 +159,7 @@
 	"100015": {
         "client": "Research Room", 
 		"id": "100015",
-		"name": "Shelves", 
+		"name": "Door", 
 		"permitted": [
             "1", 
             "2", 
@@ -173,7 +173,7 @@
 	"100016": {
         "client": "Research Room", 
 		"id": "100016",
-		"name": "Shelves", 
+		"name": "Rafter Near Door", 
 		"permitted": [
             "1", 
             "2", 
@@ -187,7 +187,7 @@
 	"100017": {
         "client": "Research Room", 
 		"id": "100017",
-		"name": "Shelves", 
+		"name": "Rafter Near Window", 
 		"permitted": [
             "1", 
             "2", 
@@ -201,7 +201,7 @@
 	"100018": {
         "client": "Research Room", 
 		"id": "100018",
-		"name": "Shelves", 
+		"name": "Pipes", 
 		"permitted": [
             "1", 
             "2", 
@@ -215,7 +215,7 @@
 	"100019": {
         "client": "Research Room", 
 		"id": "100019",
-		"name": "Shelves", 
+		"name": "Sketchy Box", 
 		"permitted": [
             "1", 
             "2", 
@@ -229,7 +229,7 @@
 	"100020": {
         "client": "Research Room", 
 		"id": "100020",
-		"name": "Shelves", 
+		"name": "Garbage Can", 
 		"permitted": [
             "1", 
             "2", 
@@ -243,7 +243,7 @@
 	"100021": {
         "client": "Research Room", 
 		"id": "100021",
-		"name": "Shelves", 
+		"name": "Dead Squirrel In Corner", 
 		"permitted": [
             "1", 
             "2", 
@@ -257,7 +257,7 @@
 	"100022": {
         "client": "Research Room", 
 		"id": "100022",
-		"name": "Shelves", 
+		"name": "Acid Tub", 
 		"permitted": [
             "1", 
             "2", 
@@ -271,7 +271,7 @@
 	"100023": {
         "client": "Research Room", 
 		"id": "100023",
-		"name": "Shelves", 
+		"name": "3D Printer", 
 		"permitted": [
             "1", 
             "2", 
@@ -285,7 +285,7 @@
 	"100024": {
         "client": "Research Room", 
 		"id": "100024",
-		"name": "Shelves", 
+		"name": "Booze Display", 
 		"permitted": [
             "1", 
             "2", 
@@ -299,7 +299,7 @@
 	"100025": {
         "client": "Research Room", 
 		"id": "100025",
-		"name": "Shelves", 
+		"name": "Moffitt Box", 
 		"permitted": [
             "1", 
             "2", 
@@ -313,7 +313,7 @@
 	"100026": {
         "client": "Research Room", 
 		"id": "100026",
-		"name": "Shelves", 
+		"name": "Famicom", 
 		"permitted": [
             "1", 
             "2", 
@@ -327,7 +327,7 @@
 	"100027": {
         "client": "Research Room", 
 		"id": "100027",
-		"name": "Shelves", 
+		"name": "Mirror", 
 		"permitted": [
             "1", 
             "2", 
@@ -341,7 +341,7 @@
 	"100028": {
         "client": "Research Room", 
 		"id": "100028",
-		"name": "Shelves", 
+		"name": "CSH Mural", 
 		"permitted": [
             "1", 
             "2", 
@@ -355,7 +355,7 @@
 	"100029": {
         "client": "Research Room", 
 		"id": "100029",
-		"name": "Shelves", 
+		"name": "Smaller windows", 
 		"permitted": [
             "1", 
             "2", 
@@ -369,7 +369,7 @@
 	"100030": {
         "client": "Research Room", 
 		"id": "100030",
-		"name": "Shelves",
+		"name": "Northwest Corner",
 		"permitted": [
             "1", 
             "2", 
@@ -383,7 +383,7 @@
 	"100031": {
         "client": "Research Room", 
 		"id": "100031",
-		"name": "Shelves",
+		"name": "Crappy Chair",
 		"permitted": [
             "1", 
             "2", 
