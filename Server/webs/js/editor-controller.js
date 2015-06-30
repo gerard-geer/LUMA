@@ -4,4 +4,9 @@ angular.module('LUMAClient').controller('EditorController',
 ['$scope','LUMAServerService','LUMAStateService',
 function($scope,LUMAServerService,LUMAStateService){
 	$scope.state = LUMAStateService;
+	
+	this.onSubmitState = function()
+	{
+		LUMAServerService.submitLightState('1');
+	}
 }]);
