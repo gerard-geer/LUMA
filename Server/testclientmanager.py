@@ -12,7 +12,7 @@ the test configuration files, stored in "LUMA/Test Configs/"
 """
 from clientmanager import ClientManager
 
-good_addr = '127.0.0.1'
+good_addr = '192.168.1.76'
 bad_addr = 'not a good address'
 
 
