@@ -102,7 +102,9 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		// Stop editing while we are submitting.
 		LUMAStateService.isEditing = false;
 		LUMAStateService.isError = false;
-		LUMAStateService.errorMessage = '';
+		// In the case of any error we want to prepend it
+		// with 'Server error: '.
+		LUMAStateService.errorMessage = 'Server error: ';
 		
 		// Format the light state into an object accepted by the API.
 		var state = {
@@ -117,15 +119,39 @@ angular.module('LUMAClient').factory('LUMAServerService',
 			'client': LUMAStateService.lightState['client']
 		}
 		var request = {'uuid':uuid,'lights':[state]};
-		console.log('REQUEST:');
-		console.log(request);
 		
 		// Send our stuff!
 		$http.post('resources/lights/state/'+JSON.stringify(request)).
 		success(function(response)
 		{
-			console.log('RESPONSE:');
-			console.log(response);
+			// If the request failed at the request level, we need to
+			// display an error.
+			if(!response['success'])
+			{
+				LUMAStateService.errorMessage += 
+					response['message'];
+				LUMAStateService.isError = true;
+				// Since there aren't any lights to parse through we just
+				// return here.
+				return;
+			}
+			
+			// If the response failed for a light, well we have problems too.
+			var lights = response['lights'];
+			for(var i = 0; i < lights.length; ++i)
+			{
+				if(!lights[i]['success'])
+				{
+					LUMAStateService.errorMessage += 
+						"'"+lights[i]['name']+"': "+lights[i]['message']+'\n';
+					LUMAStateService.isError = true;
+				}
+			}
+			
+			// Otherwise we update our local model of the light state with
+			// what was returned and bring back up the edit pane.
+			LUMAStateService.lightState = lights[0];
+			LUMAStateService.isEditing = !LUMAStateService.isError;
 		});
 		
 	}
