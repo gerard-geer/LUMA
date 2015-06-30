@@ -304,7 +304,60 @@ class RequestHandler(object):
 					'success': False,
 					'message': 'Request poorly formed.'}
 					
-
+		# Create a list to store our updated states in.
+		updated = []
+		
+		# Go through each submitted state and try to abide.
+		for submitted in req['lights']:
+			# Validate the light.
+			validationError = self._cm.validateLight(submitted)
+			# If it fails validation, we have to reject it and move on.
+			if validationError:
+				submitted['success'] = False
+				submitted['message'] = validationError
+				updated.append(submitted)
+				continue
+			# At this point we have a valid light. Now we have to
+			# get our own copy of it.
+			serverVersion = self._lm.getLight(submitted['id'])
+			# If we don't have a record of the light well poop.
+			if not serverVersion:
+				submitted['success'] = False
+				submitted['message'] = 'Light not in server records.'
+				updated.append(submitted)
+				continue
+			# If the client doesn't match, we have a problem.
+			if serverVersion['client'] != submitted['client']:
+				submitted['success'] = False
+				submitted['message'] = 'Client does not match server records.'
+				updated.append(submitted)
+				continue
+			# Finally we can start making headway. Let's get the address of
+			# where this update goes.
+			addr = self._am.getAddress(submitted['client'])
+			# If we can't figure that out, well...
+			if not addr:
+				submitted['success'] = False
+				submitted['message'] = 'Could not resolve client IP.'
+				updated.append(submitted)
+				continue
+			# Now that we have a valid light and a valid address, let's
+			# send the update.
+			clientRes = self._cm.sendChangeRequest(addr, submitted)
+			# If that action errors out, we have to pass it up the ladder too.
+			if clientRes['type'] == 'error':
+				submitted['success'] = False
+				submitted['message'] = clientRes['message']
+				updated.append(submitted)
+				continue
+			# At this point we should have finally had a successful update.
+			submitted['success'] = True
+			submitted['message'] = clientRes['message']
+			updated.append(submitted)
+	
+		return {'lights': updated,
+				'success': True,
+				'message': None}
 				
 	def addUUID(self, req):
 		"""
