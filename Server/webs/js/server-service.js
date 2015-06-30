@@ -95,11 +95,73 @@ angular.module('LUMAClient').factory('LUMAServerService',
 			}
 		});		
 	}
-
+	
+	// Submits a lighting pattern to the server.
+	function performStateSubmit(uuid)
+	{
+		// Stop editing while we are submitting.
+		LUMAStateService.isEditing = false;
+		LUMAStateService.isError = false;
+		// In the case of any error we want to prepend it
+		// with 'Server error: '.
+		LUMAStateService.errorMessage = 'Server error: ';
+		
+		// Format the light state into an object accepted by the API.
+		var state = {
+			'r_t': 	  LUMAStateService.lightState['r_t'],
+			'r_v': 	  LUMAStateService.lightState['r_v'],
+			'g_t': 	  LUMAStateService.lightState['g_t'],
+			'g_v': 	  LUMAStateService.lightState['g_v'],
+			'b_t': 	  LUMAStateService.lightState['b_t'],
+			'b_v': 	  LUMAStateService.lightState['b_v'],
+			'name':	  LUMAStateService.lightState['name'],
+			'id': 	  LUMAStateService.lightState['id'],
+			'client': LUMAStateService.lightState['client']
+		}
+		var request = {'uuid':uuid,'lights':[state]};
+		
+		// Send our stuff!
+		$http.post('resources/lights/state/'+JSON.stringify(request)).
+		success(function(response)
+		{
+			// If the request failed at the request level, we need to
+			// display an error.
+			if(!response['success'])
+			{
+				LUMAStateService.errorMessage += 
+					response['message'];
+				LUMAStateService.isError = true;
+				// Since there aren't any lights to parse through we just
+				// return here.
+				return;
+			}
+			
+			// If the response failed for a light, well we have problems too.
+			var lights = response['lights'];
+			for(var i = 0; i < lights.length; ++i)
+			{
+				if(!lights[i]['success'])
+				{
+					LUMAStateService.errorMessage += 
+						"'"+lights[i]['name']+"': "+lights[i]['message']+'\n';
+					LUMAStateService.isError = true;
+				}
+			}
+			
+			// Otherwise we update our local model of the light state with
+			// what was returned and bring back up the edit pane.
+			LUMAStateService.lightState = lights[0];
+			LUMAStateService.isEditing = !LUMAStateService.isError;
+		});
+		
+	}
+	
     return {
 		// The function to submit a light query to the server.
 		submitLightQuery: function(uuid, query){performLightQuery(uuid, query);},
 		// The function to submit a light state query to the server.
-		requestLightState: function(uuid, light){performStateQuery(uuid, light);}
+		requestLightState: function(uuid, light){performStateQuery(uuid, light);},
+		// The function to submit an updated light state to the server.
+		submitLightState: function(uuid){performStateSubmit(uuid);}
     };
 }]);

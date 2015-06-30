@@ -84,6 +84,9 @@ class RequestHandler(object):
 			
 		Preconditions:
 			None.
+			
+		Postconditions:
+			None.
 		"""
 		# Make sure the request is a Dictionary.
 		if not isinstance(req, dict):
@@ -107,6 +110,40 @@ class RequestHandler(object):
 			return False
 			
 		# Finally after all that checks out we can return True.
+		return True
+		
+	def _sanitizeStateUpdate(self, req):
+		"""
+		Sanitizes a state update request. This makes sure that the form of the
+		object passed as the request is valid for the request. Again, this does
+		key and type testing.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		if not isinstance(req, dict):
+			return False
+			
+		for key in ['uuid', 'lights']:
+			if key not in req.keys():
+				return False
+		
+		if  not isinstance(req['uuid'],str) and	\
+			not isinstance(req['uuid'],unicode):
+			return False
+		
+		if not isinstance(req['lights'], list):
+			return False
+			
 		return True
 		
 	def lightQuery(self, req):
@@ -242,7 +279,7 @@ class RequestHandler(object):
 		Handles a request to update the state of one or more lights.
 		
 		Parameters:
-			req (JSON): The Dictionary that contains the request.
+			req (JSON): A JSON String that should describe the request.
 			
 		Returns:
 			A dictionary containing the response to the request.
@@ -253,57 +290,74 @@ class RequestHandler(object):
 		Postconditions:
 			The state of the lights supplied is updated, if they exist.
 		"""
-		# Create a list to store the updated state of the lights, or errors.
-		updated = []
-		# For each requested light
-		for light in req['lights']:
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			return {'lights':None,
+					'success': False,
+					'message': 'Unable to parse request.'}
 		
-			# Get the light from the manager.
-			l = self._lm.getLight(light['id'])
-			if l == None:
-				light['success'] = False
-				light['message'] = 'Light does not exist.'
-				updated.append(light)
+		if not self._sanitizeStateUpdate(req):
+			return {'lights':None,
+					'success': False,
+					'message': 'Request poorly formed.'}
+					
+		# Create a list to store our updated states in.
+		updated = []
+		
+		# Go through each submitted state and try to abide.
+		for submitted in req['lights']:
+			# Validate the light.
+			validationError = self._cm.validateLight(submitted)
+			# If it fails validation, we have to reject it and move on.
+			if validationError:
+				submitted['success'] = False
+				submitted['message'] = validationError
+				updated.append(submitted)
 				continue
-				
-			# Make sure the user can access the light.
-			if not self._lm.isAllowed(req['uuid'], light['id']):
-				light['success'] = False
-				light['message'] = 'User not allowed to access light.'
-				updated.append(light)
+			# At this point we have a valid light. Now we have to
+			# get our own copy of it.
+			serverVersion = self._lm.getLight(submitted['id'])
+			# If we don't have a record of the light well poop.
+			if not serverVersion:
+				submitted['success'] = False
+				submitted['message'] = 'Light not in server records.'
+				updated.append(submitted)
 				continue
-
-			# We need to translate the client name/alias to an IP.
-			address = self._am.getAddress(light['client'])
-			if address == None:
-				light['success'] = False
-				light['message'] = 'Alias not recognized.'
-				updated.append(light)
+			# If the client doesn't match, we have a problem.
+			if serverVersion['client'] != submitted['client']:
+				submitted['success'] = False
+				submitted['message'] = 'Client does not match server records.'
+				updated.append(submitted)
 				continue
-
-			# Next validate the light.
-			validation = self._cm.validateLight(light)
-			# If there was a validation error we just append the light request
-			# and the error message and failure.
-			if validation != None:
-				light['success'] = False
-				light['message'] = validation
-				updated.append(light)
+			# Finally we can start making headway. Let's get the address of
+			# where this update goes.
+			addr = self._am.getAddress(submitted['client'])
+			# If we can't figure that out, well...
+			if not addr:
+				submitted['success'] = False
+				submitted['message'] = 'Could not resolve client IP.'
+				updated.append(submitted)
 				continue
-				
-			# Send the request and store the response.
-			response = self._cm.sendChangeRequest(address, light)
-			# Response documentation is in lumajson.py on the client.
-			response['success'] = ( response['type'] == 'success' )
-			response['message'] = response['message']
-			
-			# If a light was returned we append it, otherwise we return
-			# the original light.
-			updated.append(response['data'] if	\
-					response['data']!=None else light)
+			# Now that we have a valid light and a valid address, let's
+			# send the update.
+			clientRes = self._cm.sendChangeRequest(addr, submitted)
+			# If that action errors out, we have to pass it up the ladder too.
+			if clientRes['type'] == 'error':
+				submitted['success'] = False
+				submitted['message'] = clientRes['message']
+				updated.append(submitted)
+				continue
+			# At this point we should have finally had a successful update.
+			submitted['success'] = True
+			submitted['message'] = clientRes['message']
+			updated.append(submitted)
 	
-				
-		return {'lights':updated}
+		return {'lights': updated,
+				'success': True,
+				'message': None}
 				
 	def addUUID(self, req):
 		"""

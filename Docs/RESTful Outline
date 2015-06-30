@@ -15,6 +15,6 @@ eventually be implemented, and only reflects what can be done.
 
 <LUMA domain>/resources/lights/state
 	GET: Gets the state of a single light.
-	POST: Sets the state of a single light.
+	POST: Sets the state of one or more lights.
 	PUT: Not used.
 	DELETE: Not used.

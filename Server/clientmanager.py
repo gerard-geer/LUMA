@@ -152,7 +152,8 @@ class ClientManager(object):
 					return test+' does not contain only numbers.'
 		# Others not a string?
 		for test in ['name','client','id']:
-			if not isinstance(dict[test], str):
+			if  not isinstance(dict[test], str) and	\
+				not isinstance(dict[test], unicode):
 				return test+' is not a string.'
 				
 		return None
