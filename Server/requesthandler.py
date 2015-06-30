@@ -127,7 +127,8 @@ class RequestHandler(object):
 		"""
 		# Try to decode the JSON.
 		try:
-			req = loads(req)
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
 		except:
 			return {'lights':[]}
 			
@@ -140,7 +141,6 @@ class RequestHandler(object):
 		
 		# Get the subset of all allowed lights.
 		allowed = self._lm.getAllowedSubset(req['uuid'])
-		
 		# Gets possible aliases should the query be an IP address.
 		possible = self._am.getPossibleAliases(req['query'])
 		
@@ -150,9 +150,9 @@ class RequestHandler(object):
 		
 		else:
 			for light in allowed:
-				if 	req['query'] in light['name'] or	\
-					req['query'] in	light['id'] or 		\
-					req['query'] in light['client']:
+				if 	req['query'].lower() in light['name'].lower() or	\
+					req['query'].lower() in	light['id'].lower() or 		\
+					req['query'].lower() in light['client'].lower():
 					
 					requested.append({'id':light['id'],		\
 									'name':light['name'],	\
@@ -186,7 +186,8 @@ class RequestHandler(object):
 		"""	
 		# Try to decode the JSON.
 		try:
-			req = loads(req)
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
 		except:
 			return {'success': False,
 					'message': 'Invalid query.',

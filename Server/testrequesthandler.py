@@ -177,7 +177,7 @@ def testRequestHandler():
 		q = lightQueries[i]
 		e = lightQueryExpectedLengths[i]
 		c = lightQueryComments[i]
-		l = len(rh.lightQuery(q))
+		l = len(rh.lightQuery(q)['lights'])
 		print(str(l==e)+c+' (result: '+str(l)+')')
 	
 	# Make all the test state queries.
