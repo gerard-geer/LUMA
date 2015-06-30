@@ -84,6 +84,9 @@ class RequestHandler(object):
 			
 		Preconditions:
 			None.
+			
+		Postconditions:
+			None.
 		"""
 		# Make sure the request is a Dictionary.
 		if not isinstance(req, dict):
@@ -107,6 +110,40 @@ class RequestHandler(object):
 			return False
 			
 		# Finally after all that checks out we can return True.
+		return True
+		
+	def _sanitizeStateUpdate(self, req):
+		"""
+		Sanitizes a state update request. This makes sure that the form of the
+		object passed as the request is valid for the request. Again, this does
+		key and type testing.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		if not isinstance(req, dict):
+			return False
+			
+		for key in ['uuid', 'lights']:
+			if key not in req.keys():
+				return False
+		
+		if  not isinstance(req['uuid'],str) and	\
+			not isinstance(req['uuid'],unicode):
+			return False
+		
+		if not isinstance(req['lights'], list):
+			return False
+			
 		return True
 		
 	def lightQuery(self, req):
@@ -242,7 +279,7 @@ class RequestHandler(object):
 		Handles a request to update the state of one or more lights.
 		
 		Parameters:
-			req (JSON): The Dictionary that contains the request.
+			req (JSON): A JSON String that should describe the request.
 			
 		Returns:
 			A dictionary containing the response to the request.
@@ -258,59 +295,16 @@ class RequestHandler(object):
 			if isinstance(req, unicode) or isinstance(req, str):
 				req = loads(req)
 		except:
-			return {'lights':None}
-					
-		# Create a list to store the updated state of the lights, or errors.
-		updated = []
-		# For each requested light
-		for light in req['lights']:
+			return {'lights':None,
+					'success': False,
+					'message': 'Unable to parse request.'}
 		
-			# Get the light from the manager.
-			l = self._lm.getLight(light['id'])
-			if l == None:
-				light['success'] = False
-				light['message'] = 'Light does not exist.'
-				updated.append(light)
-				continue
-				
-			# Make sure the user can access the light.
-			if not self._lm.isAllowed(req['uuid'], light['id']):
-				light['success'] = False
-				light['message'] = 'User not allowed to access light.'
-				updated.append(light)
-				continue
+		if not self._sanitizeStateUpdate(req):
+			return {'lights':None,
+					'success': False,
+					'message': 'Request poorly formed.'}
+					
 
-			# We need to translate the client name/alias to an IP.
-			address = self._am.getAddress(light['client'])
-			if address == None:
-				light['success'] = False
-				light['message'] = 'Alias not recognized.'
-				updated.append(light)
-				continue
-
-			# Next validate the light.
-			validation = self._cm.validateLight(light)
-			# If there was a validation error we just append the light request
-			# and the error message and failure.
-			if validation != None:
-				light['success'] = False
-				light['message'] = validation
-				updated.append(light)
-				continue
-				
-			# Send the request and store the response.
-			response = self._cm.sendChangeRequest(address, light)
-			# Response documentation is in lumajson.py on the client.
-			response['success'] = ( response['type'] == 'success' )
-			response['message'] = response['message']
-			
-			# If a light was returned we append it, otherwise we return
-			# the original light.
-			updated.append(response['data'] if	\
-					response['data']!=None else light)
-	
-				
-		return {'lights':updated}
 				
 	def addUUID(self, req):
 		"""
