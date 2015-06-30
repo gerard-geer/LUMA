@@ -13,7 +13,7 @@ from datetime import datetime
 HOST = ''
 PORT = 8641
 FILE = 'config/lights.json'
-DATAREAD = 16384
+DATAREAD = 65536
 luma = LUMA(FILE)
 
 class LUMATCPHandler(BaseRequestHandler):

@@ -8,7 +8,7 @@ from json import dumps, loads
 _CONN_ERR = {'type': 'error',	\
 			'message': None,	\
 			'data': None}
-_DATAREAD = 16384
+_DATAREAD = 65536
 @Singleton
 class ClientManager(object):
 	"""
