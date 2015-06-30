@@ -5,7 +5,7 @@ from datetime import datetime
 from lightmanager import LightManager
 from aliasmanager import AliasManager
 from clientmanager import ClientManager
-from json import loads, dumps
+from json import loads
 
 from singleton import Singleton
 
@@ -129,12 +129,12 @@ class RequestHandler(object):
 		try:
 			req = loads(req)
 		except:
-			return dumps({'lights':[]})
+			return {'lights':[]}
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
 		if not self._sanitizeLightQuery(req):
-			return dumps({'lights':[]})
+			return {'lights':[]}
 			
 		requested = []
 		
@@ -166,7 +166,7 @@ class RequestHandler(object):
 											'name':light['name'],	\
 											'client':light['client']})
 		
-		return dumps({'lights':requested})
+		return {'lights':requested}
 		
 	def stateQuery(self, req):
 		"""
@@ -188,53 +188,53 @@ class RequestHandler(object):
 		try:
 			req = loads(req)
 		except:
-			return dumps({'success': False,
+			return {'success': False,
 					'message': 'Invalid query.',
-					'id': None})
+					'id': None}
 			
 		# Sanitize the request.
 		if not self._sanitizeStateQuery(req):
-			return dumps({'success': False,
+			return {'success': False,
 					'message': 'Invalid query.',
-					'id': None})
+					'id': None}
 					
 		# Get the light.
 		light = self._lm.getLight(req['id'])
 		if light == None:
-			return dumps({'success': False,
+			return {'success': False,
 					'message': 'Light does not exist.',
-					'id': req['id']})
+					'id': req['id']}
 					
 		# Check to see if the user can access the light.
 		if not self._lm.isAllowed(req['uuid'], req['id']):
-			return dumps({'success': False,
+			return {'success': False,
 					'message': 'User not allowed to access light.',
-					'id': req['id']})
+					'id': req['id']}
 		
 		# Try to parlay an address from the client alias. If we can't,
 		# that's another problem.
 		address = self._am.getAddress(light['client'])
 		if address == None:
-			return dumps({'success': False,
+			return {'success': False,
 					'message': 'Client alias not recognized.',
 					'id': req['id'],
-					'client': light['client']})
+					'client': light['client']}
 		
 		# If we can, well, that's good.
 		res = self._cm.sendStatusRequest(address, req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
-			return dumps({'success': False,
+			return {'success': False,
 					'message': 'Could not connect to client.',
 					'id': req['id'],
-					'client': light['client']})
+					'client': light['client']}
 		else:
 			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
 					'client': light['client']}
 			resp.update(res['data'])
-			return dumps(resp)
+			return resp
 				
 	def lightUpdate(self, req):
 		"""
