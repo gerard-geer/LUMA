@@ -106,15 +106,20 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		
 		// Format the light state into an object accepted by the API.
 		var state = LUMAStateService.lightState;
-		var response = {'uuid':uuid,'lights':[state]};
-		console.log(response);
+		var request = {'uuid':uuid,'lights':[state]};
+		console.log('REQUEST:');
+		console.log(request);
 		
 		// Send our stuff!
-		
+		$http.post('resources/lights/state/'+JSON.stringify(request)).
+		success(function(response)
+		{
+			console.log('RESPONSE:');
+			console.log(response);
+		});
 		
 	}
 	
-
     return {
 		// The function to submit a light query to the server.
 		submitLightQuery: function(uuid, query){performLightQuery(uuid, query);},
