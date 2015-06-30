@@ -296,6 +296,7 @@ class RequestHandler(object):
 			# Response documentation is in lumajson.py on the client.
 			response['success'] = ( response['type'] == 'success' )
 			response['message'] = response['message']
+			
 			# If a light was returned we append it, otherwise we return
 			# the original light.
 			updated.append(response['data'] if	\
