@@ -64,14 +64,15 @@ class ClientManager(object):
 		req = {'type':'status', 'data':id}
 		try:
 			s = socket(AF_INET, SOCK_STREAM)
-			s.settimeout(.5)
+			s.settimeout(5)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
 			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
-		except:
-			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
+		except Exception as e:
+			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
 			return _CONN_ERR
 			
 	def sendChangeRequest(self, address, dict):
@@ -107,14 +108,15 @@ class ClientManager(object):
 		req = {'type':'change', 'data':dict}
 		try:
 			s = socket(AF_INET, SOCK_STREAM)
-			s.settimeout(.5)
+			s.settimeout(5)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
 			res = s.recv(_DATAREAD)
 			s.close()
 			return loads(res)
-		except Exception:
-			_CONN_ERR['message'] = 'Could not connect to address '+str(address)
+		except Exception as e:
+			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
 			return _CONN_ERR
 			
 	def validateLight(self, dict):

@@ -38,17 +38,19 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		LUMAStateService.isError = false;
 		
 		// Convert the query to lower-case for better comparison.
-		lowercase = query.toLowerCase();
+		var lowercase = query.toLowerCase();
 		
 		// Create a stringified JSON object as our request.
-		request = JSON.stringify({'uuid':uuid,'query':query})
+		var request = JSON.stringify({'uuid':uuid,'query':query})
 		
 		// Send the request!
 		$http.get('resources/lights/'+request)
 		.success(function(response)
 		{
+			console.log("State query response:")
+			console.log(response);
 			// Get the lights for ease of use.
-			lights = response['lights'];
+			var lights = response['lights'];
 			
 			// Set the interface state's query results to the actual results.
 			LUMAStateService.queryResults = 
@@ -69,12 +71,13 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		LUMAStateService.isError = false;
 		
 		// Stringify our request terms for transmission.
-		request = JSON.stringify({'uuid':uuid,'id':light['id']})
+		var request = JSON.stringify({'uuid':uuid,'id':light['id']})
 		
 		// Send the request!
 		$http.get('resources/lights/state/'+request)
 		.success(function(response)
 		{
+			console.log("State query response:")
 			console.log(response);
 			// If the state query was successful...
 			if(response['success'])
@@ -124,6 +127,8 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		$http.post('resources/lights/state/'+JSON.stringify(request)).
 		success(function(response)
 		{
+			console.log("State update response:")
+			console.log(response);
 			// If the request failed at the request level, we need to
 			// display an error.
 			if(!response['success'])
