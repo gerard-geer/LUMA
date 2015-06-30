@@ -5,8 +5,8 @@
 	the querying of the light server for valid light instances.
 */
 angular.module('LUMAClient').controller('QueryController', 
-[ '$scope','$http','LUMAServerService','LUMAStateService', 
-function($scope, $http, LUMAServerService,LUMAStateService){
+[ '$scope', 'LUMAServerService', 'LUMAStateService', 
+function($scope, LUMAServerService,LUMAStateService){
 	
 	// Bind the state service to the scope so we can access it in the dom.
 	$scope.state = LUMAStateService;
@@ -27,7 +27,7 @@ function($scope, $http, LUMAServerService,LUMAStateService){
 		LUMAStateService.queryResults.length = 0;
 		
 		// Submit the light query.
-		LUMAServerService.submitLightQuery('<uuid>', LUMAStateService.query);
+		LUMAServerService.submitLightQuery('1', LUMAStateService.query);
 		
 		// Decide whether or not we need to display the sadness dialog.
 		if(LUMAStateService.queryResults.length == 0)

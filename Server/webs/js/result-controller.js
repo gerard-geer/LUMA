@@ -5,8 +5,8 @@
 	result.
 */
 angular.module('LUMAClient').controller('ResultController', 
-['$scope','$http','LUMAServerService','LUMAStateService', 
-function($scope, $http, LUMAServerService, LUMAStateService){
+['$scope','LUMAServerService','LUMAStateService', 
+function($scope, LUMAServerService, LUMAStateService){
 	
 	// Bind the state service to the controller's scope so that
 	// yet again we can access it in the DOM.
@@ -24,17 +24,13 @@ function($scope, $http, LUMAServerService, LUMAStateService){
 		// light.
 		LUMAStateService.query = LUMAStateService.selectedLight.name;
 		
-		// Now that we've selected a light we flag that the user
-		// is now editing the light.
-		LUMAStateService.isEditing = true;
-		
 		// Also we clear out all the query results.
 		LUMAStateService.queryResults.length = 0;
 		
 		// We also need to get the state of the light we selected.
 		
 		// Finally we get the state of the light.
-		LUMAServerService.requestLightState('<uuid>',
+		LUMAServerService.requestLightState('1',
 			LUMAStateService.selectedLight);
 	};
 }]);

@@ -5,6 +5,7 @@ from datetime import datetime
 from lightmanager import LightManager
 from aliasmanager import AliasManager
 from clientmanager import ClientManager
+from json import loads
 
 from singleton import Singleton
 
@@ -47,17 +48,23 @@ class RequestHandler(object):
 		"""
 		# Make sure the request is a Dictionary.
 		if not isinstance(req, dict):
+			print('Not a dictionary.')
 			return False
 			
 		# Make sure all required keys are present.
 		for key in ['uuid', 'query']:
 			if key not in req.keys():
+				print(key + ' not in req.keys()')
 				return False
 		
 		# Verify the types of the keys' values.
-		if not isinstance(req['uuid'], str):
+		if  not isinstance(req['uuid'], str) and	\
+			not isinstance(req['uuid'], unicode):
+			print('uuid not string. Type: '+str(type(req['uuid'])))
 			return False
-		if not isinstance(req['query'], str):
+		if  not isinstance(req['query'], str) and	\
+			not isinstance(req['query'], unicode):
+			print('query not string. Type: '+str(type(req['query'])))
 			return False
 			
 		# Finally after all that checks out we can return True.
@@ -80,17 +87,23 @@ class RequestHandler(object):
 		"""
 		# Make sure the request is a Dictionary.
 		if not isinstance(req, dict):
+			print('Not a dictionary.')
 			return False
 			
 		# Make sure all required keys are present.
 		for key in ['uuid', 'id']:
 			if key not in req.keys():
+				print(key + ' not in req.keys()')
 				return False
 		
 		# Verify the types of the keys' values.
-		if not isinstance(req['uuid'], str):
+		if  not isinstance(req['uuid'], str) and	\
+			not isinstance(req['uuid'], unicode):
+			print('uuid not string. Type: '+str(type(req['uuid'])))
 			return False
-		if not isinstance(req['id'], str):
+		if  not isinstance(req['id'], str) and	\
+			not isinstance(req['id'], unicode):
+			print('id not string. Type: '+str(type(req['id'])))
 			return False
 			
 		# Finally after all that checks out we can return True.
@@ -101,7 +114,7 @@ class RequestHandler(object):
 		Handles a query for light instances.
 		
 		Parameters:
-			req (JSON): The Dictionary that contains the request.
+			req (JSON String): The JSON String that describes the request.
 			
 		Returns:
 			A dictionary containing the response to the request.
@@ -112,6 +125,13 @@ class RequestHandler(object):
 		Postconditions:
 			None.
 		"""
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			return {'lights':[]}
+			
 		# If the request was invalid, we need to transparently return
 		# nothing.
 		if not self._sanitizeLightQuery(req):
@@ -121,7 +141,6 @@ class RequestHandler(object):
 		
 		# Get the subset of all allowed lights.
 		allowed = self._lm.getAllowedSubset(req['uuid'])
-		
 		# Gets possible aliases should the query be an IP address.
 		possible = self._am.getPossibleAliases(req['query'])
 		
@@ -131,9 +150,9 @@ class RequestHandler(object):
 		
 		else:
 			for light in allowed:
-				if 	req['query'] in light['name'] or	\
-					req['query'] in	light['id'] or 		\
-					req['query'] in light['client']:
+				if 	req['query'].lower() in light['name'].lower() or	\
+					req['query'].lower() in	light['id'].lower() or 		\
+					req['query'].lower() in light['client'].lower():
 					
 					requested.append({'id':light['id'],		\
 									'name':light['name'],	\
@@ -154,7 +173,7 @@ class RequestHandler(object):
 		Handles a request for a light's state.
 		
 		Parameters:
-			req (JSON): The Dictionary that contains the request.
+			req (JSON String): The JSON String that describes the request.
 			
 		Returns:
 			A dictionary containing the response to the request.
@@ -164,12 +183,22 @@ class RequestHandler(object):
 			
 		Postconditions:
 			The state of the lights supplied is updated, if they exist.
-		"""					
+		"""	
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			return {'success': False,
+					'message': 'Invalid query.',
+					'id': None}
+			
 		# Sanitize the request.
 		if not self._sanitizeStateQuery(req):
 			return {'success': False,
 					'message': 'Invalid query.',
 					'id': None}
+					
 		# Get the light.
 		light = self._lm.getLight(req['id'])
 		if light == None:

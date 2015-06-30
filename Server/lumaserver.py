@@ -2,6 +2,7 @@
 
 # LUMA copyright (C) Gerard Geer 2014-2015
 
+from json import dumps
 from flask import Flask, send_from_directory
 from requesthandler import RequestHandler
 
@@ -34,18 +35,22 @@ def fetchJS(filename):
 	
 # Light queries.
 @app.route('/resources/lights/<light_query>', methods=['GET'])
-def lightQueries():
-    return rh.lightQuery(request.get_json(light_query))
+def lightQueries(light_query):
+	print("### QUERY: "+light_query)
+	print("### QUERY TYPE: "+str(type(light_query)))
+	return dumps(rh.lightQuery(light_query))
 
 # Get light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['GET'])
 def stateQuery(light_state_query):
-    return rh.stateQuery(request.get_json(light_state_query))
+	print("### STATE QUERY: "+light_state_query)
+	print("### STATE QUERY TYPE: "+str(type(light_state_query)))
+	return dumps(rh.stateQuery(light_state_query))
 	
 # Set light state.
 @app.route('/resources/lights/state/<light_state_query>', methods=['POST'])
 def stateUpdate(light_state_query):
-    return rh.lightUpdate(request.get_json(light_state_query))
+    return dumps(rh.lightUpdate(light_state_query))
 	
 if __name__ == '__main__':
     app.run(debug=True)

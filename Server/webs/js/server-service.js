@@ -1,18 +1,4 @@
 // LUMA Copyright (c) Gerard Geer 2014-2015 
-
-// Just a simple bank of test lights.
-var testLights = [ 	{id:"55e0ed38-2e14-45c2-aac9-c81740b16be1", name:"Gerard's Desk", client:"Gerard and Josh's Room"},
-					{id:"51d784a7-8f30-4e02-9186-54440372e6a4", name:"Gerard's Bed", client:"Gerard and Josh's Room"},
-					{id:"c89f6784-9611-4df4-8eee-dbf9cacf2f8e", name:"Josh's Bed", client:"Gerard and Josh's Room"},
-					{id:"1eb9c4d2-7277-4469-a578-c36d7f09badb", name:'Research Room Shelves', client:'Research Room'},
-					{id:"fbbe28a5-b1a1-4fc3-b133-bb6f8227f18e", name:'Research Room Countertop', client:'Research Room'},
-					{id:"539eb5df-7ac0-4eff-929e-37a65c3cc1a9", name:'Research Room Left Window', client:'Research Room'},
-					{id:"6c1a03e1-5c40-406c-99ca-181c1a73de7f", name:'Research Room Right Window', client:'Research Room'},
-					{id:"fc2fb7a8-cabb-4859-a994-d684c34442bd", name:'Research Room Ceiling', client:'Research Room'},
-					{id:"561519e7-f6a8-462b-a749-c7de69ade7d1", name:"Couch", client:"Max's Room"},
-					{id:"3f827e77-444a-40be-8526-b3055f14848a", name:"Desk", client:"Max's Room"},
-					{id:"d23c737a-269b-4ce9-9c05-cd9011ef20f9", name:"Bed", client:"Max's Room"},
-					{id:"d2a7107e-9dbe-4e18-a3eb-364202a640d6", name:"Ceiling", client:"Max's Room"}];
 					
 var testState = {	success: true,
 					message: "simple message from client of Couch",
@@ -44,22 +30,70 @@ angular.module('LUMAClient').factory('LUMAServerService',
 	{
 		// Pre-emptively clear out the Query Result array.
 		LUMAStateService.queryResults.length = 0;
+		
+		// Go ahead and clear out the old light state and errors.
+		LUMAStateService.lightState = null;
+		LUMAStateService.isEditing = false;
+		LUMAStateService.errorMessage = '';
+		LUMAStateService.isError = false;
+		
 		// Convert the query to lower-case for better comparison.
 		lowercase = query.toLowerCase();
-		// Go through each of the dummy lights, and if it matches
-		// add it to the response.
-		for(var i = 0; i < testLights.length; ++i)
+		
+		// Create a stringified JSON object as our request.
+		request = JSON.stringify({'uuid':uuid,'query':query})
+		
+		// Send the request!
+		$http.get('resources/lights/'+request)
+		.success(function(response)
 		{
-			if(	testLights[i].name.toLowerCase().indexOf(lowercase) >= 0 ||
-			testLights[i].client.toLowerCase().indexOf(lowercase) >= 0 )
-				LUMAStateService.queryResults.push(testLights[i]);
-		}
+			// Get the lights for ease of use.
+			lights = response['lights'];
+			
+			// Set the interface state's query results to the actual results.
+			LUMAStateService.queryResults = 
+				LUMAStateService.queryResults.concat(lights)
+				
+			// If there were no results we want to display the sad dialog.
+			LUMAStateService.noResults = (lights.length == 0);
+		});
 	}
 	
 	// "Requests from the server the state of the light."
 	function performStateQuery(uuid, light)
 	{
-		LUMAStateService.lightState = testState;
+		// Go ahead and clear out the old light state and errors.
+		LUMAStateService.lightState = null;
+		LUMAStateService.isEditing = false;
+		LUMAStateService.errorMessage = '';
+		LUMAStateService.isError = false;
+		
+		// Stringify our request terms for transmission.
+		request = JSON.stringify({'uuid':uuid,'id':light['id']})
+		
+		// Send the request!
+		$http.get('resources/lights/state/'+request)
+		.success(function(response)
+		{
+			console.log(response);
+			// If the state query was successful...
+			if(response['success'])
+			{
+				// We set the light state to edit to the response,
+				LUMAStateService.lightState = response;
+				// And we flag that we should now be editing.
+				LUMAStateService.isEditing = true;
+			}
+			// If the state query was unsuccessful...
+			else
+			{
+				// We store the error message,
+				LUMAStateService.errorMessage =
+					'Error retrieving light state: '+response['message'];
+				// And set the error flag.
+				LUMAStateService.isError = true;
+			}
+		});		
 	}
 
     return {

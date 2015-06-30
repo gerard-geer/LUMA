@@ -21,6 +21,10 @@ angular.module('LUMAClient').factory('LUMAStateService', [function()
 		lightState: null,
 		// Whether or not a light is being edited.
 		isEditing: false,
+		// Whether or not an error has occored.
+		isError: false,
+		// The potential message of that error.
+		errorMessage: '',
 		test: "asdfasdfstate"
 	}
 }]);
