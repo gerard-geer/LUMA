@@ -84,6 +84,11 @@ EXAMPLE RESPONSE:
 			"b_t": [<blue channel timings>],
 			"b_v": [<blue channel values>]
 		}
+		. . .
+	]
+	"success": <True | False>,
+	"message": <example message pertaining to all lights in the request.>
+}
 
 EXAMPLE UUID ADD:
 {
