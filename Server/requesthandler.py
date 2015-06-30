@@ -253,6 +253,13 @@ class RequestHandler(object):
 		Postconditions:
 			The state of the lights supplied is updated, if they exist.
 		"""
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			return {'lights':None}
+					
 		# Create a list to store the updated state of the lights, or errors.
 		updated = []
 		# For each requested light
