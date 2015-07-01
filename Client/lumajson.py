@@ -206,7 +206,9 @@ def encodeResponse(type, light_s, message):
 	print("Response:")
 	print("  Type:    "+str(r['type']))
 	print("  Message: "+str(r['message']))
-	return dumps(r, cls=_LightEncoder)
+	s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	print("  Length:  "+str(len(s)))
+	return s
 	
 def encodeLight(light):
 	"""
