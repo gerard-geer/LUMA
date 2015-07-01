@@ -13,7 +13,7 @@ from datetime import datetime
 HOST = ''
 PORT = 8641
 FILE = 'config/lights.json'
-DATAREAD = 65536
+DATAREAD = 8
 TIMEOUT = 5.0
 luma = LUMA(FILE)
 
@@ -49,7 +49,12 @@ class LUMATCPHandler(BaseRequestHandler):
 		req = ''		
 		# Receive some data. In Python 2 recv returns a String instead of a
 		# byte array. This makes sterilization really easy.
-		req = self.request.recv(DATAREAD)
+		chunk = self.request.recv(DATAREAD)
+		req = chunk
+		while chunk != '':
+			print(chunk)
+			chunk = self.request.recv(DATAREAD)
+			req += chunk
 		print('Request:')
 		print('  Length: '+str(len(req)))
 		# Now we need to act upon the request.
