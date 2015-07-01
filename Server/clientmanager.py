@@ -78,7 +78,7 @@ class ClientManager(object):
 			s.close()
 			
 			# Return the client's response.
-			print('Interface-bound change response length: '+str(len(res)))
+			print('Interface-bound status response length: '+str(len(res)))
 			return loads(res)
 			
 		except Exception as e:
