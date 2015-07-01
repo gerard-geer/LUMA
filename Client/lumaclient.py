@@ -45,17 +45,9 @@ class LUMATCPHandler(BaseRequestHandler):
 		print('Connection from: '+str(self.client_address[0]))
 		print('Time: '+str(datetime.now()))
 		
-		# Gotta store the accumulated response somewhere.
-		req = ''		
 		# Receive some data. In Python 2 recv returns a String instead of a
 		# byte array. This makes sterilization really easy.
-		chunk = self.request.recv(DATAREAD)
-		print(str(type(self.request)))
-		req = chunk
-		# while chunk != '':
-			# print(chunk)
-			# chunk = self.request.recv(DATAREAD)
-			# req += chunk
+		req = self.request.recv(DATAREAD)
 		print('Request:')
 		print('  Length: '+str(len(req)))
 		# Now we need to act upon the request.
