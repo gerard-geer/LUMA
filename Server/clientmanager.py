@@ -8,7 +8,7 @@ from json import dumps, loads
 _CONN_ERR = {'type': 'error',	\
 			'message': None,	\
 			'data': None}
-_DATAREAD = 65536
+_DATAREAD = 64
 _TIMEOUT = 5.0
 
 @Singleton
@@ -80,9 +80,14 @@ class ClientManager(object):
 			s.settimeout(_TIMEOUT)
 			s.connect((address, self._PORT))
 			s.sendall(m)
-			res = s.recv(_DATAREAD)
+			# Receive in the response.
+			chunk = s.recv(_DATAREAD)
+			res = chunk
+			while chunk != '':
+				print(chunk)
+				chunk = s.recv(_DATAREAD)
+				res += chunk
 			s.close()
-			
 			# Return the client's response.
 			print('Interface-bound status response length: '+str(len(res)))
 			try:
@@ -164,7 +169,12 @@ class ClientManager(object):
 			s.settimeout(_TIMEOUT)
 			s.connect((address, self._PORT))
 			s.sendall(m)
-			res = s.recv(_DATAREAD)
+			# Get the client's response.
+			chunk = s.recv(_DATAREAD)
+			res = chunk
+			while chunk != '':
+				chunk = s.recv(_DATAREAD)
+				res += chunk
 			s.close()
 			
 			# Return the client's response.
