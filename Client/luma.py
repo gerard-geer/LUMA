@@ -460,7 +460,7 @@ class LUMA(object):
 			None.
 		"""
 		# Log some info. 
-		print('For: id='+req['data'])
+		print('  For:    id='+req['data'])
 		
 		# If the light name is None, then all lights are sought.
 		if req['data'] == None:
@@ -496,7 +496,7 @@ class LUMA(object):
 			None.
 		"""
 		# Similarly log some info.
-		print(	"For: id='"+str(req['data']['id'])+"'"+	\
+		print(	"  For:    id='"+str(req['data']['id'])+"'"+	\
 				" name='"+str(req['data']['name'])+"'"+	\
 				" ("+str(type(req['data']['name']))+")"	)
 
@@ -547,18 +547,19 @@ class LUMA(object):
 		try:
 			r = decodeRequest(s)
 		except Exception as e:
+			print('  Request could not be decoded.')
 			return encodeResponse('error', None, 'Request sent to '+
 				'client '+str(self.name)+' could not be decoded. Error: '+str(e))
 				
 		# Sanitize the request.
 		e = sanitizeRequest(r)
 		if e != None:
-			print('Request Failed sanitization. Error: '+e)
+			print('  Request Failed sanitization. Error: '+e)
 			return encodeResponse('error', None, 'Request sent to '+
 				'client '+str(self.name)+' failed sanitation. Error: '+str(e))
 		
 		# Log the request type.
-		print('Request type: '+r['type'])
+		print('  Type:   '+r['type'])
 				
 		# Act appropriately for the request.
 		if r['type'] == 'status':
@@ -566,5 +567,6 @@ class LUMA(object):
 		elif r['type'] == 'change':
 			return self._onChangeRequest(r)
 		else:
+			print('  Request of invalid type.')
 			return encodeResponse('error', None, 'Invalid request type sent to '+
 				'client '+str(self.name)+'.')
