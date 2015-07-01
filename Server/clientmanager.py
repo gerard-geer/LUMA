@@ -9,6 +9,8 @@ _CONN_ERR = {'type': 'error',	\
 			'message': None,	\
 			'data': None}
 _DATAREAD = 65536
+_TIMEOUT = 5.0
+
 @Singleton
 class ClientManager(object):
 	"""
@@ -64,7 +66,7 @@ class ClientManager(object):
 		req = {'type':'status', 'data':id}
 		try:
 			s = socket(AF_INET, SOCK_STREAM)
-			s.settimeout(5)
+			s.settimeout(_TIMEOUT)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
 			res = s.recv(_DATAREAD)
@@ -108,7 +110,7 @@ class ClientManager(object):
 		req = {'type':'change', 'data':dict}
 		try:
 			s = socket(AF_INET, SOCK_STREAM)
-			s.settimeout(5)
+			s.settimeout(_TIMEOUT)
 			s.connect((address, self._PORT))
 			s.sendall(dumps(req))
 			res = s.recv(_DATAREAD)
