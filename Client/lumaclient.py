@@ -14,6 +14,7 @@ HOST = ''
 PORT = 8641
 FILE = 'config/lights.json'
 DATAREAD = 65536
+TIMEOUT = 5.0
 luma = LUMA(FILE)
 
 class LUMATCPHandler(BaseRequestHandler):
@@ -102,6 +103,9 @@ if __name__ == '__main__':
 	
 	# Create the SocketServer client.
 	client = TCPServer((HOST, PORT), LUMATCPHandler)
+	
+	# Give the client a timeout value.
+	client.timeout = TIMEOUT
 	
 	# Go ahead and print some info about this client.
 	printWelcomeHeader(luma)

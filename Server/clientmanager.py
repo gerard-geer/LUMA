@@ -2,7 +2,7 @@
 # LUMA copyright (C) Gerard Geer 2014-2015
 
 from singleton import Singleton
-from socket import socket, AF_INET, SOCK_STREAM, timeout
+from socket import socket, AF_INET, SOCK_STREAM, error, herror, gaierror, timeout
 from json import dumps, loads
 
 _CONN_ERR = {'type': 'error',	\
@@ -66,7 +66,13 @@ class ClientManager(object):
 		req = {'type':'status', 'data':id}
 		try:
 			# Encode the request before opening the socket for timeliness.
-			m = dumps(req, separators=(',',':'))
+			try:
+				m = dumps(req, separators=(',',':'))
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error encoding JSON when sending status to '+str(address)+	\
+				'. ('+str(e)+')'
+				return _CONN_ERR
+				
 			print('Client-bound status request length: '+str(len(m)))
 			
 			# Perform socket IO.
@@ -79,10 +85,35 @@ class ClientManager(object):
 			
 			# Return the client's response.
 			print('Interface-bound status response length: '+str(len(res)))
-			return loads(res)
+			try:
+				return loads(res)
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error decoding JSON when receiving status from '+str(address)+	\
+				'. ('+str(e)+')\n'+str(res)
+				return _CONN_ERR
 			
-		except Exception as e:
+		except ValueError as e:
+			_CONN_ERR['message'] = 'Error parsing JSON when sending status to '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.error
+		except error as e:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.herror
+		except herror as e:
+			_CONN_ERR['message'] = 'H Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.gaierror
+		except gaierror as e:
+			_CONN_ERR['message'] = 'GAI Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.timeout
+		except timeout as e:
+			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 			
@@ -119,7 +150,13 @@ class ClientManager(object):
 		req = {'type':'change', 'data':dict}
 		try:
 			# Form the message ahead of time.
-			m = dumps(req, separators=(',',':'))
+			try:
+				m = dumps(req, separators=(',',':'))
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error encoding JSON when sending change to '+str(address)+	\
+				'. ('+str(e)+')'
+				return _CONN_ERR
+				
 			print('Client-bound change request length: '+str(len(m)))
 			
 			# Perform socket IO.
@@ -132,10 +169,35 @@ class ClientManager(object):
 			
 			# Return the client's response.
 			print('Interface-bound change response length: '+str(len(res)))
-			return loads(res)
+			try:
+				return loads(res)
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error decoding JSON when receiving change from '+str(address)+	\
+				'. ('+str(e)+')'
+				return _CONN_ERR
 			
-		except Exception as e:
+		except ValueError as e:
+			_CONN_ERR['message'] = 'Error parsing JSON when sending change to '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.error
+		except error as e:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.herror
+		except herror as e:
+			_CONN_ERR['message'] = 'H Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.gaierror
+		except gaierror as e:
+			_CONN_ERR['message'] = 'GAI Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.timeout
+		except timeout as e:
+			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 			

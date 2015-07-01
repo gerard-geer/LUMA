@@ -264,7 +264,7 @@ class RequestHandler(object):
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
 			return {'success': False,
-					'message': 'Could not connect to client.',
+					'message': 'Could not connect to client. Error: '+res['message'],
 					'id': req['id'],
 					'client': light['client']}
 		else:
