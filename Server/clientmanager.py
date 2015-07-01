@@ -2,7 +2,7 @@
 # LUMA copyright (C) Gerard Geer 2014-2015
 
 from singleton import Singleton
-from socket import socket, AF_INET, SOCK_STREAM, timeout
+from socket import socket, AF_INET, SOCK_STREAM, error, herror, gaierror, timeout
 from json import dumps, loads
 
 _CONN_ERR = {'type': 'error',	\
@@ -81,8 +81,28 @@ class ClientManager(object):
 			print('Interface-bound status response length: '+str(len(res)))
 			return loads(res)
 			
-		except Exception as e:
+		except ValueError as e:
+			_CONN_ERR['message'] = 'Error parsing JSON when sending status to '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.error
+		except error as e:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.herror
+		except herror as e:
+			_CONN_ERR['message'] = 'H Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.gaierror
+		except gaierror as e:
+			_CONN_ERR['message'] = 'GAI Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.timeout
+		except timeout as e:
+			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 			
@@ -134,8 +154,28 @@ class ClientManager(object):
 			print('Interface-bound change response length: '+str(len(res)))
 			return loads(res)
 			
-		except Exception as e:
+		except ValueError as e:
+			_CONN_ERR['message'] = 'Error parsing JSON when sending change to '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.error
+		except error as e:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.herror
+		except herror as e:
+			_CONN_ERR['message'] = 'H Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.gaierror
+		except gaierror as e:
+			_CONN_ERR['message'] = 'GAI Error: Could not connect to address '+str(address)+	\
+			'. ('+str(e)+')'
+			return _CONN_ERR
+		# Socket.timeout
+		except timeout as e:
+			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 			
