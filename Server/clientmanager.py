@@ -78,6 +78,7 @@ class ClientManager(object):
 			s.close()
 			
 			# Return the client's response.
+			print('Interface-bound change response length: '+str(len(res)))
 			return loads(res)
 			
 		except Exception as e:
@@ -119,6 +120,8 @@ class ClientManager(object):
 		try:
 			# Form the message ahead of time.
 			m = dumps(req, separators=(',',':'))
+			print('Client-bound change request length: '+str(len(m)))
+			
 			# Perform socket IO.
 			s = socket(AF_INET, SOCK_STREAM)
 			s.settimeout(_TIMEOUT)
@@ -126,7 +129,9 @@ class ClientManager(object):
 			s.sendall(m)
 			res = s.recv(_DATAREAD)
 			s.close()
+			
 			# Return the client's response.
+			print('Interface-bound change response length: '+str(len(res)))
 			return loads(res)
 			
 		except Exception as e:
