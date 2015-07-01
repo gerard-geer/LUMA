@@ -66,7 +66,13 @@ class ClientManager(object):
 		req = {'type':'status', 'data':id}
 		try:
 			# Encode the request before opening the socket for timeliness.
-			m = dumps(req, separators=(',',':'))
+			try:
+				m = dumps(req, separators=(',',':'))
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error encoding JSON when sending status to '+str(address)+	\
+				'. ('+str(e)+')'
+				return _CONN_ERR
+				
 			print('Client-bound status request length: '+str(len(m)))
 			
 			# Perform socket IO.
@@ -79,7 +85,12 @@ class ClientManager(object):
 			
 			# Return the client's response.
 			print('Interface-bound status response length: '+str(len(res)))
-			return loads(res)
+			try:
+				return loads(res)
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error decoding JSON when receiving status from '+str(address)+	\
+				'. ('+str(e)+')\n'+str(res)
+				return _CONN_ERR
 			
 		except ValueError as e:
 			_CONN_ERR['message'] = 'Error parsing JSON when sending status to '+str(address)+	\
@@ -139,7 +150,13 @@ class ClientManager(object):
 		req = {'type':'change', 'data':dict}
 		try:
 			# Form the message ahead of time.
-			m = dumps(req, separators=(',',':'))
+			try:
+				m = dumps(req, separators=(',',':'))
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error encoding JSON when sending change to '+str(address)+	\
+				'. ('+str(e)+')'
+				return _CONN_ERR
+				
 			print('Client-bound change request length: '+str(len(m)))
 			
 			# Perform socket IO.
@@ -152,7 +169,12 @@ class ClientManager(object):
 			
 			# Return the client's response.
 			print('Interface-bound change response length: '+str(len(res)))
-			return loads(res)
+			try:
+				return loads(res)
+			except ValueError as e:
+				_CONN_ERR['message'] = 'Error decoding JSON when receiving change from '+str(address)+	\
+				'. ('+str(e)+')'
+				return _CONN_ERR
 			
 		except ValueError as e:
 			_CONN_ERR['message'] = 'Error parsing JSON when sending change to '+str(address)+	\
