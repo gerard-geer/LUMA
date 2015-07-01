@@ -245,6 +245,31 @@ class LUMA(object):
 		self.lightLock.release()
 		return l
 		
+	def getLights(self):
+		"""
+		A thread safe way to get a listing of all the Lights in the
+		LUMA instance.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			A list of all the Light instances.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			A list is constructed, filled with Light references,
+			and returned.
+		"""
+		l = []
+		self.lightLock.acquire(True)
+		for light in self.lights.values():
+			l.append(light)
+		self.lightLock.release()
+		return l
+		
 		
 	def _changeLight(self, id, rtimes, rvals, gtimes, gvals, btimes, bvals):
 		"""
