@@ -75,6 +75,9 @@ def printWelcomeHeader(luma):
 	print(" Client name: '"+str(luma.name)+"'")
 	print(" Configuration file: '"+str(FILE)+"'")
 	print(" Host: '"+str(HOST)+"' Port: '"+str(PORT)+"' Data red per TCP action: '"+str(DATAREAD)+"'")
+	print(" Lights:")
+	for light in luma.getLights():
+		print(" %-20s : "%str(light.id)+str(light.name))
 	print('*******************************************************************************')
 	
 if __name__ == '__main__':
