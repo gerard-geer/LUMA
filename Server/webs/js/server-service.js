@@ -110,9 +110,7 @@ angular.module('LUMAClient').factory('LUMAServerService',
 		
 		// Send our stuff! We truncate floats for the sake of message bandwidth.
 		// The lights only work off of 12 bits anyhow.
-		$http.post('resources/lights/state/'+JSON.stringify(request,function(k, v) {
-			return v.toFixed ? Number(v.toFixed(3)) : v;
-		})).
+		$http.post('resources/lights/state/', request).
 		success(function(response)
 		{
 			console.log("State update response:")
