@@ -82,7 +82,6 @@ class ClientManager(object):
 			s.sendall(m)
 			res = s.recv(_DATAREAD)
 			s.close()
-			
 			# Return the client's response.
 			print('Interface-bound status response length: '+str(len(res)))
 			try:
