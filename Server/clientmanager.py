@@ -84,7 +84,6 @@ class ClientManager(object):
 			chunk = s.recv(_DATAREAD)
 			res = chunk
 			while chunk != '':
-				print(chunk)
 				chunk = s.recv(_DATAREAD)
 				res += chunk
 			s.close()
