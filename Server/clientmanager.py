@@ -65,13 +65,21 @@ class ClientManager(object):
 		"""
 		req = {'type':'status', 'data':id}
 		try:
+			# Encode the request before opening the socket for timeliness.
+			m = dumps(req, separators=(',',':'))
+			print('Client-bound status request length: '+str(len(m)))
+			
+			# Perform socket IO.
 			s = socket(AF_INET, SOCK_STREAM)
 			s.settimeout(_TIMEOUT)
 			s.connect((address, self._PORT))
-			s.sendall(dumps(req))
+			s.sendall(m)
 			res = s.recv(_DATAREAD)
 			s.close()
+			
+			# Return the client's response.
 			return loads(res)
+			
 		except Exception as e:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
@@ -109,13 +117,18 @@ class ClientManager(object):
 		"""
 		req = {'type':'change', 'data':dict}
 		try:
+			# Form the message ahead of time.
+			m = dumps(req, separators=(',',':'))
+			# Perform socket IO.
 			s = socket(AF_INET, SOCK_STREAM)
 			s.settimeout(_TIMEOUT)
 			s.connect((address, self._PORT))
-			s.sendall(dumps(req))
+			s.sendall(m)
 			res = s.recv(_DATAREAD)
 			s.close()
+			# Return the client's response.
 			return loads(res)
+			
 		except Exception as e:
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
