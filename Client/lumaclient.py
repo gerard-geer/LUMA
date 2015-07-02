@@ -5,19 +5,21 @@
 """
 LUMA Raspberry Pi client.
 """
-from SocketServer import TCPServer, BaseRequestHandler
+from SocketServer import TCPServer, StreamRequestHandler
+from socket import SOL_SOCKET, SO_REUSEADDR
 from luma import LUMA
+from select import select
 from lumajson import *
 from datetime import datetime
 
 HOST = ''
 PORT = 8641
 FILE = 'config/lights.json'
-DATAREAD = 65536
-TIMEOUT = 5.0
+DATAREAD = 999999
+TIMEOUT = 1.0
 luma = LUMA(FILE)
 
-class LUMATCPHandler(BaseRequestHandler):
+class LUMATCPHandler(StreamRequestHandler):
 	"""
 	The LUMA Pi Client's request handler.
 	"""
@@ -47,13 +49,14 @@ class LUMATCPHandler(BaseRequestHandler):
 		
 		# Receive some data. In Python 2 recv returns a String instead of a
 		# byte array. This makes sterilization really easy.
-		req = self.request.recv(DATAREAD)
+		self.request.settimeout(TIMEOUT)		
+		req = self.rfile.readline()
 		print('Request:')
 		print('  Length: '+str(len(req)))
 		# Now we need to act upon the request.
 		res = luma.onRequest(req)
 		# Fire the response back.
-		self.request.sendall(res)
+		self.wfile.write(res)
 		
 def printWelcomeHeader(luma):
 	"""

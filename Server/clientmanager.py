@@ -67,7 +67,7 @@ class ClientManager(object):
 		try:
 			# Encode the request before opening the socket for timeliness.
 			try:
-				m = dumps(req, separators=(',',':'))
+				m = dumps(req, separators=(',',':'))+'\n'
 			except ValueError as e:
 				_CONN_ERR['message'] = 'Error encoding JSON when sending status to '+str(address)+	\
 				'. ('+str(e)+')'
@@ -155,7 +155,7 @@ class ClientManager(object):
 		try:
 			# Form the message ahead of time.
 			try:
-				m = dumps(req, separators=(',',':'))
+				m = dumps(req, separators=(',',':'))+'\n'
 			except ValueError as e:
 				_CONN_ERR['message'] = 'Error encoding JSON when sending change to '+str(address)+	\
 				'. ('+str(e)+')'
