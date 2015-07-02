@@ -113,6 +113,8 @@ function($scope, LUMAStateService){
 		for(var i = 0; i < timings.length; ++i)timings[i] = timing;
 	}
 	
+	// Called when the wavelength submit button is pressed. This stores the
+	// local model of the waveforms to the light state.
 	this.onSubmit = function(r, g, b)
 	{
 		setWavelength(LUMAStateService.lightState.r_t, r);
@@ -121,6 +123,7 @@ function($scope, LUMAStateService){
 		this.updatePreview();
 	}
 	
+	// The cancel button. This resets the local model to the state of the light.
 	this.onCancel = function()
 	{
 		$scope.rLambda = getWavelength(LUMAStateService.lightState.r_t);
