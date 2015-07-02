@@ -159,7 +159,7 @@
 				</div>
 				<!-- The form used: 3 text inputs and a submit.				 -->
 				<form 
-				ng-submit='wctrl.onSubmit(rLambda, gLambda, bLambda);supressPeriodDialog();'
+				ng-submit='wctrl.onSubmit(rLambda,gLambda,bLambda);supressPeriodDialog();'
 				id='wavelength_form' name='wavelength_form' novalidate>
 					<!-- Each text input is wrapped up with a label.		 -->
 					<div class='wavelength_container'>
@@ -204,7 +204,7 @@
 						Your browser does not support HTML5 canvases.
 					</canvas>
 					<!-- The cancel button is just another div-based button. -->
-					<div id='wavelength_cancel' ng-click='supressPeriodDialog()'
+					<div id='wavelength_cancel' ng-click='wctrl.onCancel();supressPeriodDialog()'
 					class='edit_button'>Cancel</div>
 					<!-- Whereas the submit button is actually a submit.	 -->
 					<input 

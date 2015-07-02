@@ -118,6 +118,7 @@ function($scope, LUMAStateService){
 		setWavelength(LUMAStateService.lightState.r_t, r);
 		setWavelength(LUMAStateService.lightState.g_t, g);
 		setWavelength(LUMAStateService.lightState.b_t, b);
+		this.updatePreview();
 	}
 	
 	this.onCancel = function()
@@ -125,6 +126,7 @@ function($scope, LUMAStateService){
 		$scope.rLambda = getWavelength(LUMAStateService.lightState.r_t);
 		$scope.gLambda = getWavelength(LUMAStateService.lightState.g_t);
 		$scope.bLambda = getWavelength(LUMAStateService.lightState.b_t);
+		this.updatePreview();
 	}
 		
 	// Whenever the light state is populated, then this watch function
