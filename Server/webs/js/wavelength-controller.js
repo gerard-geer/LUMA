@@ -88,6 +88,8 @@ function($scope, LUMAStateService){
 			var mult = lcm_nums([	parseInt(Math.floor($scope.rLambda)),
 									parseInt(Math.floor($scope.gLambda)),
 									parseInt(Math.floor($scope.bLambda))]);
+			// At this point drawing extra would be futile.
+			mult = (mult > 500*longest) ? 500*longest : mult;
 			drawCycleLine(mult/parseInt(Math.floor($scope.rLambda)), $scope.wCanvas.width, 35, '#FF0000');
 			drawCycleLine(mult/parseInt(Math.floor($scope.gLambda)), $scope.wCanvas.width, 40, '#00FF00');
 			drawCycleLine(mult/parseInt(Math.floor($scope.bLambda)), $scope.wCanvas.width, 45, '#0000FF');
