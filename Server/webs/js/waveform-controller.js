@@ -20,6 +20,9 @@ function($scope,LUMAServerService,LUMAStateService){
 	// Whether or not the wavelength dialog is visible.
 	$scope.showPeriodDialog = false;
 	
+	// Whether or not the help dialog is visible.
+	$scope.showHelpDialog = false;
+	
 	// The periods of the channel waveforms.
 	$scope.rPeriod = 0.5;
 	$scope.gPeriod = 0.5;
@@ -303,6 +306,12 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.togglePeriodDialog = function()
 	{
 		$scope.showPeriodDialog = !$scope.showPeriodDialog;
+	}
+	
+	// Toggles the help dialog.
+	$scope.toggleHelpDialog = function()
+	{
+		$scope.showHelpDialog = !$scope.showHelpDialog;
 	}
 	
 	// Since you cannot use anonymous functions in wMousetrap, I have to make
