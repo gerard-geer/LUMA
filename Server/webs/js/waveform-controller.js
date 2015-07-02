@@ -307,6 +307,7 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.gotoBlue = function(){$scope.channel = $scope.BLUE;};
 	$scope.rotCurRight = function(){$scope.rotateRight($scope.getChannelCtx(), $scope.getChannelVals());};
 	$scope.rotCurLeft = function(){$scope.rotateLeft($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.clearCur = function(){$scope.clear($scope.getChannelCtx(), $scope.getChannelVals());};
 	
 	
 }]);

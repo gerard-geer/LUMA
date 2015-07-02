@@ -98,7 +98,8 @@
 						G:gotoGreen,
 						B:gotoBlue,
 						left:rotCurLeft,
-						right:rotCurRight
+						right:rotCurRight,
+						"shift+del":clearCur
 					 }'
 					  >
 			<!-- The three edit canvases and their container divs.			 -->
@@ -228,7 +229,7 @@
 			<div class='utility_container no_sel'>
 				<div class='edit_button rotate_button' ng-click='rotCurLeft()'>Rotate Left</div>
 				<div class='edit_button rotate_button' ng-click='rotCurRight()'>Rotate Right</div>
-				<div class='edit_button clear_button' ng-click='clear(getChannelCtx(),getChannelVals())'>Clear</div>
+				<div class='edit_button clear_button' ng-click='clearCur()'>Clear</div>
 			</div>
 		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->
 		 <div id='node' class='editor'></div> 
