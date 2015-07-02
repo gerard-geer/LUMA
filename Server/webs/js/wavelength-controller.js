@@ -113,12 +113,18 @@ function($scope, LUMAStateService){
 		for(var i = 0; i < timings.length; ++i)timings[i] = timing;
 	}
 	
-	this.onSubmit = function()
+	this.onSubmit = function(r, g, b)
 	{
-		setWavelength(LUMAStateService.lightState.r_t, $scope.rLambda);
-		setWavelength(LUMAStateService.lightState.g_t, $scope.gLambda);
-		setWavelength(LUMAStateService.lightState.b_t, $scope.bLambda);
-		this.updatePreview();
+		setWavelength(LUMAStateService.lightState.r_t, r);
+		setWavelength(LUMAStateService.lightState.g_t, g);
+		setWavelength(LUMAStateService.lightState.b_t, b);
+	}
+	
+	this.onCancel = function()
+	{
+		$scope.rLambda = getWavelength(LUMAStateService.lightState.r_t);
+		$scope.gLambda = getWavelength(LUMAStateService.lightState.g_t);
+		$scope.bLambda = getWavelength(LUMAStateService.lightState.b_t);
 	}
 		
 	// Whenever the light state is populated, then this watch function
