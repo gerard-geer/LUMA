@@ -130,13 +130,13 @@
 				Wavelengths
 			</div>
 			<!-- The three channel selection buttons. 						 -->
-			<div ng-click='channel="red"' id='red_select' class='edit_button wave_select_button'>
+			<div ng-click='setChannel("red")' id='red_select' class='edit_button wave_select_button'>
 				Red Channel
 			</div>
-			<div ng-click='channel="green"' id='green_select' class='edit_button wave_select_button'>
+			<div ng-click='setChannel("green")' id='green_select' class='edit_button wave_select_button'>
 				Green Channel
 			</div>
-			<div ng-click='channel="blue"' id='blue_select' class='edit_button wave_select_button'>
+			<div ng-click='setChannel("blue")' id='blue_select' class='edit_button wave_select_button'>
 				Blue Channel
 			</div>
 			<!-- The wavelength modal.										 -->
@@ -214,13 +214,13 @@
 			</modal-dialog>
 			<!-- Some wave manipulation utilities.							 -->
 			<div class='utility_container no_sel' ng-show='channel=="red"'>
-				<div class='edit_button rotate_button' ng-click='wave.rotateRight(rCtx,state.r_v)'>Rotate Right</div>
 				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(rCtx,state.r_v)'>Rotate Left</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateRight(rCtx,state.r_v)'>Rotate Right</div>
 				<div class='edit_button clear_button' ng-click='wave.clear(rCtx,state.r_v)'>Clear</div>
 			</div>
 			<div class='utility_container no_sel' ng-show='channel=="green"'>
-				<div class='edit_button rotate_button' ng-click='wave.rotateRight(gCtx,state.g_v)'>Rotate Right</div>
 				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(gCtx,state.g_v)'>Rotate Left</div>
+				<div class='edit_button rotate_button' ng-click='wave.rotateRight(gCtx,state.g_v)'>Rotate Right</div>
 				<div class='edit_button clear_button' ng-click='wave.clear(gCtx,state.g_v)'>Clear</div>
 			</div>
 			<div class='utility_container no_sel' ng-show='channel=="blue"'>
