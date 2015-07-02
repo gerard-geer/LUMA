@@ -308,6 +308,11 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.rotCurRight = function(){$scope.rotateRight($scope.getChannelCtx(), $scope.getChannelVals());};
 	$scope.rotCurLeft = function(){$scope.rotateLeft($scope.getChannelCtx(), $scope.getChannelVals());};
 	$scope.clearCur = function(){$scope.clear($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.sineCur = function(){$scope.sine($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.sawCur = function(){$scope.saw($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.revsawCur = function(){$scope.revsaw($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.squareCur = function(){$scope.square($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.triangleCur = function(){$scope.triangle($scope.getChannelCtx(), $scope.getChannelVals());};
 	
 	
 }]);
