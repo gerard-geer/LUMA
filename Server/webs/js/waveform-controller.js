@@ -48,6 +48,30 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.state.g_v = Array();
 	$scope.state.b_v = Array();
 	
+	// Returns the state values for the current channel.
+	$scope.getChannelVals = function()
+	{
+		switch($scope.channel)
+		{
+			case $scope.RED: return  $scope.state.r_v; break;
+			case $scope.GREEN: return  $scope.state.g_v; break;
+			case $scope.BLUE: return  $scope.state.b_v; break;
+			default: return$scope.state.r_v; break;
+		}
+	}
+	
+	// Returns canvas for the current channel.
+	$scope.getChannelCtx = function()
+	{
+		switch($scope.channel)
+		{
+			case $scope.RED: return $scope.rCtx; break;
+			case $scope.GREEN: return $scope.gCtx; break;
+			case $scope.BLUE: return $scope.bCtx; break;
+			default: return $scope.rCtx; break;
+		}
+	}
+	
 	// Redraws a line.
 	function update(ctx, index, val, numVals)
 	{
@@ -273,30 +297,6 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.supressPeriodDialog = function()
 	{
 		$scope.showPeriodDialog = false;
-	}
-	
-	// Returns the state values for the current channel.
-	$scope.getChannelVals = function()
-	{
-		switch($scope.channel)
-		{
-			case $scope.RED: return  $scope.state.r_v; break;
-			case $scope.GREEN: return  $scope.state.g_v; break;
-			case $scope.BLUE: return  $scope.state.b_v; break;
-			default: return LUMAStateService.lightState['r_v']; break;
-		}
-	}
-	
-	// Returns canvas for the current channel.
-	$scope.getChannelCtx = function()
-	{
-		switch($scope.channel)
-		{
-			case $scope.RED: return $scope.rCtx; break;
-			case $scope.GREEN: return $scope.gCtx; break;
-			case $scope.BLUE: return $scope.bCtx; break;
-			default: return $scope.rCtx; break;
-		}
 	}
 	
 	// Since you cannot use anonymous functions in wMousetrap, I have to make
