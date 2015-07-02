@@ -229,11 +229,11 @@ function($scope,LUMAServerService,LUMAStateService){
 		mdown=true;
 		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.state.r_v);
 	},false);
-	$scope.gCanvas.addEventListener('mousedown', function(){
+	$scope.gCanvas.addEventListener('mousedown', function(evt){
 		mdown=true;
 		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.state.g_v);
 	},false);
-	$scope.bCanvas.addEventListener('mousedown', function(){
+	$scope.bCanvas.addEventListener('mousedown', function(evt){
 		mdown=true;
 		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.state.b_v);
 	},false);
