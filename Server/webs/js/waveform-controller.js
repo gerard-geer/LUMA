@@ -11,8 +11,11 @@ function($scope,LUMAServerService,LUMAStateService){
 	// Bind the controller's scope to the state service.
 	$scope.state = LUMAStateService;
 	
-	// The currently selected channel.
-	$scope.channel = 'red';
+	// The currently selected channel, and some symbolic constants.
+	$scope.RED = 64;
+	$scope.GREEN = 128;
+	$scope.BLUE = 256;
+	$scope.channel = $scope.RED;
 	
 	// Whether or not the wavelength dialog is visible.
 	$scope.showPeriodDialog = false;

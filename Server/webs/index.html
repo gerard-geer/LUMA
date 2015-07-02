@@ -91,7 +91,7 @@
 		<div id='waveform' class='editor'
 		ng-controller='WaveformController as wave'>
 			<!-- The three edit canvases and their container divs.			 -->
-			<div id='red' class='wave_channel no_sel' ng-show='channel=="red"'>
+			<div id='red' class='wave_channel no_sel' ng-show='channel==RED'>
 				<!-- These buttons all reset the waveform to a preset shape. -->
 				<div class='edit_button preset_button' ng-click='wave.sine(rCtx,state.r_v)'>Sine</div>
 				<div class='edit_button preset_button' ng-click='wave.saw(rCtx,state.r_v)'>Sawtooth</div>
@@ -102,7 +102,7 @@
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div> 
-			<div id='green' class='wave_channel no_sel' ng-show='channel=="green"'>
+			<div id='green' class='wave_channel no_sel' ng-show='channel==GREEN'>
 				<div class='edit_button preset_button' ng-click='wave.sine(gCtx,state.g_v)'>Sine</div>
 				<div class='edit_button preset_button' ng-click='wave.saw(gCtx,state.g_v)'>Sawtooth</div>
 				<div class='edit_button preset_button' ng-click='wave.revsaw(gCtx,state.g_v)'>Reverse Sawtooth</div>
@@ -112,7 +112,7 @@
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div> 
-			<div id='blue' class='wave_channel no_sel' ng-show='channel=="blue"'>
+			<div id='blue' class='wave_channel no_sel' ng-show='channel==BLUE'>
 				<div class='edit_button preset_button' ng-click='wave.sine(bCtx,state.b_v)'>Sine</div>
 				<div class='edit_button preset_button' ng-click='wave.saw(bCtx,state.b_v)'>Sawtooth</div>
 				<div class='edit_button preset_button' ng-click='wave.revsaw(bCtx,state.b_v)'>Reverse Sawtooth</div>
@@ -131,13 +131,13 @@
 				Wavelengths
 			</div>
 			<!-- The three channel selection buttons. 						 -->
-			<div ng-click='channel="red"' id='red_select' class='edit_button wave_select_button'>
+			<div ng-click='channel=RED' id='red_select' class='edit_button wave_select_button'>
 				Red Channel
 			</div>
-			<div ng-click='channel="green"' id='green_select' class='edit_button wave_select_button'>
+			<div ng-click='channel=GREEN' id='green_select' class='edit_button wave_select_button'>
 				Green Channel
 			</div>
-			<div ng-click='channel="blue"' id='blue_select' class='edit_button wave_select_button'>
+			<div ng-click='channel=BLUE' id='blue_select' class='edit_button wave_select_button'>
 				Blue Channel
 			</div>
 			<!-- The wavelength modal.										 -->
@@ -214,17 +214,17 @@
 				</div>
 			</modal-dialog>
 			<!-- Some wave manipulation utilities.							 -->
-			<div class='utility_container no_sel' ng-show='channel=="red"'>
+			<div class='utility_container no_sel' ng-show='channel==RED'>
 				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(rCtx,state.r_v)'>Rotate Left</div>
 				<div class='edit_button rotate_button' ng-click='wave.rotateRight(rCtx,state.r_v)'>Rotate Right</div>
 				<div class='edit_button clear_button' ng-click='wave.clear(rCtx,state.r_v)'>Clear</div>
 			</div>
-			<div class='utility_container no_sel' ng-show='channel=="green"'>
+			<div class='utility_container no_sel' ng-show='channel==GREEN'>
 				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(gCtx,state.g_v)'>Rotate Left</div>
 				<div class='edit_button rotate_button' ng-click='wave.rotateRight(gCtx,state.g_v)'>Rotate Right</div>
 				<div class='edit_button clear_button' ng-click='wave.clear(gCtx,state.g_v)'>Clear</div>
 			</div>
-			<div class='utility_container no_sel' ng-show='channel=="blue"'>
+			<div class='utility_container no_sel' ng-show='channel==BLUE'>
 				<div class='edit_button rotate_button' ng-click='wave.rotateLeft(bCtx,state.b_v)'>Rotate Left</div>
 				<div class='edit_button rotate_button' ng-click='wave.rotateRight(bCtx,state.b_v)'>Rotate Right</div>
 				<div class='edit_button clear_button' ng-click='wave.clear(bCtx,state.b_v)'>Clear</div>
