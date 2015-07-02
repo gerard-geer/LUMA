@@ -76,9 +76,10 @@
 		
 	</div>
 	 <!-- The edit pane holds the editing UI.  -->
-	 <div ng-controller='EditorController as editor' 
-	 ng-show='state.isEditing'
-	 id='edit_pane'>
+	<div ng-controller='EditorController as editor' 
+	ng-show='state.isEditing'
+	w-mousetrap='{"alt+enter":editor.onSubmitState}'
+	id='edit_pane'>
 		<div class='edit_subject_info'>
 			You are editing the 
 			<span class='edit_subject_attr'>{{state.lightState.name}}</span> 
@@ -104,6 +105,11 @@
 						H:rotCurLeft,
 						L:rotCurRight,
 						"0 D":clearCur,
+						1:sineCur,
+						2:sawCur,
+						3:revsawCur,
+						4:squareCur,
+						5:triangleCur,
 						"p s i":sineCur,
 						"p S I":sineCur,
 						"p s a":sawCur,
@@ -113,7 +119,9 @@
 						"p s q":squareCur,
 						"p S Q":squareCur,
 						"p t r":triangleCur,
-						"p T R":triangleCur
+						"p T R":triangleCur,
+						"`":togglePeriodDialog,
+						"~":togglePeriodDialog,
 					 }'
 					  >
 			

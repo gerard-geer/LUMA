@@ -299,6 +299,12 @@ function($scope,LUMAServerService,LUMAStateService){
 		$scope.showPeriodDialog = false;
 	}
 	
+	// A brother function that toggles the wavelength dialog.
+	$scope.togglePeriodDialog = function()
+	{
+		$scope.showPeriodDialog = !$scope.showPeriodDialog;
+	}
+	
 	// Since you cannot use anonymous functions in wMousetrap, I have to make
 	// all the shortcut callbacks here. Man is this ugly. But hey it simplifies
 	// the existing buttons.
