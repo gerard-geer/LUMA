@@ -111,6 +111,9 @@ if __name__ == '__main__':
 	
 	# Set the client's time-out.
 	client.timeout = TIMEOUT
+
+	# Set the client's maximum request queue length so peeeeps don't get peeeeeeepy.
+	client.request_queue_size = 1
 	
 	# Go ahead and print some info about this client.
 	printWelcomeHeader(luma)
