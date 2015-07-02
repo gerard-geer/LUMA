@@ -15,8 +15,7 @@ from datetime import datetime
 HOST = ''
 PORT = 8641
 FILE = 'config/lights.json'
-DATAREAD = 999999
-TIMEOUT = 1.0
+TIMEOUT = 3.0
 luma = LUMA(FILE)
 
 class LUMATCPHandler(StreamRequestHandler):
@@ -43,18 +42,21 @@ class LUMATCPHandler(StreamRequestHandler):
 			the data is decoded as a JSON object, which is then processed
 			as the request. The response to this request is then sent back.
 		"""
+		# Print some info.
 		print('-------------------------------------------------------------------------------')
 		print('Connection from: '+str(self.client_address[0]))
 		print('Time: '+str(datetime.now()))
 		
-		# Receive some data. In Python 2 recv returns a String instead of a
-		# byte array. This makes sterilization really easy.
-		self.request.settimeout(TIMEOUT)		
+		# Receive some data. 
 		req = self.rfile.readline()
+		
+		# Print some more info.
 		print('Request:')
 		print('  Length: '+str(len(req)))
+		
 		# Now we need to act upon the request.
 		res = luma.onRequest(req)
+		
 		# Fire the response back.
 		self.wfile.write(res)
 		
@@ -78,7 +80,7 @@ def printWelcomeHeader(luma):
 	print(" You're now running a LUMA Client!")
 	print(" Client name: '"+str(luma.name)+"'")
 	print(" Configuration file: '"+str(FILE)+"'")
-	print(" Host: '"+str(HOST)+"' Port: '"+str(PORT)+"' Data red per TCP action: '"+str(DATAREAD)+"'")
+	print(" Host: '"+str(HOST)+"' Port: '"+str(PORT))
 	print(" Lights:")
 	for light in luma.getLights():
 		print(" %-20s : "%str(light.id)+str(light.name))
@@ -107,8 +109,11 @@ if __name__ == '__main__':
 	# Create the SocketServer client.
 	client = TCPServer((HOST, PORT), LUMATCPHandler)
 	
-	# Give the client a timeout value.
+	# Set the client's time-out.
 	client.timeout = TIMEOUT
+
+	# Set the client's maximum request queue length so peeeeps don't get peeeeeeepy.
+	client.request_queue_size = 1
 	
 	# Go ahead and print some info about this client.
 	printWelcomeHeader(luma)
