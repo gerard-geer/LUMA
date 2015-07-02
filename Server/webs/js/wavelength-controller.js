@@ -88,6 +88,8 @@ function($scope, LUMAStateService){
 			var mult = lcm_nums([	parseInt(Math.floor($scope.rLambda)),
 									parseInt(Math.floor($scope.gLambda)),
 									parseInt(Math.floor($scope.bLambda))]);
+			// At this point drawing extra would be futile.
+			mult = (mult > 500*longest) ? 500*longest : mult;
 			drawCycleLine(mult/parseInt(Math.floor($scope.rLambda)), $scope.wCanvas.width, 35, '#FF0000');
 			drawCycleLine(mult/parseInt(Math.floor($scope.gLambda)), $scope.wCanvas.width, 40, '#00FF00');
 			drawCycleLine(mult/parseInt(Math.floor($scope.bLambda)), $scope.wCanvas.width, 45, '#0000FF');
@@ -111,11 +113,22 @@ function($scope, LUMAStateService){
 		for(var i = 0; i < timings.length; ++i)timings[i] = timing;
 	}
 	
-	this.onSubmit = function()
+	// Called when the wavelength submit button is pressed. This stores the
+	// local model of the waveforms to the light state.
+	this.onSubmit = function(r, g, b)
 	{
-		setWavelength(LUMAStateService.lightState.r_t, $scope.rLambda);
-		setWavelength(LUMAStateService.lightState.g_t, $scope.gLambda);
-		setWavelength(LUMAStateService.lightState.b_t, $scope.bLambda);
+		setWavelength(LUMAStateService.lightState.r_t, r);
+		setWavelength(LUMAStateService.lightState.g_t, g);
+		setWavelength(LUMAStateService.lightState.b_t, b);
+		this.updatePreview();
+	}
+	
+	// The cancel button. This resets the local model to the state of the light.
+	this.onCancel = function()
+	{
+		$scope.rLambda = getWavelength(LUMAStateService.lightState.r_t);
+		$scope.gLambda = getWavelength(LUMAStateService.lightState.g_t);
+		$scope.bLambda = getWavelength(LUMAStateService.lightState.b_t);
 		this.updatePreview();
 	}
 		

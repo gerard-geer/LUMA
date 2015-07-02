@@ -11,8 +11,11 @@ function($scope,LUMAServerService,LUMAStateService){
 	// Bind the controller's scope to the state service.
 	$scope.state = LUMAStateService;
 	
-	// The currently selected channel.
-	$scope.channel = 'red';
+	// The currently selected channel, and some symbolic constants.
+	$scope.RED = 64;
+	$scope.GREEN = 128;
+	$scope.BLUE = 256;
+	$scope.channel = $scope.RED;
 	
 	// Whether or not the wavelength dialog is visible.
 	$scope.showPeriodDialog = false;
@@ -45,6 +48,30 @@ function($scope,LUMAServerService,LUMAStateService){
 	$scope.state.g_v = Array();
 	$scope.state.b_v = Array();
 	
+	// Returns the state values for the current channel.
+	$scope.getChannelVals = function()
+	{
+		switch($scope.channel)
+		{
+			case $scope.RED: return  $scope.state.r_v; break;
+			case $scope.GREEN: return  $scope.state.g_v; break;
+			case $scope.BLUE: return  $scope.state.b_v; break;
+			default: return$scope.state.r_v; break;
+		}
+	}
+	
+	// Returns canvas for the current channel.
+	$scope.getChannelCtx = function()
+	{
+		switch($scope.channel)
+		{
+			case $scope.RED: return $scope.rCtx; break;
+			case $scope.GREEN: return $scope.gCtx; break;
+			case $scope.BLUE: return $scope.bCtx; break;
+			default: return $scope.rCtx; break;
+		}
+	}
+	
 	// Redraws a line.
 	function update(ctx, index, val, numVals)
 	{
@@ -74,7 +101,7 @@ function($scope,LUMAServerService,LUMAStateService){
 	}
 	
 	// The sine-wave preset function.
-	this.sine = function(ctx, vals)
+	$scope.sine = function(ctx, vals)
 	{
 		var length = vals.length;
 		var period = 3.1459/length;
@@ -86,7 +113,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		updateAll(ctx, vals);
 	}
 	// The sawtooth preset function.
-	this.saw = function(ctx, vals)
+	$scope.saw = function(ctx, vals)
 	{
 		var length = vals.length;
 		vals.length = 0;
@@ -97,7 +124,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		updateAll(ctx, vals);
 	}
 	// The reverse sawtooth preset function.
-	this.revsaw = function(ctx, vals)
+	$scope.revsaw = function(ctx, vals)
 	{
 		var length = vals.length;
 		vals.length = 0;
@@ -108,7 +135,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		updateAll(ctx, vals);
 	}
 	// The square-wave preset function.
-	this.square = function(ctx, vals)
+	$scope.square = function(ctx, vals)
 	{
 		var length = vals.length;
 		vals.length = 0;
@@ -119,7 +146,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		updateAll(ctx, vals);
 	}
 	// The triangle squarewave function.
-	this.triangle = function(ctx, vals)
+	$scope.triangle = function(ctx, vals)
 	{
 		var length = vals.length;
 		vals.length = 0;
@@ -134,7 +161,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		updateAll(ctx, vals);
 	}
 	// Empties the waveform, resetting every sample to zero.
-	this.clear = function(ctx, vals)
+	$scope.clear = function(ctx, vals)
 	{
 		for(var i = 0; i < vals.length; ++i)
 		{
@@ -201,7 +228,7 @@ function($scope,LUMAServerService,LUMAStateService){
 	}
 	
 	// A function that rotates a waveform's values left by 1/128 its period.
-	this.rotateLeft = function(ctx, vals)
+	$scope.rotateLeft = function(ctx, vals)
 	{
 		var first = vals[0];
 		for(var i = 0; i < vals.length-1; ++i)
@@ -212,7 +239,7 @@ function($scope,LUMAServerService,LUMAStateService){
 		updateAll(ctx, vals);
 	}
 	// A sister function that rotates right.
-	this.rotateRight = function(ctx, vals)
+	$scope.rotateRight = function(ctx, vals)
 	{
 		var last = vals[vals.length-1];
 		for(var i = vals.length-1; i > 0; --i)
@@ -229,11 +256,11 @@ function($scope,LUMAServerService,LUMAStateService){
 		mdown=true;
 		updateVal($scope.rCanvas, $scope.rCtx, evt, $scope.state.r_v);
 	},false);
-	$scope.gCanvas.addEventListener('mousedown', function(){
+	$scope.gCanvas.addEventListener('mousedown', function(evt){
 		mdown=true;
 		updateVal($scope.gCanvas, $scope.gCtx, evt, $scope.state.g_v);
 	},false);
-	$scope.bCanvas.addEventListener('mousedown', function(){
+	$scope.bCanvas.addEventListener('mousedown', function(evt){
 		mdown=true;
 		updateVal($scope.bCanvas, $scope.bCtx, evt, $scope.state.b_v);
 	},false);
@@ -271,6 +298,27 @@ function($scope,LUMAServerService,LUMAStateService){
 	{
 		$scope.showPeriodDialog = false;
 	}
+	
+	// A brother function that toggles the wavelength dialog.
+	$scope.togglePeriodDialog = function()
+	{
+		$scope.showPeriodDialog = !$scope.showPeriodDialog;
+	}
+	
+	// Since you cannot use anonymous functions in wMousetrap, I have to make
+	// all the shortcut callbacks here. Man is this ugly. But hey it simplifies
+	// the existing buttons.
+	$scope.gotoRed = function(){$scope.channel = $scope.RED;};
+	$scope.gotoGreen = function(){$scope.channel = $scope.GREEN;};
+	$scope.gotoBlue = function(){$scope.channel = $scope.BLUE;};
+	$scope.rotCurRight = function(){$scope.rotateRight($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.rotCurLeft = function(){$scope.rotateLeft($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.clearCur = function(){$scope.clear($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.sineCur = function(){$scope.sine($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.sawCur = function(){$scope.saw($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.revsawCur = function(){$scope.revsaw($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.squareCur = function(){$scope.square($scope.getChannelCtx(), $scope.getChannelVals());};
+	$scope.triangleCur = function(){$scope.triangle($scope.getChannelCtx(), $scope.getChannelVals());};
 	
 	
 }]);
