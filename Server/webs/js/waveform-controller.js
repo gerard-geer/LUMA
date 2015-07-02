@@ -300,7 +300,8 @@ function($scope,LUMAServerService,LUMAStateService){
 	}
 	
 	// Since you cannot use anonymous functions in wMousetrap, I have to make
-	// all the shortcut callbacks here. Man is this ugly.
+	// all the shortcut callbacks here. Man is this ugly. But hey it simplifies
+	// the existing buttons.
 	$scope.gotoRed = function(){$scope.channel = $scope.RED;};
 	$scope.gotoGreen = function(){$scope.channel = $scope.GREEN;};
 	$scope.gotoBlue = function(){$scope.channel = $scope.BLUE;};

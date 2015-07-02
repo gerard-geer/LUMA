@@ -225,22 +225,11 @@
 				</div>
 			</modal-dialog>
 			<!-- Some wave manipulation utilities.							 -->
-			<div class='utility_container no_sel' ng-show='channel==RED'>
-				<div class='edit_button rotate_button' ng-click='rotateLeft(rCtx,state.r_v)'>Rotate Left</div>
-				<div class='edit_button rotate_button' ng-click='rotateRight(rCtx,state.r_v)'>Rotate Right</div>
-				<div class='edit_button clear_button' ng-click='clear(rCtx,state.r_v)'>Clear</div>
+			<div class='utility_container no_sel'>
+				<div class='edit_button rotate_button' ng-click='rotCurLeft()'>Rotate Left</div>
+				<div class='edit_button rotate_button' ng-click='rotCurRight()'>Rotate Right</div>
+				<div class='edit_button clear_button' ng-click='clear(getChannelCtx(),getChannelVals())'>Clear</div>
 			</div>
-			<div class='utility_container no_sel' ng-show='channel==GREEN'>
-				<div class='edit_button rotate_button' ng-click='rotateLeft(gCtx,state.g_v)'>Rotate Left</div>
-				<div class='edit_button rotate_button' ng-click='rotateRight(gCtx,state.g_v)'>Rotate Right</div>
-				<div class='edit_button clear_button' ng-click='clear(gCtx,state.g_v)'>Clear</div>
-			</div>
-			<div class='utility_container no_sel' ng-show='channel==BLUE'>
-				<div class='edit_button rotate_button' ng-click='rotateLeft(bCtx,state.b_v)'>Rotate Left</div>
-				<div class='edit_button rotate_button' ng-click='rotateRight(bCtx,state.b_v)'>Rotate Right</div>
-				<div class='edit_button clear_button' ng-click='clear(bCtx,state.b_v)'>Clear</div>
-			</div>
-		 </div>
 		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->
 		 <div id='node' class='editor'></div> 
 	 </div> 
