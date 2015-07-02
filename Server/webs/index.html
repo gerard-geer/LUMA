@@ -116,34 +116,25 @@
 						"p T R":triangleCur
 					 }'
 					  >
+			
+			<!-- These buttons all reset the waveform to a preset shape. -->
+			<div class='edit_button preset_button' ng-click='sineCur()'>Sine</div>
+			<div class='edit_button preset_button' ng-click='sawCur()'>Sawtooth</div>
+			<div class='edit_button preset_button' ng-click='revsawCur()'>Reverse Sawtooth</div>
+			<div class='edit_button preset_button' ng-click='squareCur()'>Square</div>
+			<div class='edit_button preset_button' ng-click='triangleCur()'>Triangle</div>
 			<!-- The three edit canvases and their container divs.			 -->
 			<div id='red' class='wave_channel no_sel' ng-show='channel==RED'>
-				<!-- These buttons all reset the waveform to a preset shape. -->
-				<div class='edit_button preset_button' ng-click='sine(rCtx,state.r_v)'>Sine</div>
-				<div class='edit_button preset_button' ng-click='saw(rCtx,state.r_v)'>Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='revsaw(rCtx,state.r_v)'>Reverse Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='square(rCtx,state.r_v)'>Square</div>
-				<div class='edit_button preset_button' ng-click='triangle(rCtx,state.r_v)'>Triangle</div>
 				<canvas id='red_canvas' class='wave_canvas' width='1200' height='450'>
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div> 
 			<div id='green' class='wave_channel no_sel' ng-show='channel==GREEN'>
-				<div class='edit_button preset_button' ng-click='sine(gCtx,state.g_v)'>Sine</div>
-				<div class='edit_button preset_button' ng-click='saw(gCtx,state.g_v)'>Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='revsaw(gCtx,state.g_v)'>Reverse Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='square(gCtx,state.g_v)'>Square</div>
-				<div class='edit_button preset_button' ng-click='triangle(gCtx,state.g_v)'>Triangle</div>
 				<canvas id='green_canvas' class='wave_canvas' width='1200' height='450'>
 					Your browser does not support HTML5 Canvases.
 				</canvas>
 			</div> 
 			<div id='blue' class='wave_channel no_sel' ng-show='channel==BLUE'>
-				<div class='edit_button preset_button' ng-click='sine(bCtx,state.b_v)'>Sine</div>
-				<div class='edit_button preset_button' ng-click='saw(bCtx,state.b_v)'>Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='revsaw(bCtx,state.b_v)'>Reverse Sawtooth</div>
-				<div class='edit_button preset_button' ng-click='square(bCtx,state.b_v)'>Square</div>
-				<div class='edit_button preset_button' ng-click='triangle(bCtx,state.b_v)'>Triangle</div>
 				<canvas id='blue_canvas' class='wave_canvas' width='1200' height='450'>
 					Your browser does not support HTML5 Canvases.
 				</canvas>
