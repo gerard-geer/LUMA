@@ -78,7 +78,8 @@
 	 <!-- The edit pane holds the editing UI.  -->
 	<div ng-controller='EditorController as editor' 
 	ng-show='state.isEditing'
-	w-mousetrap='{"alt+enter":editor.onSubmitState}'
+	w-mousetrap='{"alt+enter":editor.onSubmitState,
+				  ": w enter":editor.onSubmitState}'
 	id='edit_pane'>
 		<div class='edit_subject_info'>
 			You are editing the 
@@ -105,6 +106,7 @@
 						H:rotCurLeft,
 						L:rotCurRight,
 						"0 D":clearCur,
+						"shift+delete":clearCur,
 						1:sineCur,
 						2:sawCur,
 						3:revsawCur,
@@ -120,12 +122,45 @@
 						"p S Q":squareCur,
 						"p t r":triangleCur,
 						"p T R":triangleCur,
-						"`":togglePeriodDialog,
-						"~":togglePeriodDialog,
+						"tab":togglePeriodDialog,
+						"?":toggleHelpDialog,
+						"/":toggleHelpDialog,
 					 }'
 					  >
-			
-			<!-- These buttons all reset the waveform to a preset shape. -->
+			<!-- This is the waveform editor help dialog.					 -->
+			<modal-dialog
+			show='showHelpDialog'
+			width='32em'>
+				<div class='modal_header'>
+					Keyboard Shortcuts
+					<div class='edit_subject_info' id='wavelength_subject_info'>
+						Below are a list of keyboard shortcuts to aid in editing your light.
+					</div>
+				</div>
+				All commands are case-insensitive.
+				<ul id='help_list'>
+					<li><b>Left --</b> Rotate the current waveform to the left.</li>
+					<li><b>Right --</b>  Rotate the current waveform to the right.</li>
+					<li><b>1 through 5 --</b>  Fill the current waveform with a preset.</li>
+					<li><b>Shift+Delete --</b>  Clears the current channel to zero. </li>
+					<li><b>Tab --</b>  Toggle the wavelength dialog.</li>
+					<li><b>r --</b>  Select the red channel.</li>
+					<li><b>g --</b>  Select the green channel.</li>
+					<li><b>b --</b>  Select the blue channel.</li>
+					<li><b>Shift+Enter --</b>  Submits the current pattern.</li>
+					<li><b>p s i --</b>  Fill the current channel with the sinusoidal preset.</li>
+					<li><b>p s a --</b>  Fill the current channel with the sawtooth preset.</li>
+					<li><b>p r e --</b>  Fill the current channel with the reverse sawtooth preset.</li>
+					<li><b>p s q --</b>  Fill the current channel with the square preset.</li>
+					<li><b>p t r --</b>  Fill the current channel with the triangle preset.</li>
+					<li><b>h --</b> Rotate the current waveform left.</li>
+					<li><b>l --</b> Rotate the current waveform right.</li>
+					<li><b>D 0 (zero) --</b> Clears the current waveform.</li>
+					<li><b>: w enter --</b> Submits the current pattern.</li>
+					<li><b>? --</b> Displays this help dialog.</li>
+				</ul>
+			</modal-dialog>
+			<!-- These buttons all reset the waveform to a preset shape.	 -->
 			<div class='edit_button preset_button' ng-click='sineCur()'>Sine</div>
 			<div class='edit_button preset_button' ng-click='sawCur()'>Sawtooth</div>
 			<div class='edit_button preset_button' ng-click='revsawCur()'>Reverse Sawtooth</div>
@@ -173,7 +208,7 @@
 				<div id='wavelength_container'
 				ng-controller='WavelengthController as wctrl'>
 				<!-- The title bar of the wavelength editor.				 -->
-				<div id='wavelength_header'>
+				<div class='modal_header'>
 					Edit Wavelengths
 					<div class='edit_subject_info' id='wavelength_subject_info'>
 						You are editing the 
@@ -185,7 +220,7 @@
 				</div>
 				<!-- The form used: 3 text inputs and a submit.				 -->
 				<form 
-				ng-submit='wctrl.onSubmit(rLambda,gLambda,bLambda);supressPeriodDialog();'
+				ng-submit='wctrl.onSubmit();supressPeriodDialog();'
 				id='wavelength_form' name='wavelength_form' novalidate>
 					<!-- Each text input is wrapped up with a label.		 -->
 					<div class='wavelength_container'>
@@ -246,6 +281,6 @@
 			</div>
 		 <!-- The node editor paradigm allows users to create a set of nodes and transitions.  -->
 		 <div id='node' class='editor'></div> 
-	 </div> 
+	 </div>
 </body>
 </html>

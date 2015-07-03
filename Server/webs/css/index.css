@@ -63,8 +63,8 @@ input:focus
 .error_dialog
 {
 	width: 600px;
-	height: 40px;
 	color: #222222;
+	font-size: .8em;
 	background-color: #CCCCDD;
 	padding-left: 5px;
 	margin-left: auto;
@@ -271,7 +271,7 @@ input:focus
 	display:inline;
 }
 
-#wavelength_header
+.modal_header
 {
 	width: 100%;
 	color: #333333;
@@ -364,4 +364,10 @@ input:focus
 {
 	margin-top: .5em;
 	border-color: #FFAA00;
+}
+
+#help_list
+{
+	text-align: left;
+	font-size: .8em;
 }
