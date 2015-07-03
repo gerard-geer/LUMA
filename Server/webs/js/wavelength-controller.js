@@ -117,9 +117,9 @@ function($scope, LUMAStateService){
 	// local model of the waveforms to the light state.
 	this.onSubmit = function()
 	{
-		setWavelength(LUMAStateService.lightState.r_t, rLambda);
-		setWavelength(LUMAStateService.lightState.g_t, gLambda);
-		setWavelength(LUMAStateService.lightState.b_t, bLambda);
+		setWavelength(LUMAStateService.lightState.r_t, $scope.rLambda);
+		setWavelength(LUMAStateService.lightState.g_t, $scope.gLambda);
+		setWavelength(LUMAStateService.lightState.b_t, $scope.bLambda);
 		this.updatePreview();
 	}
 	
