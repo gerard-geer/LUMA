@@ -67,7 +67,7 @@ class _LightEncoder(JSONEncoder):
 		try:
 			return _encode_light(obj)
 		except:
-			return JSONEncoder.default(self, 5)
+			return JSONEncoder.default(self, obj)
 			
 class _LightSaveEncoder(JSONEncoder):
 	"""
@@ -94,7 +94,7 @@ class _LightSaveEncoder(JSONEncoder):
 		try:
 			return _encode_light(obj, True)
 		except:
-			return JSONEncoder.default(self, 5)
+			return JSONEncoder.default(self, obj)
 
 def _decode_light(d):
 	"""
