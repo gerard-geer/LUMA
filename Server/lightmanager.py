@@ -343,3 +343,24 @@ class LightManager(object):
 			if uuid in self._lights[id]['permitted']:
 				return True
 		return False
+		
+	def getLightCatalog(self):
+		"""
+		Returns a catalog of the lights for info purposes.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			A dictionary with light IDs keying into light names.
+			
+		Preconditions:
+			The Light Manager is initialized.
+			
+		Postconditions:
+			None.
+		"""
+		catalog = {}
+		for id in self._lights.keys():
+			catalog[id] = self._lights[id]['name']
+		return catalog
