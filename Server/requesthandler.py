@@ -454,3 +454,31 @@ class RequestHandler(object):
 		self._am.save("REMOTE ALIAS BACKUP "+timest_amp+".json")
 		return {'success':True, 'message':None}
 		
+	def printInfo(self):
+		"""
+		Prints info about the Request Handler and its managers.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			None.
+		
+		Preconditions:
+			The Request Handler is initialized.
+			
+		Postconditions:
+			Info is printed.
+		"""
+		# Get listings of the clients and lights on the server.
+		clients = self._am.getPossibleAliases('')
+		lights = self._lm.getLightCatalog()
+		
+		# Print those listings.
+		print('\n Clients: ('+str(len(clients))+')')
+		for client in self._am.getPossibleAliases(''):
+			print('   '+client)
+		print('\n Lights: ('+str(len(lights.keys()))+')')
+		for key in lights.keys():
+			print("   %-20s : "%str(key)+str(lights[key]))
+		
