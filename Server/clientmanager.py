@@ -163,11 +163,12 @@ class ClientManager(object):
 			try:
 				m = dumps(req, separators=(',',':'))+'\n'
 			except ValueError as e:
+				print('   Error encoding JSON when sending change to '+str(address))
 				_CONN_ERR['message'] = 'Error encoding JSON when sending change to '+str(address)+	\
 				'. ('+str(e)+')'
 				return _CONN_ERR
-				
-			print('Client-bound change request length: '+str(len(m)))
+			
+			print('   Sending request. (length: '+str(len(m))+')')
 			
 			# Perform socket IO.
 			s = socket(AF_INET, SOCK_STREAM)
@@ -183,10 +184,11 @@ class ClientManager(object):
 			s.close()
 			
 			# Return the client's response.
-			print('Interface-bound change response length: '+str(len(res)))
+			print('   Response received. (length: '+str(len(m))+')')
 			try:
 				return loads(res)
 			except ValueError as e:
+				print('   Error decoding JSON when receiving change response from '+str(address))
 				_CONN_ERR['message'] = 'Error decoding JSON when receiving change from '+str(address)+	\
 				'. ('+str(e)+')'
 				return _CONN_ERR
@@ -197,21 +199,25 @@ class ClientManager(object):
 			return _CONN_ERR
 		# Socket.error
 		except error as e:
+			print('   Could not connect to address '+str(address))
 			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 		# Socket.herror
 		except herror as e:
+			print('   H Error: Could not connect to address '+str(address))
 			_CONN_ERR['message'] = 'H Error: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 		# Socket.gaierror
 		except gaierror as e:
+			print('   GAI Error: Could not connect to address '+str(address))
 			_CONN_ERR['message'] = 'GAI Error: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
 		# Socket.timeout
 		except timeout as e:
+			print('   Timeout error: Could not connect to address '+str(address))
 			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR
