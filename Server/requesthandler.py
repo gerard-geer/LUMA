@@ -251,9 +251,9 @@ class RequestHandler(object):
 		# Get the light.
 		light = self._lm.getLight(req['id'])
 		if light == None:
-			print(' Light does not exist.')
+			print(' Light does not exist on server.')
 			return {'success': False,
-					'message': 'Light does not exist.',
+					'message': 'Light does not exist on server.',
 					'id': req['id']}
 					
 		# Check to see if the user can access the light.
