@@ -167,13 +167,22 @@ class RequestHandler(object):
 			if isinstance(req, unicode) or isinstance(req, str):
 				req = loads(req)
 		except:
+			print(' Could not decode JSON of request.')
 			return {'lights':[]}
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
 		if not self._sanitizeLightQuery(req):
+			print(' Request did not pass sanitation.')
 			return {'lights':[]}
 			
+		# Print the query.
+		printedQuery = req['query']
+		if len(printedQuery) > 71: 
+			printedQuery = printedQuery[:68]+'...'
+		print(' Query: '+printedQuery)
+		
+		# Create a place to store the query results.
 		requested = []
 		
 		# Get the subset of all allowed lights.
@@ -203,6 +212,7 @@ class RequestHandler(object):
 											'name':light['name'],	\
 											'client':light['client']})
 		
+		print(' Query returned '+str(len(requested))+' lights.')
 		return {'lights':requested}
 		
 	def stateQuery(self, req):
