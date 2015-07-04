@@ -320,9 +320,10 @@ class RequestHandler(object):
 					'success': False,
 					'message': 'Request poorly formed.'}
 					
+		print(' By UUID: '+req['uuid'])
+		
 		# Create a list to store our updated states in.
 		updated = []
-		
 		# Go through each submitted state and try to abide.
 		for submitted in req['lights']:
 			print(' Updating light: '+submitted['id']+' ('+submitted['name']+'):')
@@ -330,7 +331,7 @@ class RequestHandler(object):
 			validationError = self._cm.validateLight(submitted)
 			# If it fails validation, we have to reject it and move on.
 			if validationError:
-				print('   sLight failed validation: '+validationError)
+				print('   Light failed validation: '+validationError)
 				submitted['success'] = False
 				submitted['message'] = validationError
 				updated.append(submitted)
@@ -364,6 +365,7 @@ class RequestHandler(object):
 				continue
 			# Now that we have a valid light and a valid address, let's
 			# send the update.
+			print('   To: '+str(addr)+' ('+str(submitted['client'])+')')
 			clientRes = self._cm.sendChangeRequest(addr, submitted)
 			# If that action errors out, we have to pass it up the ladder too.
 			if clientRes['type'] == 'error':
@@ -378,6 +380,7 @@ class RequestHandler(object):
 			submitted['message'] = clientRes['message']
 			updated.append(submitted)
 	
+		print(' All requested lights handled.')
 		return {'lights': updated,
 				'success': True,
 				'message': None}
