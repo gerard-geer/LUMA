@@ -233,7 +233,7 @@ def encodeLight(light):
 	Postconditions:
 		None.
 	"""
-	return dumps(light, cls=_LightEncoder, sort_keys=True, indent=4)
+	return dumps(light, cls=_LightEncoder, sort_keys=True, indent=2)
 	
 		
 def encodeLights(lights):
@@ -252,7 +252,7 @@ def encodeLights(lights):
 	Postconditions:
 		None.
 	"""
-	return dumps(lights, cls=_LightEncoder, sort_keys=True, indent=4)
+	return dumps(lights, cls=_LightEncoder, sort_keys=True, indent=2)
 		
 def encodeState(name, lights):
 	"""
