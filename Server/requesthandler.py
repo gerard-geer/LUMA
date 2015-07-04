@@ -250,11 +250,13 @@ class RequestHandler(object):
 					
 		# Get the light.
 		light = self._lm.getLight(req['id'])
+		print(' By UUID: '+req['uuid'])
 		if light == None:
 			print(' Light does not exist on server.')
 			return {'success': False,
 					'message': 'Light does not exist on server.',
 					'id': req['id']}
+		print("For: %-20s : "%str(light['id'])+str(light['name']))
 					
 		# Check to see if the user can access the light.
 		if not self._lm.isAllowed(req['uuid'], req['id']):
