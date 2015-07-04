@@ -236,12 +236,14 @@ class RequestHandler(object):
 			if isinstance(req, unicode) or isinstance(req, str):
 				req = loads(req)
 		except:
+			print(' Could not decode JSON of request.')
 			return {'success': False,
 					'message': 'Invalid query.',
 					'id': None}
 			
 		# Sanitize the request.
 		if not self._sanitizeStateQuery(req):
+			print(' Request did not pass sanitation.')
 			return {'success': False,
 					'message': 'Invalid query.',
 					'id': None}
@@ -249,12 +251,14 @@ class RequestHandler(object):
 		# Get the light.
 		light = self._lm.getLight(req['id'])
 		if light == None:
+			print(' Light does not exist.')
 			return {'success': False,
 					'message': 'Light does not exist.',
 					'id': req['id']}
 					
 		# Check to see if the user can access the light.
 		if not self._lm.isAllowed(req['uuid'], req['id']):
+			print(' User tried to access forbidden light.')
 			return {'success': False,
 					'message': 'User not allowed to access light.',
 					'id': req['id']}
@@ -263,6 +267,7 @@ class RequestHandler(object):
 		# that's another problem.
 		address = self._am.getAddress(light['client'])
 		if address == None:
+			print(' Unrecognized client name/alias.')
 			return {'success': False,
 					'message': 'Client alias not recognized.',
 					'id': req['id'],
@@ -273,14 +278,18 @@ class RequestHandler(object):
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
+			print(' Could not connect to client. '+res['message'])
 			return {'success': False,
 					'message': 'Could not connect to client. Error: '+res['message'],
 					'id': req['id'],
 					'client': light['client']}
 		else:
+			print(' Light status request successful.')
 			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
 					'client': light['client']}
+			# Append the keys from the client's response's data to our response 
+			# being sent back to the interface.
 			resp.update(res['data'])
 			return resp
 				
