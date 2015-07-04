@@ -68,6 +68,33 @@ class _LightEncoder(JSONEncoder):
 			return _encode_light(obj)
 		except:
 			return JSONEncoder.default(self, 5)
+			
+class _LightSaveEncoder(JSONEncoder):
+	"""
+	A custom JSONEncoder that specifies its own way of doing things, this
+	time for saving the LUMAClient to file.
+	"""
+	def default(self, obj):
+		"""
+		Overrides JSONEncoder.default() to call _encode_light() if the
+		object being encoded is actually a Light instance.
+		
+		Parameters:
+			obj (Any): The object to encode.
+			
+		Returns:
+			The object transformed to be encoded.
+			
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		try:
+			return _encode_light(obj, True)
+		except:
+			return JSONEncoder.default(self, 5)
 
 def _decode_light(d):
 	"""
