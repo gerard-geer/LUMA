@@ -76,14 +76,17 @@ def printWelcomeHeader(luma):
 	Postconditions:
 		None
 	"""
+	lights = luma.getLights()
 	print('*******************************************************************************')
-	print(" You're now running a LUMA Client!")
+	print(" You're now running a LUMA Client!\n")
+	
 	print(" Client name: '"+str(luma.name)+"'")
 	print(" Configuration file: '"+str(FILE)+"'")
-	print(" Host: '"+str(HOST)+"' Port: '"+str(PORT))
-	print(" Lights:")
-	for light in luma.getLights():
-		print(" %-20s : "%str(light.id)+str(light.name))
+	print(" Host: '"+str(HOST)+"' Port: '"+str(PORT)+'\n')
+	
+	print(" Lights: ("+str(len(lights))+")")
+	for light in lights:
+		print("   %-20s : "%str(light.id)+str(light.name))
 	print('*******************************************************************************')
 	
 if __name__ == '__main__':
