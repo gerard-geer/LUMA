@@ -256,7 +256,7 @@ class RequestHandler(object):
 			return {'success': False,
 					'message': 'Light does not exist on server.',
 					'id': req['id']}
-		print("For: %-20s : "%str(light['id'])+str(light['name']))
+		print(' For: '+str(light['id'])+' ('+str(light['name'])+')')
 					
 		# Check to see if the user can access the light.
 		if not self._lm.isAllowed(req['uuid'], req['id']):
@@ -276,6 +276,7 @@ class RequestHandler(object):
 					'client': light['client']}
 		
 		# If we can, well, that's good.
+		print(' To: '+address+' ('+light['client']+')')
 		res = self._cm.sendStatusRequest(address, req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
@@ -286,7 +287,6 @@ class RequestHandler(object):
 					'id': req['id'],
 					'client': light['client']}
 		else:
-			print(' Light status request successful.')
 			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
 					'client': light['client']}
