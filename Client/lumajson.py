@@ -301,7 +301,7 @@ def encodeState(name, lights):
 	# Create a JSON string containing all the lights. This will encode normally
 	# until it recurses down to the elements in the list of lights, when it will
 	# use the Light encoder.
-	return encodeLights({'name':name, 'lights':lights})
+	return dumps({'name':name, 'lights':lights}, cls=_LightSaveEncoder, sort_keys=True, indent=2)
 	
 def decodeState(state):
 	"""
