@@ -9,12 +9,15 @@ from json import dumps, loads, JSONEncoder
 from light import Light
 from colorchannel import ColorChannel
 
-def _encode_light(l):
+def _encode_light(l, complete=False):
 	"""
 	Encodes a light object into a dictionary.
 	
 	Parameters:
 		l (Light): The Light instance to encode.
+		complete (Boolean) (Default = False): Whether or not to encode
+			all components of the light. This mode is meant for saving
+			the state of the lights to file.
 	
 	Returns:
 		A dictionary containing all the fields of the Light instance.
@@ -34,6 +37,10 @@ def _encode_light(l):
 	d['g_v'] = l.g.vals.aslist()
 	d['b_t'] = l.b.times.aslist()
 	d['b_v'] = l.b.vals.aslist()
+	if complete:
+		d['r_c'] = l.r.chan
+		d['g_c'] = l.g.chan
+		d['b_c'] = l.b.chan
 	return d
 
 class _LightEncoder(JSONEncoder):
@@ -60,7 +67,34 @@ class _LightEncoder(JSONEncoder):
 		try:
 			return _encode_light(obj)
 		except:
-			return JSONEncoder.default(self, 5)
+			return JSONEncoder.default(self, obj)
+			
+class _LightSaveEncoder(JSONEncoder):
+	"""
+	A custom JSONEncoder that specifies its own way of doing things, this
+	time for saving the LUMAClient to file.
+	"""
+	def default(self, obj):
+		"""
+		Overrides JSONEncoder.default() to call _encode_light() if the
+		object being encoded is actually a Light instance.
+		
+		Parameters:
+			obj (Any): The object to encode.
+			
+		Returns:
+			The object transformed to be encoded.
+			
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		try:
+			return _encode_light(obj, True)
+		except:
+			return JSONEncoder.default(self, obj)
 
 def _decode_light(d):
 	"""
@@ -226,7 +260,7 @@ def encodeLight(light):
 	Postconditions:
 		None.
 	"""
-	return dumps(light, cls=_LightEncoder, sort_keys=True, indent=4)
+	return dumps(light, cls=_LightEncoder, sort_keys=True, indent=2)
 	
 		
 def encodeLights(lights):
@@ -245,7 +279,7 @@ def encodeLights(lights):
 	Postconditions:
 		None.
 	"""
-	return dumps(lights, cls=_LightEncoder, sort_keys=True, indent=4)
+	return dumps(lights, cls=_LightEncoder, sort_keys=True, indent=2)
 		
 def encodeState(name, lights):
 	"""
@@ -267,7 +301,7 @@ def encodeState(name, lights):
 	# Create a JSON string containing all the lights. This will encode normally
 	# until it recurses down to the elements in the list of lights, when it will
 	# use the Light encoder.
-	return encodeLights({'name':name, 'lights':lights})
+	return dumps({'name':name, 'lights':lights}, cls=_LightSaveEncoder, sort_keys=True, indent=2)
 	
 def decodeState(state):
 	"""
