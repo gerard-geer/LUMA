@@ -98,10 +98,6 @@ class ClientManager(object):
 				'. ('+str(e)+')\n'+str(res)
 				return _CONN_ERR
 			
-		except ValueError as e:
-			_CONN_ERR['message'] = 'Error parsing JSON when sending status to '+str(address)+	\
-			'. ('+str(e)+')'
-			return _CONN_ERR
 		# Socket.error
 		except error as e:
 			print(' Could not connect to address '+str(address))
@@ -192,11 +188,7 @@ class ClientManager(object):
 				_CONN_ERR['message'] = 'Error decoding JSON when receiving change from '+str(address)+	\
 				'. ('+str(e)+')'
 				return _CONN_ERR
-			
-		except ValueError as e:
-			_CONN_ERR['message'] = 'Error parsing JSON when sending change to '+str(address)+	\
-			'. ('+str(e)+')'
-			return _CONN_ERR
+
 		# Socket.error
 		except error as e:
 			print('   Could not connect to address '+str(address))
