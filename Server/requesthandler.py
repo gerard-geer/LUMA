@@ -167,13 +167,22 @@ class RequestHandler(object):
 			if isinstance(req, unicode) or isinstance(req, str):
 				req = loads(req)
 		except:
+			print(' Could not decode JSON of request.')
 			return {'lights':[]}
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
 		if not self._sanitizeLightQuery(req):
+			print(' Request did not pass sanitation.')
 			return {'lights':[]}
 			
+		# Print the query.
+		printedQuery = req['query']
+		if len(printedQuery) > 71: 
+			printedQuery = printedQuery[:68]+'...'
+		print(' Query: '+printedQuery)
+		
+		# Create a place to store the query results.
 		requested = []
 		
 		# Get the subset of all allowed lights.
@@ -203,6 +212,7 @@ class RequestHandler(object):
 											'name':light['name'],	\
 											'client':light['client']})
 		
+		print(' Query returned '+str(len(requested))+' lights.')
 		return {'lights':requested}
 		
 	def stateQuery(self, req):
@@ -226,25 +236,31 @@ class RequestHandler(object):
 			if isinstance(req, unicode) or isinstance(req, str):
 				req = loads(req)
 		except:
+			print(' Could not decode JSON of request.')
 			return {'success': False,
 					'message': 'Invalid query.',
 					'id': None}
 			
 		# Sanitize the request.
 		if not self._sanitizeStateQuery(req):
+			print(' Request did not pass sanitation.')
 			return {'success': False,
 					'message': 'Invalid query.',
 					'id': None}
 					
 		# Get the light.
 		light = self._lm.getLight(req['id'])
+		print(' By UUID: '+req['uuid'])
 		if light == None:
+			print(' Light does not exist on server.')
 			return {'success': False,
-					'message': 'Light does not exist.',
+					'message': 'Light does not exist on server.',
 					'id': req['id']}
+		print(' For: '+str(light['id'])+' ('+str(light['name'])+')')
 					
 		# Check to see if the user can access the light.
 		if not self._lm.isAllowed(req['uuid'], req['id']):
+			print(' User tried to access forbidden light.')
 			return {'success': False,
 					'message': 'User not allowed to access light.',
 					'id': req['id']}
@@ -253,16 +269,19 @@ class RequestHandler(object):
 		# that's another problem.
 		address = self._am.getAddress(light['client'])
 		if address == None:
+			print(' Unrecognized client name/alias.')
 			return {'success': False,
 					'message': 'Client alias not recognized.',
 					'id': req['id'],
 					'client': light['client']}
 		
 		# If we can, well, that's good.
+		print(' To: '+address+' ('+light['client']+')')
 		res = self._cm.sendStatusRequest(address, req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
+			print(' Could not connect to client. '+res['message'])
 			return {'success': False,
 					'message': 'Could not connect to client. Error: '+res['message'],
 					'id': req['id'],
@@ -271,6 +290,8 @@ class RequestHandler(object):
 			resp = {'success': res['type'] == 'status',
 					'message': res['message'],
 					'client': light['client']}
+			# Append the keys from the client's response's data to our response 
+			# being sent back to the interface.
 			resp.update(res['data'])
 			return resp
 				
@@ -294,19 +315,23 @@ class RequestHandler(object):
 		# need to worry about parsing it.
 		
 		if not self._sanitizeStateUpdate(req):
+			print(' Could not decode JSON request.')
 			return {'lights':None,
 					'success': False,
 					'message': 'Request poorly formed.'}
 					
+		print(' By UUID: '+req['uuid'])
+		
 		# Create a list to store our updated states in.
 		updated = []
-		
 		# Go through each submitted state and try to abide.
 		for submitted in req['lights']:
+			print(' Updating light: '+submitted['id']+' ('+submitted['name']+'):')
 			# Validate the light.
 			validationError = self._cm.validateLight(submitted)
 			# If it fails validation, we have to reject it and move on.
 			if validationError:
+				print('   Light failed validation: '+validationError)
 				submitted['success'] = False
 				submitted['message'] = validationError
 				updated.append(submitted)
@@ -316,12 +341,14 @@ class RequestHandler(object):
 			serverVersion = self._lm.getLight(submitted['id'])
 			# If we don't have a record of the light well poop.
 			if not serverVersion:
+				print('   Light not in server records.')
 				submitted['success'] = False
 				submitted['message'] = 'Light not in server records.'
 				updated.append(submitted)
 				continue
 			# If the client doesn't match, we have a problem.
 			if serverVersion['client'] != submitted['client']:
+				print('   Client does not match server records.')
 				submitted['success'] = False
 				submitted['message'] = 'Client does not match server records.'
 				updated.append(submitted)
@@ -331,24 +358,29 @@ class RequestHandler(object):
 			addr = self._am.getAddress(submitted['client'])
 			# If we can't figure that out, well...
 			if not addr:
+				print('   Client not recognized.')
 				submitted['success'] = False
-				submitted['message'] = 'Could not resolve client IP.'
+				submitted['message'] = 'Client not recognized.'
 				updated.append(submitted)
 				continue
 			# Now that we have a valid light and a valid address, let's
 			# send the update.
+			print('   To: '+str(addr)+' ('+str(submitted['client'])+')')
 			clientRes = self._cm.sendChangeRequest(addr, submitted)
 			# If that action errors out, we have to pass it up the ladder too.
 			if clientRes['type'] == 'error':
+				print('   Error in client interaction: '+clientRes['message'])
 				submitted['success'] = False
 				submitted['message'] = clientRes['message']
 				updated.append(submitted)
 				continue
 			# At this point we should have finally had a successful update.
+			print('   Light successfully updated.')
 			submitted['success'] = True
 			submitted['message'] = clientRes['message']
 			updated.append(submitted)
 	
+		print(' All requested lights handled.')
 		return {'lights': updated,
 				'success': True,
 				'message': None}
@@ -453,4 +485,32 @@ class RequestHandler(object):
 		self._lm.save("REMOTE LIGHT BACKUP "+timest_amp+".json")
 		self._am.save("REMOTE ALIAS BACKUP "+timest_amp+".json")
 		return {'success':True, 'message':None}
+		
+	def printInfo(self):
+		"""
+		Prints info about the Request Handler and its managers.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			None.
+		
+		Preconditions:
+			The Request Handler is initialized.
+			
+		Postconditions:
+			Info is printed.
+		"""
+		# Get listings of the clients and lights on the server.
+		clients = self._am.getPossibleAliases('')
+		lights = self._lm.getLightCatalog()
+		
+		# Print those listings.
+		print('\n Clients: ('+str(len(clients))+')')
+		for client in self._am.getPossibleAliases(''):
+			print('   '+client)
+		print('\n Lights: ('+str(len(lights.keys()))+')')
+		for key in lights.keys():
+			print("   %-20s : "%str(key)+str(lights[key]))
 		
