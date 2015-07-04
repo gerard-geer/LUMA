@@ -1,397 +1,369 @@
 {
-    "100001": {
-        "client": "Research Room", 
-        "name": "Ceiling", 
-		"id": "100001",
-        "permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-    }, 
-    "100002": {
-        "client": "Gerard's Room", 
-        "name": "Gerard's Desk", 
-		"id": "100002",
-        "permitted": [
-            "6", 
-            "7"
-        ]
-    }, 
-    "100003": {
-        "client": "DUMMYNAME", 
-        "name": "Max's Couch", 
-		"id": "100003",
-        "permitted": [
-            "3"
-        ]
-    }, 
-    "100004": {
-        "client": "Research Room", 
-        "name": "Shelves", 
-		"id": "100004",
-        "permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-    }, 
-    "100005": {
-        "client": "Research Room", 
-        "name": "Under Countertop", 
-		"id": "100005",
-        "permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-    },
-	"100001": {
-        "client": "Research Room", 
-		"id": "100001",
-		"name": "Ceiling", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100004": {
-        "client": "Research Room", 
-		"id": "100004",
-		"name": "Shelves",
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ] 
-	}, 
-	"100010": {
-        "client": "Research Room", 
-		"id": "100010",
-		"name": "Chair", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100011": {
-        "client": "Research Room", 
-		"id": "100011",
-		"name": "Left Window",
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ] 
-	}, 
-	"100012": {
-        "client": "Research Room", 
-		"id": "100012",
-		"name": "Right Window", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100013": {
-        "client": "Research Room", 
-		"id": "100013",
-		"name": "Under Cabinet", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100014": {
-        "client": "Research Room", 
-		"id": "100014",
-		"name": "On Top Of Cabinet", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100015": {
-        "client": "Research Room", 
-		"id": "100015",
-		"name": "Door", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100016": {
-        "client": "Research Room", 
-		"id": "100016",
-		"name": "Rafter Near Door", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100017": {
-        "client": "Research Room", 
-		"id": "100017",
-		"name": "Rafter Near Window", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100018": {
-        "client": "Research Room", 
-		"id": "100018",
-		"name": "Pipes", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100019": {
-        "client": "Research Room", 
-		"id": "100019",
-		"name": "Sketchy Box", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100020": {
-        "client": "Research Room", 
-		"id": "100020",
-		"name": "Garbage Can", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100021": {
-        "client": "Research Room", 
-		"id": "100021",
-		"name": "Dead Squirrel In Corner", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100022": {
-        "client": "Research Room", 
-		"id": "100022",
-		"name": "Acid Tub", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100023": {
-        "client": "Research Room", 
-		"id": "100023",
-		"name": "3D Printer", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100024": {
-        "client": "Research Room", 
-		"id": "100024",
-		"name": "Booze Display", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100025": {
-        "client": "Research Room", 
-		"id": "100025",
-		"name": "Moffitt Box", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100026": {
-        "client": "Research Room", 
-		"id": "100026",
-		"name": "Famicom", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100027": {
-        "client": "Research Room", 
-		"id": "100027",
-		"name": "Mirror", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100028": {
-        "client": "Research Room", 
-		"id": "100028",
-		"name": "CSH Mural", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100029": {
-        "client": "Research Room", 
-		"id": "100029",
-		"name": "Smaller windows", 
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}, 
-	"100030": {
-        "client": "Research Room", 
-		"id": "100030",
-		"name": "Northwest Corner",
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ] 
-	}, 
-	"100031": {
-        "client": "Research Room", 
-		"id": "100031",
-		"name": "Crappy Chair",
-		"permitted": [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5", 
-            "6", 
-            "7"
-        ]
-	}
+  "5822a89c-3368-4fd9-8045-410d9297ddf9": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Ceiling", 
+    "id": "5822a89c-3368-4fd9-8045-410d9297ddf9"
+  }, 
+  "0b019c16-09dc-4b73-8f20-5ea9dd4bcb09": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "On Top Of Cabinet", 
+    "id": "0b019c16-09dc-4b73-8f20-5ea9dd4bcb09"
+  }, 
+  "64779fc9-e43c-433a-955f-97afbe652b7b": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Shelves", 
+    "id": "64779fc9-e43c-433a-955f-97afbe652b7b"
+  }, 
+  "48acfcb0-831f-4896-82de-4a5a16f5ccfa": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Famicom", 
+    "id": "48acfcb0-831f-4896-82de-4a5a16f5ccfa"
+  }, 
+  "6b433745-f249-49b0-8767-33a04d43b4c5": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Garbage Can", 
+    "id": "6b433745-f249-49b0-8767-33a04d43b4c5"
+  }, 
+  "bf54084c-9119-4f78-886f-950673bf6ff2": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Door", 
+    "id": "bf54084c-9119-4f78-886f-950673bf6ff2"
+  }, 
+  "d87d179b-2bda-49e9-9f65-21fe5b012b6f": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Dead Squirrel In Corner", 
+    "id": "d87d179b-2bda-49e9-9f65-21fe5b012b6f"
+  }, 
+  "7847ef7d-f273-4353-ae28-c1569e3bdb3c": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Chair", 
+    "id": "7847ef7d-f273-4353-ae28-c1569e3bdb3c"
+  }, 
+  "2f88bf3e-cf99-40eb-89df-9d154a938d0a": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "3D Printer", 
+    "id": "2f88bf3e-cf99-40eb-89df-9d154a938d0a"
+  }, 
+  "68f54041-6f51-499d-84dc-7fd117cd7efc": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Rafter Near Window", 
+    "id": "68f54041-6f51-499d-84dc-7fd117cd7efc"
+  }, 
+  "b0846f4f-67cd-4c87-becc-3fe2de677029": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Acid Tub", 
+    "id": "b0846f4f-67cd-4c87-becc-3fe2de677029"
+  }, 
+  "d6ac0be9-e94e-43bf-8286-c4b27a8b3875": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Under Cabinet", 
+    "id": "d6ac0be9-e94e-43bf-8286-c4b27a8b3875"
+  }, 
+  "d19fe3be-8efb-4992-9e2a-171a978802fd": {
+    "id": "d19fe3be-8efb-4992-9e2a-171a978802fd", 
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Under Countertop"
+  }, 
+  "5ee9b513-3389-497c-a8de-434ab1bf6d5a": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Sketchy Box", 
+    "id": "5ee9b513-3389-497c-a8de-434ab1bf6d5a"
+  }, 
+  "f787e638-7be5-4402-b0c6-0aff833aa989": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Mirror", 
+    "id": "f787e638-7be5-4402-b0c6-0aff833aa989"
+  }, 
+  "95784631-db24-4102-941e-251c1afc5fd0": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Smaller windows", 
+    "id": "95784631-db24-4102-941e-251c1afc5fd0"
+  }, 
+  "5dda09c3-52ec-4cbf-b4de-1d346999b86e": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Pipes", 
+    "id": "5dda09c3-52ec-4cbf-b4de-1d346999b86e"
+  }, 
+  "958ff120-0354-4b78-b418-f4cbff1efa9d": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Northwest Corner", 
+    "id": "958ff120-0354-4b78-b418-f4cbff1efa9d"
+  }, 
+  "42798d52-6f90-481d-bdf5-90d23d01ae30": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Rafter Near Door", 
+    "id": "42798d52-6f90-481d-bdf5-90d23d01ae30"
+  }, 
+  "91a8de81-ca2c-4197-b099-56722de6429f": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Moffitt Box", 
+    "id": "91a8de81-ca2c-4197-b099-56722de6429f"
+  }, 
+  "e726c1a5-5b2a-43db-9d38-9f80a77657cd": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Crappy Chair", 
+    "id": "e726c1a5-5b2a-43db-9d38-9f80a77657cd"
+  }, 
+  "3d7453dc-7475-4b89-94f2-8cf816f55da1": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Right Window", 
+    "id": "3d7453dc-7475-4b89-94f2-8cf816f55da1"
+  }, 
+  "08306fd2-3c62-4424-bc6e-1f15fe5e5c1a": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Booze Display", 
+    "id": "08306fd2-3c62-4424-bc6e-1f15fe5e5c1a"
+  }, 
+  "706cfc5b-07c2-421a-b9e0-db6bdea216fc": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "Left Window", 
+    "id": "706cfc5b-07c2-421a-b9e0-db6bdea216fc"
+  }, 
+  "3f13ef54-d013-4362-996a-ddd9163dde68": {
+    "client": "Research Room", 
+    "permitted": [
+      "1", 
+      "2", 
+      "3", 
+      "4", 
+      "5", 
+      "6", 
+      "7"
+    ], 
+    "name": "CSH Mural", 
+    "id": "3f13ef54-d013-4362-996a-ddd9163dde68"
+  }, 
+  "394105f9-c0c3-4585-95a6-c51cb179d51a": {
+    "id": "394105f9-c0c3-4585-95a6-c51cb179d51a", 
+    "client": "Gerard's Room", 
+    "permitted": [
+      "6", 
+      "7"
+    ], 
+    "name": "Gerard's Desk"
+  }, 
+  "20d077c2-513b-490f-b03e-664ef78850af": {
+    "id": "20d077c2-513b-490f-b03e-664ef78850af", 
+    "client": "DUMMYNAME", 
+    "permitted": [
+      "3"
+    ], 
+    "name": "Max's Couch"
+  }
 }
