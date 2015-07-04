@@ -9,12 +9,15 @@ from json import dumps, loads, JSONEncoder
 from light import Light
 from colorchannel import ColorChannel
 
-def _encode_light(l):
+def _encode_light(l, complete=False):
 	"""
 	Encodes a light object into a dictionary.
 	
 	Parameters:
 		l (Light): The Light instance to encode.
+		complete (Boolean) (Default = False): Whether or not to encode
+			all components of the light. This mode is meant for saving
+			the state of the lights to file.
 	
 	Returns:
 		A dictionary containing all the fields of the Light instance.
@@ -34,6 +37,10 @@ def _encode_light(l):
 	d['g_v'] = l.g.vals.aslist()
 	d['b_t'] = l.b.times.aslist()
 	d['b_v'] = l.b.vals.aslist()
+	if complete:
+		d['r_c'] = l.r.chan
+		d['g_c'] = l.g.chan
+		d['b_c'] = l.b.chan
 	return d
 
 class _LightEncoder(JSONEncoder):
