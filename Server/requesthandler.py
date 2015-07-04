@@ -315,6 +315,7 @@ class RequestHandler(object):
 		# need to worry about parsing it.
 		
 		if not self._sanitizeStateUpdate(req):
+			print(' Could not decode JSON request.')
 			return {'lights':None,
 					'success': False,
 					'message': 'Request poorly formed.'}
@@ -324,10 +325,12 @@ class RequestHandler(object):
 		
 		# Go through each submitted state and try to abide.
 		for submitted in req['lights']:
+			print(' Updating light: '+submitted['id']+' ('+submitted['name']+'):')
 			# Validate the light.
 			validationError = self._cm.validateLight(submitted)
 			# If it fails validation, we have to reject it and move on.
 			if validationError:
+				print('   sLight failed validation: '+validationError)
 				submitted['success'] = False
 				submitted['message'] = validationError
 				updated.append(submitted)
@@ -337,12 +340,14 @@ class RequestHandler(object):
 			serverVersion = self._lm.getLight(submitted['id'])
 			# If we don't have a record of the light well poop.
 			if not serverVersion:
+				print('   Light not in server records.')
 				submitted['success'] = False
 				submitted['message'] = 'Light not in server records.'
 				updated.append(submitted)
 				continue
 			# If the client doesn't match, we have a problem.
 			if serverVersion['client'] != submitted['client']:
+				print('   Client does not match server records.')
 				submitted['success'] = False
 				submitted['message'] = 'Client does not match server records.'
 				updated.append(submitted)
@@ -352,8 +357,9 @@ class RequestHandler(object):
 			addr = self._am.getAddress(submitted['client'])
 			# If we can't figure that out, well...
 			if not addr:
+				print('   Client not recognized.')
 				submitted['success'] = False
-				submitted['message'] = 'Could not resolve client IP.'
+				submitted['message'] = 'Client not recognized.'
 				updated.append(submitted)
 				continue
 			# Now that we have a valid light and a valid address, let's
@@ -361,11 +367,13 @@ class RequestHandler(object):
 			clientRes = self._cm.sendChangeRequest(addr, submitted)
 			# If that action errors out, we have to pass it up the ladder too.
 			if clientRes['type'] == 'error':
+				print('   Error in client interaction: '+clientRes['message'])
 				submitted['success'] = False
 				submitted['message'] = clientRes['message']
 				updated.append(submitted)
 				continue
 			# At this point we should have finally had a successful update.
+			print('   Light successfully updated.')
 			submitted['success'] = True
 			submitted['message'] = clientRes['message']
 			updated.append(submitted)
