@@ -6,6 +6,7 @@ from json import dumps
 from flask import Flask, send_from_directory, request
 from requesthandler import RequestHandler
 from datetime import datetime
+import logging
 
 """
 The LUMA central server. It's a Flask app. All non-file requests are handled
@@ -75,5 +76,10 @@ def stateUpdate():
 	return dumps(rh.lightUpdate(request.get_json()))
 	
 if __name__ == '__main__':
+	# Disable normal logging so that we don't clutter up things.
+	log = logging.getLogger('werkzeug')
+	log.setLevel(logging.WARNING)
+	# Print the startup header.
 	printStartupHeader()
+	# Start the server.
 	app.run(host='0.0.0.0')
