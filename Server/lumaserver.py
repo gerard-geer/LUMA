@@ -75,7 +75,25 @@ def stateUpdate():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 	
-if __name__ == '__main__':
+def main():
+	"""
+	The main execution function of the LUMA server. Initializes and loads the
+	managers, then starts Flask.
+	If the loading of any manager fails, an initial setup dialog for the manager
+	is run.
+	
+	Parameters:
+		None.
+	
+	Returns:
+		None.
+		
+	Preconditions:
+		None.
+		
+	Postconditions:
+		The program is running.
+	"""
 	# Disable normal logging so that we don't clutter up things.
 	log = logging.getLogger('werkzeug')
 	log.setLevel(logging.WARNING)
@@ -83,3 +101,6 @@ if __name__ == '__main__':
 	printStartupHeader()
 	# Start the server.
 	app.run(host='0.0.0.0')
+	
+if __name__ == '__main__':
+	main()
