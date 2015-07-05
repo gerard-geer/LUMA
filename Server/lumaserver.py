@@ -74,6 +74,13 @@ def stateUpdate():
 	print(' Light State Update from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
+
+def printInitialSetupBanner():
+	print('*******************************************************************************')
+	print(" Welcome to the LUMA server!")
+	print(" Sadly, there have been problems during startup.")
+	print(" This may only be first-time jitters.")
+	print('-------------------------------------------------------------------------------')
 	
 def main():
 	"""
