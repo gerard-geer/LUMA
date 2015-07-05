@@ -82,6 +82,41 @@ def printInitialSetupBanner():
 	print(" This may only be first-time jitters.")
 	print('-------------------------------------------------------------------------------')
 	
+def createAliasConfigFile():
+	"""
+	A utility function for first time or error time startup. If the alias manager
+	fails to open its config file, this function should be called to create one.
+	
+	Parameters:
+		None.
+		
+	Returns:
+		None.
+		
+	Preconditions:
+		config/aliases.json either doesn't exist or is ready to get nuked.
+		
+	Postconditions:
+		A new config file is born.
+	"""
+	print(" The alias configuration file doesn't seem to exist. Let's specify")
+	print(" some client names and their IP addresses and make one.")
+	resp = 'y'
+	clients = {}
+	while input == '':
+		print(" Client #"+str(len(clients.keys())+1))
+		name = raw_input('   Client name: ')
+		addr = raw_input('   Client address: ')
+		clients[name] = addr
+		resp = raw_input(" Another? (Y/n): ")
+	print(" Clients created...")
+	print(" Creating new config file...")
+	f = open('config/aliases.json', 'w')
+	print(" Dumping client-->address table to file...")
+	f.write(dumps(clients, indent=2))
+	print(" Done.")
+	print('-------------------------------------------------------------------------------')
+	
 def main():
 	"""
 	The main execution function of the LUMA server. Initializes and loads the
