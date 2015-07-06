@@ -67,7 +67,7 @@ def stateUpdate():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 
-def printInitialSetupBanner():
+def printInitialSetupHeader():
 	print('*******************************************************************************')
 	print(" Welcome to the LUMA server!")
 	print(" Sadly, there have been problems during startup.")
@@ -103,7 +103,7 @@ def createAliasConfigFile():
 	print(" some client names and their IP addresses and make one.")
 	resp = 'y'
 	clients = {}
-	while input == '':
+	while resp == 'y':
 		print(" Client #"+str(len(clients.keys())+1))
 		name = raw_input('   Client name: ')
 		addr = raw_input('   Client address: ')
@@ -175,7 +175,17 @@ def main():
 	rh = RequestHandler.Instance()
 	
 	# Try to load the components of the request handler.
-	lm, am = rh.load()
+	am, lm = rh.load()
+	
+	# If either fail we have to act.
+	if not (am and lm):
+		printInitialSetupHeader()
+		if not am:
+			createAliasConfigFile()
+		if not lm:
+			createLightConfigFile()
+		return
+	
 	
 	# Print the startup header.
 	printStartupHeader()
