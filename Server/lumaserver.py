@@ -100,7 +100,7 @@ def createAliasConfigFile():
 		A new config file is born.
 	"""
 	print(" The alias configuration file doesn't seem to exist. Let's specify")
-	print(" some client names and their IP addresses and make one.")
+	print(" some client names and their IP addresses and make one.\n")
 	resp = 'y'
 	clients = {}
 	while resp.lower() == 'y':
@@ -135,7 +135,7 @@ def createLightConfigFile():
 		A new config file is born.
 	"""
 	print(" The lights configuration file doesn't seem to exist. Let's create an empty")
-	print(' one to get running. You can add lights later.')
+	print(' one to get running. You can add lights later.\n')
 	raw_input(' ## Press enter to create a new light configuration file. ##')
 	print(' Creating document structure...')
 	lights = {}
@@ -184,13 +184,13 @@ def main():
 			try:
 				createAliasConfigFile()
 			except KeyboardInterrupt:
-				print('\n Keyboard interrupt. Cancelling.')
+				print('\n\n Keyboard interrupt. Cancelling.')
 				print('-------------------------------------------------------------------------------')
 		if not lm:
 			try:
 				createLightConfigFile()
 			except KeyboardInterrupt:
-				print('\n Keyboard interrupt. Cancelling.')
+				print('\n\n Keyboard interrupt. Cancelling.')
 				print('-------------------------------------------------------------------------------')
 		return
 	
