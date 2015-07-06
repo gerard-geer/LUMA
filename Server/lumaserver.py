@@ -117,6 +117,37 @@ def createAliasConfigFile():
 	print(" Done.")
 	print('-------------------------------------------------------------------------------')
 	
+def createLightConfigFile():
+	"""
+	A utility function for first time or error time startup. If the light manager
+	fails to open its config file, this function should be called to create one.
+	
+	Parameters:
+		None.
+		
+	Returns:
+		None.
+		
+	Preconditions:
+		config/lights.json either doesn't exist or is ready to get nuked.
+		
+	Postconditions:
+		A new config file is born.
+	"""
+	print(" The lights configuration file doesn't seem to exist. Let's create an empty")
+	print(' one to get running. You can add lights later.')
+	raw_input(' ## Press enter to create a new light configuration file. ##')
+	print(' Creating document structure...')
+	lights = {}
+	print(' Creating new config file...')
+	f = open('config/lights.json','w')
+	print(' Dumping light structure to file...')
+	f.write(dumps(lights, indent = 2))
+	print(' Done.')
+	print('-------------------------------------------------------------------------------')
+	
+	
+	
 def main():
 	"""
 	The main execution function of the LUMA server. Initializes and loads the
