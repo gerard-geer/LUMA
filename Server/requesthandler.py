@@ -46,7 +46,7 @@ class RequestHandler(object):
 			The Light and Alias Managers configurations are attempted to
 			be loaded.
 		"""
-		return (self._am.load(), self.lm.load())
+		return (self._am.load(), self._lm.load())
 	
 		
 	def _sanitizeLightQuery(self, req):
