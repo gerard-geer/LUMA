@@ -181,9 +181,17 @@ def main():
 	if not (am and lm):
 		printInitialSetupHeader()
 		if not am:
-			createAliasConfigFile()
+			try:
+				createAliasConfigFile()
+			except KeyboardInterrupt:
+				print('\n Keyboard interrupt. Cancelling.')
+				print('-------------------------------------------------------------------------------')
 		if not lm:
-			createLightConfigFile()
+			try:
+				createLightConfigFile()
+			except KeyboardInterrupt:
+				print('\n Keyboard interrupt. Cancelling.')
+				print('-------------------------------------------------------------------------------')
 		return
 	
 	
