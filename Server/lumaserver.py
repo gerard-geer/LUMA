@@ -19,7 +19,6 @@ sent back to the web interface as confirmation. Timely? About as can be.
 Responsive? If it's your lucky day.
 """
 app = Flask(__name__)
-rh = RequestHandler.Instance()
 	
 # Index page.
 @app.route('/', methods=['GET'])
@@ -140,6 +139,13 @@ def main():
 	# Disable normal logging so that we don't clutter up things.
 	log = logging.getLogger('werkzeug')
 	log.setLevel(logging.WARNING)
+	
+	# Create the request handler.
+	rh = RequestHandler.Instance()
+	
+	# Try to load the components of the request handler.
+	lm, am = rh.load()
+	
 	# Print the startup header.
 	printStartupHeader()
 	# Start the server.
