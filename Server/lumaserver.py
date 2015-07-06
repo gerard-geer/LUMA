@@ -21,13 +21,6 @@ Responsive? If it's your lucky day.
 app = Flask(__name__)
 rh = RequestHandler.Instance()
 	
-# Draw the start-up message.
-def printStartupHeader():
-	print('*******************************************************************************')
-	print(" You're now running the LUMA Server!")
-	rh.printInfo()
-	print('*******************************************************************************')
-
 # Index page.
 @app.route('/', methods=['GET'])
 def fetchHTML():
@@ -81,6 +74,14 @@ def printInitialSetupBanner():
 	print(" Sadly, there have been problems during startup.")
 	print(" This may only be first-time jitters.")
 	print('-------------------------------------------------------------------------------')
+	
+# Draw the start-up message.
+def printStartupHeader():
+	print('*******************************************************************************')
+	print(" You're now running the LUMA Server!")
+	rh.printInfo()
+	print('*******************************************************************************')
+
 	
 def createAliasConfigFile():
 	"""
