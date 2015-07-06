@@ -52,7 +52,7 @@ class AliasManager(object):
 			None.
 			
 		Returns:
-			None.
+			True if the config was able to be loaded, False otherwise.
 			
 		Preconditions:
 			The alias file must exist.
@@ -60,7 +60,11 @@ class AliasManager(object):
 		Postconditions:
 			The aliases are loaded into the internal dictionary.
 		"""
-		file = open(self._filename, 'r')
+		try:
+			file = open(self._filename, 'r')
+		except IOError:
+			return False
+			
 		s = ''
 		for line in file:
 			# Split the line to see if its first token is a comment delimiter.
@@ -72,7 +76,8 @@ class AliasManager(object):
 			s += line
 		self._aliases = loads(s)
 		file.close()
-	
+		return True
+		
 	def save(self, filename=None):
 		"""
 		Saves the aliases to the configuration file.

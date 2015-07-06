@@ -68,13 +68,13 @@ def printWelcomeHeader(luma):
 		luma (LUMA): The Luma instance being used.
 		
 	Returns:
-		None:
+		None.
 	
 	Preconditions:
 		The Luma instance has been initialized and loaded.
 		
 	Postconditions:
-		None
+		None.
 	"""
 	lights = luma.getLights()
 	print('*******************************************************************************')
@@ -89,7 +89,45 @@ def printWelcomeHeader(luma):
 		print("   %-20s : "%str(light.id)+str(light.name))
 	print('*******************************************************************************')
 	
-if __name__ == '__main__':
+def firstTimeStartup():
+	"""
+	If the file config file doesn't exist, this function is called
+	in order to initialize the new client.
+	It asks for a name, and creates an empty configuration file 
+	with it.
+	
+	Parameters:
+		None.
+	
+	Returns:
+		None.
+		
+	Preconditions:
+		None.
+		
+	Postconditions:
+		A fresh empty configuration file is stored in 'config/'.
+	"""
+	print('*******************************************************************************')
+	print(" Welcome to your LUMA Client!\n")
+	print(" It appears this is the first time you've run the client, or your configuration")
+	print(" is corrupted.\n")
+	print(" Let's do some initial setup.\n")
+	name = raw_input(" What would you like your client's name to be?\n -->")
+	print(" Thanks, that's all we need for now. You will be able to add lights later.")
+	
+	print(" Creating configuration...")
+	s = encodeState(name, {})
+	
+	print(" Creating config file...")
+	f = open(FILE, 'w')
+	
+	print(" Saving...")
+	f.write(s)
+	print(" Done.")
+	print('*******************************************************************************')
+	
+def main():
 	"""
 	The main execution function.
 	
@@ -105,8 +143,18 @@ if __name__ == '__main__':
 	Postconditions:
 		Still firmly planted holding up fence.
 	"""
+	luma = LUMA(FILE)
+	
 	# load the LUMA configuration data and start its update loop.
-	luma.load()
+	success = luma.load()
+	if not success:
+		try:
+			firstTimeStartup()
+		except:
+			print('\n\n Keyboard interrupt. Cancelling.')
+			print('*******************************************************************************')
+		return
+		
 	luma.start()
 	
 	# Create the SocketServer client.
@@ -128,3 +176,6 @@ if __name__ == '__main__':
 	# updater.
 	except:
 		luma.stop()
+	
+if __name__ == '__main__':
+	main()

@@ -72,10 +72,10 @@ class LUMA(object):
 			filename (String): The name of the lighting state JSON file.
 			
 		Returns:
-			None.
+			True if the file was loaded, false otherwise.
 			
 		Preconditions:
-			The file is good.
+			None.
 			
 		Postconditions:
 			The file is temporarily opened and closed, and the state it contains
@@ -84,7 +84,11 @@ class LUMA(object):
 		# We don't know if the json is a single line or not, so we go through
 		# potentially multiple lines in reading the file.
 		s = ''
-		f = open(self.file, 'r')
+		try:
+			f = open(self.file, 'r')
+		except IOError:
+			return False
+			
 		for line in f:
 			# Split the line to see if its first token is a comment delimiter.
 			tokens = line.split()
@@ -99,6 +103,7 @@ class LUMA(object):
 		self.lightLock.acquire(True)
 		self.name, self.lights = decodeState(s)
 		self.lightLock.release()
+		return True
 		
 	def save(self):
 		"""

@@ -53,7 +53,7 @@ class LightManager(object):
 			None.
 		
 		Returns:
-			None.
+			True if the load operation was successful, False otherwise.
 			
 		Preconditions:
 			The restricted global filename points to a valid configuration 
@@ -63,7 +63,12 @@ class LightManager(object):
 			The lights loaded from file are stored in the restricted global light
 			list.
 		"""
-		file = open(self._filename, 'r')
+		
+		try:
+			file = open(self._filename, 'r')
+		except IOError:
+			return False
+			
 		s = ''
 		for line in file:
 			# Split the line to see if its first token is a comment delimiter.
@@ -76,6 +81,7 @@ class LightManager(object):
 			
 		self._lights = loads(s)
 		file.close()
+		return True
 		
 	def save(self, filename=None):
 		"""
