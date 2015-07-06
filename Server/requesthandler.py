@@ -28,8 +28,26 @@ class RequestHandler(object):
 		self._am = AliasManager.Instance()
 		self._cm = ClientManager.Instance()
 		
-		self._lm.load()
-		self._am.load()
+	def load(self):
+		"""
+		Loads the alias and light manager configurations from file.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			(bool, bool) Where the first term is the success in loading
+			the Alias Manager and the second the Light Manager.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			The Light and Alias Managers configurations are attempted to
+			be loaded.
+		"""
+		return (self._am.load(), self.lm.load())
+	
 		
 	def _sanitizeLightQuery(self, req):
 		"""
