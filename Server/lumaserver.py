@@ -75,10 +75,10 @@ def printInitialSetupHeader():
 	print('-------------------------------------------------------------------------------')
 	
 # Draw the start-up message.
-def printStartupHeader():
+def printStartupHeader(handler):
 	print('*******************************************************************************')
 	print(" You're now running the LUMA Server!")
-	rh.printInfo()
+	handler.printInfo()
 	print('*******************************************************************************')
 
 	
@@ -107,7 +107,8 @@ def createAliasConfigFile():
 		print(" Client #"+str(len(clients.keys())+1))
 		name = raw_input('   Client name: ')
 		addr = raw_input('   Client address: ')
-		clients[name] = addr
+		if name != '' and addr != '':
+			clients[name] = addr
 		resp = raw_input(" Another? (Y/n): ")
 	print(" Clients created...")
 	print(" Creating new config file...")
@@ -197,7 +198,7 @@ def main():
 	
 	
 	# Print the startup header.
-	printStartupHeader()
+	printStartupHeader(rh)
 	# Start the server.
 	app.run(host='0.0.0.0')
 	
