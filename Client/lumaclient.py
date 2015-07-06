@@ -114,7 +114,7 @@ def firstTimeStartup():
 	print(" is corrupted.\n")
 	print(" Let's do some initial setup.\n")
 	name = raw_input(" What would you like your client's name to be?\n -->")
-	print(" Thanks, that's all we need for now.")
+	print(" Thanks, that's all we need for now. You will be able to add lights later.")
 	
 	print(" Creating configuration...")
 	s = encodeState(name, {})
