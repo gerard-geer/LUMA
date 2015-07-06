@@ -148,7 +148,11 @@ def main():
 	# load the LUMA configuration data and start its update loop.
 	success = luma.load()
 	if not success:
-		firstTimeStartup()
+		try:
+			firstTimeStartup()
+		except:
+			print('\n\n Keyboard interrupt. Cancelling.')
+			print('*******************************************************************************')
 		return
 		
 	luma.start()
