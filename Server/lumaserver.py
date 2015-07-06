@@ -103,7 +103,7 @@ def createAliasConfigFile():
 	print(" some client names and their IP addresses and make one.")
 	resp = 'y'
 	clients = {}
-	while resp == 'y':
+	while resp.lower() == 'y':
 		print(" Client #"+str(len(clients.keys())+1))
 		name = raw_input('   Client name: ')
 		addr = raw_input('   Client address: ')
