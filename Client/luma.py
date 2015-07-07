@@ -590,7 +590,15 @@ class LUMA(object):
 			return encodeResponse('error', None,	\
 			'Pin(s) '+str(inUse)+' already in use on client '+	\
 			str(self.name))
+		
+		# Check to make sure we aren't adding a duplicate light.
+		if self._exists(req['id']):
+			return encodeResponse('error', None,	\
+			'ID '+str(req['id'])+' already in use on client '+	\
+			str(self.name))
 			
+		
+		
 			
 		
 	def onRequest(self, s):
