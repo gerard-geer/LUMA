@@ -277,14 +277,14 @@ class LUMA(object):
 	
 	def pinsInUse(self, pins):
 		"""
-		Checks to see if any number of pins are already in use. Returns True if
-		any are.
+		Checks to see if any number of pins are already in use. Returns the
+		pin numbers that are in use.
 		
 		Parameters:
 			pins (Integer List): A list of all the pin numbers to check.
 			
 		Returns:
-			True, if any of the checked pins are in use. False otherwise.
+			The pin numbers that are in use already.
 			
 		Preconditions:
 			The LUMA instance is initialized.
@@ -292,13 +292,15 @@ class LUMA(object):
 		Postconditions:
 			None.
 		"""
+		inUse = []
 		lights = self.getLights()
 		for l in lights:
-			if	l.r.chan in pins or \
-				l.g.chan in pins or \
-				l.b.chan in pins:
-				return True
-		return False
+			for p in pins:
+				if	l.r.chan == p or \
+					l.g.chan == p or \
+					l.b.chan == p:
+					inUse.append(p)
+		return inUse
 		
 	def _changeLight(self, id, rtimes, rvals, gtimes, gvals, btimes, bvals):
 		"""
@@ -580,7 +582,15 @@ class LUMA(object):
 				" G='"+str(req['data']['g_c'])+"'"	\
 				" B='"+str(req['data']['b_c'])+"'")
 				
-		if
+		# Check to see if any pins are in use already.
+		inUse = self.pinsInUse([ int(float(req['data']['r_c'])),	\
+							int(float(req['data']['r_c'])),	\
+							int(float(req['data']['r_c']))])
+		if len(inUse) > 0:
+			return encodeResponse('error', None,	\
+			'Pin(s) '+str(inUse)+' already in use on client '+	\
+			str(self.name))
+			
 			
 		
 	def onRequest(self, s):
