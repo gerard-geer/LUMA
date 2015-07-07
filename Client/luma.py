@@ -530,6 +530,24 @@ class LUMA(object):
 			return encodeResponse('error', None,	\
 			'Light '+str(req['data']['id'])+' does not exist on client '+	\
 			str(self.name))
+			
+			
+	def _onAddRequest(self, req):
+		"""
+		Defines behaviour when given an add-light request.
+		
+		Parameters:
+			req (Dictionary): The decoded request Dictionary.
+		
+		Returns:
+			A JSON String encoding the response to this request.
+		
+		Preconditions:
+			The request is valid.
+		
+		Postconditions:
+			A light is added.
+		"""
 		
 	def onRequest(self, s):
 		"""
