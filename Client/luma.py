@@ -274,6 +274,43 @@ class LUMA(object):
 			l.append(light)
 		self.lightLock.release()
 		return l
+		
+	def _addLight(self, id, name, numVals, r_c, g_c, b_c):
+		"""
+		Safely creates and adds a new light instance to the client.
+		
+		Parameters:
+			id (String): The ID number of the new light.
+			name (String): The name of the new light.
+			numVals (String): The number of values the light shall start with.
+			r (Integer): The pin number of the light's red channel.
+			g (Integer): The pin number of the light's green channel.
+			b (Integer): The pin number of the light's blue channel.
+		"""
+		# Create the timing and value lists.
+		r_t = [], r_v = [], g_t = [], g_v = [], b_t = [], b_v = []
+		for i in range(numVals):
+			r_t.append(1.0)
+			r_v.append(1.0)
+			g_t.append(1.0)
+			g_v.append(1.0)
+			b_t.append(1.0)
+			b_v.append(1.0)
+		
+		# Use those to construct the ColorChannels of the new Light.
+		r = ColorChannel(r_t, r_v, r_c)
+		g = ColorChannel(g_t, g_v, g_c)
+		b = ColorChannel(b_t, b_v, b_c)
+		
+		# Now we can create the new Light instance.
+		newLight = Light(r, g, b, name, id)
+		
+		# The tricky part is adding it to the data structures that
+		# are nearly strictly in the domain of the update thread.
+		self.lightLock.acquire(True)
+		self.lights.append(newLight)
+		self.lightLock.release()
+		
 	
 	def pinsInUse(self, pins):
 		"""
@@ -596,10 +633,8 @@ class LUMA(object):
 			return encodeResponse('error', None,	\
 			'ID '+str(req['id'])+' already in use on client '+	\
 			str(self.name))
-			
+
 		
-		
-			
 		
 	def onRequest(self, s):
 		"""
