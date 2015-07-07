@@ -696,6 +696,8 @@ class LUMA(object):
 			return self._onStatusRequest(r)
 		elif r['type'] == 'change':
 			return self._onChangeRequest(r)
+		elif r['type'] == 'add':
+			return self._onAddRequest(r)
 		else:
 			print('  Request of invalid type.')
 			return encodeResponse('error', None, 'Invalid request type sent to '+
