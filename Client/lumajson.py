@@ -134,11 +134,13 @@ def decodeRequest(r):
 			None.
 		-change: These signal to change the pattern of a single Light. In this
 			this Light is not decoded beyond Dictionary form.
+		-add:	 These requests add lights to the client. These requests come
+			packaged with a name, ID, and three pin numbers.
 	
 	Parameters:
 		r (String): The request. It should be a JSON String that encodes:
 		{
-			"type":"status"|"change"
+			"type":"status"|"change"|"add"
 			"data":<encoded light object>|null
 		}
 		
