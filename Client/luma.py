@@ -274,7 +274,31 @@ class LUMA(object):
 			l.append(light)
 		self.lightLock.release()
 		return l
+	
+	def pinsInUse(self, pins):
+		"""
+		Checks to see if any number of pins are already in use. Returns True if
+		any are.
 		
+		Parameters:
+			pins (Integer List): A list of all the pin numbers to check.
+			
+		Returns:
+			True, if any of the checked pins are in use. False otherwise.
+			
+		Preconditions:
+			The LUMA instance is initialized.
+			
+		Postconditions:
+			None.
+		"""
+		lights = self.getLights()
+		for l in lights:
+			if	l.r.chan in pins or \
+				l.g.chan in pins or \
+				l.b.chan in pins:
+				return True
+		return False
 		
 	def _changeLight(self, id, rtimes, rvals, gtimes, gvals, btimes, bvals):
 		"""
@@ -547,8 +571,17 @@ class LUMA(object):
 		
 		Postconditions:
 			A light is added should no hurdles arise. (Pins already
-			being used, etc...)
+			being used, etc...
 		"""
+		# Log the same ol' info.
+		print(	"  id: '"+str(req['data']['id'])+"'")
+		print(	"  name: '"+str(req['data']['name'])+"'")
+		print(	"  pins: R='"+str(req['data']['r_c'])+"'"	\
+				" G='"+str(req['data']['g_c'])+"'"	\
+				" B='"+str(req['data']['b_c'])+"'")
+				
+		if
+			
 		
 	def onRequest(self, s):
 		"""
