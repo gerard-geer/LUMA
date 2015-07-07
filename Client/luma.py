@@ -498,7 +498,7 @@ class LUMA(object):
 			The request is valid.
 			
 		Postconditions:
-			None.
+			The change request is acted upon.
 		"""
 		# Similarly log some info.
 		print(	"  For:    id='"+str(req['data']['id'])+"'"+	\
@@ -546,7 +546,8 @@ class LUMA(object):
 			The request is valid.
 		
 		Postconditions:
-			A light is added.
+			A light is added should no hurdles arise. (Pins already
+			being used, etc...)
 		"""
 		
 	def onRequest(self, s):
