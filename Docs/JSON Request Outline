@@ -42,13 +42,10 @@ EXAMPLE RESPONSE
 	"client": "<example client name>",
 	"r_t": [<red channel timings>],
 	"r_v": [<red channel values>],
-	"r_c": <red channel pin>,
 	"g_t": [<green channel timings>],
 	"g_v": [<green channel values>],
-	"g_c": <green channel pin>,
 	"b_t": [<blue channel timings>],
 	"b_v": [<blue channel values>],
-	"b_c": <blue channel pin>
 }
 
 EXAMPLE LIGHTING UPDATE:
@@ -128,16 +125,35 @@ EXAMPLE LIGHT ADD:
 {
 	"name": "<example light name>",
 	"client": "<example client name>",
-	"address": "<example client IP>"
+	"address": "<example client IP>",
 	"permitted": [
 		"<example UUID>",
 		. . .
-	]
+	],
+	"exists": <Bool whether or not the light already exists on a client.>
+	"r_c": <red channel pin number>,
+	"g_c": <green channel pin number>,
+	"b_c": <blue channel pin number>
 }
 EXAMPLE RESPONSE:
 {
 	"success":<True | False>,
 	"message": <"<new id> | "<Example message>">
+}
+
+EXAMPLE CLIENT LIGHT ADD:
+{
+	"name": "<example light name>",
+	"id": "<example light id>",
+	"r_c": <red channel pin number>,
+	"g_c": <green channel pin number>,
+	"b_c": <blue channel pin number>
+}
+EXAMPLE:
+{
+	"type": "<success|error>",
+	"data": None,
+	"message": "<example client response>"
 }
 
 EXAMPLE LIGHT REMOVE:
