@@ -286,6 +286,15 @@ class LUMA(object):
 			r (Integer): The pin number of the light's red channel.
 			g (Integer): The pin number of the light's green channel.
 			b (Integer): The pin number of the light's blue channel.
+			
+		Returns:
+			None.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			The light is added.
 		"""
 		# Create the timing and value lists.
 		r_t = [], r_v = [], g_t = [], g_v = [], b_t = [], b_v = []
@@ -634,7 +643,18 @@ class LUMA(object):
 			'ID '+str(req['id'])+' already in use on client '+	\
 			str(self.name))
 
-		
+		# Now we can finally add the light.
+		self._addLight(req['data']['id'],
+					   req['data']['name'],
+					   24,
+					   req['data']['r_c'],
+					   req['data']['g_c'],
+					   req['data']['b_c'])
+					   
+		return encodeResponse('success', None,	\
+			"Light '"+str(req['data']['name'])+"' '"+str(req['data']['name'])+	\
+			"' added to client "+
+			str(self.name))
 		
 	def onRequest(self, s):
 		"""
