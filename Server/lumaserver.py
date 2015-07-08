@@ -6,6 +6,7 @@ from json import dumps
 from flask import Flask, send_from_directory, request
 from requesthandler import RequestHandler
 from datetime import datetime
+from sys import exit
 import logging
 
 """
@@ -148,8 +149,7 @@ def createLightConfigFile():
 	print('-------------------------------------------------------------------------------')
 	
 	
-	
-def main():
+if __name__ == '__main__':
 	"""
 	The main execution function of the LUMA server. Initializes and loads the
 	managers, then starts Flask.
@@ -194,13 +194,10 @@ def main():
 				print('\n\n Keyboard interrupt. Cancelling.')
 				print('-------------------------------------------------------------------------------')
 		print('*******************************************************************************')
-		return
+		exit()
 	
 	
 	# Print the startup header.
 	printStartupHeader(rh)
 	# Start the server.
 	app.run(host='0.0.0.0')
-	
-if __name__ == '__main__':
-	main()
