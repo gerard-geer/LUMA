@@ -130,6 +130,68 @@ class RequestHandler(object):
 		# Finally after all that checks out we can return True.
 		return True
 		
+	def _sanitizeLightAdd(self, req):
+		"""
+		Sanitizes a state query. This makes sure that a state query is a
+		JSON Dictionary, then that it has the required keys, and the data 
+		types of those keys' values	are correct.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		# Make sure the request is a Dictionary.
+		if not isinstance(req, dict):
+			print('Not a dictionary.')
+			return False
+			
+		# Make sure all required keys are present.
+		for key in ['name', 'client', 'address', 'permitted',
+					'exists', 'r_c', 'g_c', 'b_c']:
+			if key not in req.keys():
+				print(key + ' not in req.keys()')
+				return False
+		
+		# Verify the types of the keys' values.
+		if  not isinstance(req['name'], str) and	\
+			not isinstance(req['name'], unicode):
+			print('name is not string. Type: '+str(type(req['name'])))
+			return False
+		if  not isinstance(req['client'], str) and	\
+			not isinstance(req['client'], unicode):
+			print('client is not string. Type: '+str(type(req['client'])))
+			return False
+		if  not isinstance(req['address'], str) and	\
+			not isinstance(req['address'], unicode):
+			print('address is not string. Type: '+str(type(req['address'])))
+			return False
+		if  not isinstance(req['permitted'], list):
+			print('permitted is not a list. Type: '+str(stype(req['permitted'])))
+			return False
+		if  not isinstance(req['exists'], bool):
+			print('exists is not a boolean. Type: '+str(stype(req['exists'])))
+			return False
+		if  not isinstance(req['r_c'], int):
+			print('r_c is not an integer. Type: '+str(type(req['r_c'])))
+			return False
+		if  not isinstance(req['g_c'], int):
+			print('g_c is not an integer. Type: '+str(type(req['g_c'])))
+			return False
+		if  not isinstance(req['b_c'], int):
+			print('b_c is not an integer. Type: '+str(type(req['b_c'])))
+			return False
+			
+		# Finally after all that checks out we can return True.
+		return True
+		
 	def _sanitizeStateUpdate(self, req):
 		"""
 		Sanitizes a state update request. This makes sure that the form of the
