@@ -131,6 +131,8 @@ EXAMPLE LIGHT ADD:
 		. . .
 	],
 	"exists": <Bool whether or not the light already exists on a client.>
+	"id": <Key needs to exist, but is only used as the existing ID
+		   when adding existing lights to the server.>
 	"r_c": <red channel pin number>,
 	"g_c": <green channel pin number>,
 	"b_c": <blue channel pin number>
