@@ -42,16 +42,30 @@ class ClientManager(object):
 		self._socket = socket(AF_INET, SOCK_STREAM)
 		self._PORT = 8641
 		
-		
-	def sendStatusRequest(self, address, id):
+	def sendRequest(self, address, type, data):
 		"""
-		Sends a status request to the client at the given address and returns
-		its response.
+		Sends a request to the client at the given address, with the given
+		type and data, then returns	its response.
 		
 		Parameters:
-			address (String): The address of the client.
-			id (String): The ID of the lighting fixture whose status is
-				desired. Passing None returns the status of all lights.
+			Status Requests are formatted as follows:
+			{
+				address (String): The address of the client.
+				id (String): The ID of the lighting fixture whose status is
+					desired. Passing None returns the status of all lights.
+			}	
+			
+			Change Requests are formatted as follows:
+			{
+				'id': The ID of the light.
+				'name': The name of the light.
+				'r_t': List of red timings.
+				'r_v': List of red values.
+				'g_t': List of green timings.
+				'g_v': List of green values.
+				'b_t': List of blue timings.
+				'b_v': List of blue values.
+			}
 				
 		Returns:	
 			The response to the request as a JSON object.
@@ -63,14 +77,14 @@ class ClientManager(object):
 			A message is sent to the address specified on port 8641, and its
 			response is returned.
 		"""
-		req = {'type':'status', 'data':id}
+		req = {'type':type, 'data':data}
 		try:
 			# Encode the request before opening the socket for timeliness.
 			try:
 				m = dumps(req, separators=(',',':'))+'\n'
 			except ValueError as e:
-				print(' Error encoding JSON when sending status request to '+str(address))
-				_CONN_ERR['message'] = 'Error encoding JSON when sending status to '+str(address)+	\
+				print(' Error encoding JSON when sending '+type+' request to '+str(address))
+				_CONN_ERR['message'] = 'Error encoding JSON when sending '+type+' to '+str(address)+	\
 				'. ('+str(e)+')'
 				return _CONN_ERR
 				
@@ -92,9 +106,9 @@ class ClientManager(object):
 			try:
 				return loads(res)
 			except ValueError as e:
-				print('Error decoding JSON when receiving status from '+str(address)+	\
+				print('Error decoding JSON when receiving '+type+' from '+str(address)+	\
 				'. ('+str(e)+')\n')
-				_CONN_ERR['message'] = 'Error decoding JSON when receiving status from '+str(address)+	\
+				_CONN_ERR['message'] = 'Error decoding JSON when receiving '+type+' from '+str(address)+	\
 				'. ('+str(e)+')\n'+str(res)
 				return _CONN_ERR
 			
@@ -119,97 +133,6 @@ class ClientManager(object):
 		# Socket.timeout
 		except timeout as e:
 			print(' Timeout error: Could not connect to address '+str(address))
-			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
-			'. ('+str(e)+')'
-			return _CONN_ERR
-			
-	def sendChangeRequest(self, address, dict):
-		"""
-		Sends a change request to the client at the given address and returns
-		its response.
-		
-		Parameters:
-			address(String): The address to send the request to.
-			dict(Dictionary): A dictionary containing the to-be lighting state,
-				formatted as follows:
-				{
-					'id': The ID of the light.
-					'name': The name of the light.
-					'r_t': List of red timings.
-					'r_v': List of red values.
-					'g_t': List of green timings.
-					'g_v': List of green values.
-					'b_t': List of blue timings.
-					'b_v': List of blue values.
-				}
-		
-		Returns:
-			The response to this request as a JSON object.
-			
-		Preconditions:
-			The socket is initialized and not overworked.
-			
-		Postconditions:
-			A message is sent to the client at the address:port, and its
-			response is decoded and returned.
-		"""
-		req = {'type':'change', 'data':dict}
-		try:
-			# Form the message ahead of time.
-			try:
-				m = dumps(req, separators=(',',':'))+'\n'
-			except ValueError as e:
-				print('   Error encoding JSON when sending change to '+str(address))
-				_CONN_ERR['message'] = 'Error encoding JSON when sending change to '+str(address)+	\
-				'. ('+str(e)+')'
-				return _CONN_ERR
-			
-			print('   Sending request. (length: '+str(len(m))+')')
-			
-			# Perform socket IO.
-			s = socket(AF_INET, SOCK_STREAM)
-			s.settimeout(_TIMEOUT)
-			s.connect((address, self._PORT))
-			s.sendall(m)
-			# Get the client's response.
-			chunk = s.recv(_DATAREAD)
-			res = chunk
-			while chunk != '':
-				chunk = s.recv(_DATAREAD)
-				res += chunk
-			s.close()
-			
-			# Return the client's response.
-			print('   Response received. (length: '+str(len(m))+')')
-			try:
-				return loads(res)
-			except ValueError as e:
-				print('   Error decoding JSON when receiving change response from '+str(address))
-				_CONN_ERR['message'] = 'Error decoding JSON when receiving change from '+str(address)+	\
-				'. ('+str(e)+')'
-				return _CONN_ERR
-
-		# Socket.error
-		except error as e:
-			print('   Could not connect to address '+str(address))
-			_CONN_ERR['message'] = 'Could not connect to address '+str(address)+	\
-			'. ('+str(e)+')'
-			return _CONN_ERR
-		# Socket.herror
-		except herror as e:
-			print('   H Error: Could not connect to address '+str(address))
-			_CONN_ERR['message'] = 'H Error: Could not connect to address '+str(address)+	\
-			'. ('+str(e)+')'
-			return _CONN_ERR
-		# Socket.gaierror
-		except gaierror as e:
-			print('   GAI Error: Could not connect to address '+str(address))
-			_CONN_ERR['message'] = 'GAI Error: Could not connect to address '+str(address)+	\
-			'. ('+str(e)+')'
-			return _CONN_ERR
-		# Socket.timeout
-		except timeout as e:
-			print('   Timeout error: Could not connect to address '+str(address))
 			_CONN_ERR['message'] = 'Timeout: Could not connect to address '+str(address)+	\
 			'. ('+str(e)+')'
 			return _CONN_ERR

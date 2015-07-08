@@ -295,7 +295,7 @@ class RequestHandler(object):
 		
 		# If we can, well, that's good.
 		print(' To: '+address+' ('+light['client']+')')
-		res = self._cm.sendStatusRequest(address, req['id'])
+		res = self._cm.sendRequest(address, 'status', req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
@@ -384,7 +384,7 @@ class RequestHandler(object):
 			# Now that we have a valid light and a valid address, let's
 			# send the update.
 			print('   To: '+str(addr)+' ('+str(submitted['client'])+')')
-			clientRes = self._cm.sendChangeRequest(addr, submitted)
+			clientRes = self._cm.sendRequest(addr, 'change', submitted)
 			# If that action errors out, we have to pass it up the ladder too.
 			if clientRes['type'] == 'error':
 				print('   Error in client interaction: '+clientRes['message'])
