@@ -2,7 +2,6 @@
 # LUMA copyright (C) Gerard Geer 2014-2015
 
 from json import loads, dump
-from uuid import uuid4
 from singleton import Singleton
 
 @Singleton
@@ -126,7 +125,7 @@ class LightManager(object):
 				allowed.append(light)
 		return allowed
 		
-	def addLight(self, name, client, permitted):
+	def addLight(self, id, name, client, permitted):
 		"""
 		Adds a new light, creating a UUID to uniquely identify it. The
 		permitted list is not manipulated, but shallow copied into
@@ -134,12 +133,13 @@ class LightManager(object):
 		Also, the light is keyed into the light dictionary by its id.
 		
 		Parameters:
+			id (String): The fresh ID to use.
 			name (String): The name of the new light.
 			client (String): The alias of the client that the light is on.
 			permitted ([String]): A white-list of UUIDs.
 		
 		Returns:
-			The new ID if the light is added, None otherwise.
+			True if the light was added, False otherwise.
 		
 		Preconditions:
 			The lights are loaded.
@@ -147,13 +147,11 @@ class LightManager(object):
 		Postconditions:
 			The light is added to the list.
 		"""
-		id = str(uuid4())
 			
 		light = {'id':id, 'name':name,'client':client,'permitted':[]}
 		light['permitted'].extend(permitted)
 		self._lights[id] = light
-		
-		return id
+		return True
 		
 	def changeLightName(self, id, new):
 		"""
