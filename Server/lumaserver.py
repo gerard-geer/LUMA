@@ -68,8 +68,25 @@ def stateUpdate():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 
+# Admin page.
+@app.route('/admin/', methods=['GET'])
+def adminPage():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN PAGE ACCESS from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return send_from_directory('webs/admin/', 'admin_page.html')
+	
+# Administrative stuff.
+@app.route('/admin/tasks/<path:filename>', methods=['GET'])
+def adminPage(filename):
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN PAGE ACCESS from: '+request.remote_addr)
+	print(' FOR: '+filename)
+	print(' Time: '+str(datetime.now()))
+	return send_from_directory('webs/admin/', filename)
+
 # Administrative stuff: Adding a light.
-@app.route('/resources/lights/', methods=['POST'])
+@app.route('admin/resources/lights/', methods=['POST'])
 def addLight():
 	print('-------------------------------------------------------------------------------')
 	print(' Light Add from: '+request.remote_addr)
