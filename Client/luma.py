@@ -322,7 +322,7 @@ class LUMA(object):
 		# The tricky part is adding it to the data structures that
 		# are nearly strictly in the domain of the update thread.
 		self.lightLock.acquire(True)
-		self.lights.append(newLight)
+		self.lights[id] = newLight
 		self.lightLock.release()
 		
 	
