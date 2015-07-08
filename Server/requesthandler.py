@@ -6,6 +6,7 @@ from lightmanager import LightManager
 from aliasmanager import AliasManager
 from clientmanager import ClientManager
 from json import loads
+from uuid import uuid4
 
 from singleton import Singleton
 
@@ -130,7 +131,7 @@ class RequestHandler(object):
 		# Finally after all that checks out we can return True.
 		return True
 		
-	def _sanitizeLightAdd(self, req):
+	def _sanitizeLAddQuery(self, req):
 		"""
 		Sanitizes a state query. This makes sure that a state query is a
 		JSON Dictionary, then that it has the required keys, and the data 
@@ -155,7 +156,7 @@ class RequestHandler(object):
 			
 		# Make sure all required keys are present.
 		for key in ['name', 'client', 'address', 'permitted',
-					'exists', 'r_c', 'g_c', 'b_c']:
+					'exists', 'id', 'r_c', 'g_c', 'b_c']:
 			if key not in req.keys():
 				print(key + ' not in req.keys()')
 				return False
@@ -178,6 +179,11 @@ class RequestHandler(object):
 			return False
 		if  not isinstance(req['exists'], bool):
 			print('exists is not a boolean. Type: '+str(stype(req['exists'])))
+			return False
+		if  req['exists'] and	\
+			not isinstance(req['id'], str) and	\
+			not isinstance(req['id'], unicode):
+			print('id is not a string. Type: '+str(stype(req['string'])))
 			return False
 		if  not isinstance(req['r_c'], int):
 			print('r_c is not an integer. Type: '+str(type(req['r_c'])))
@@ -500,27 +506,6 @@ class RequestHandler(object):
 			The given UUID is removed from the given lights, if they exist.
 		"""
 		return self._lm.removeUUIDfromSubset(req['uuid'], req['lights'])
-		
-	def addLight(self, req):
-		"""
-		Adds a new light to the light manager.
-		
-		Parameters:
-			req (JSON): The Dictionary that contains the request.
-			
-		Returns:
-			A dictionary containing the response to the request.
-			
-		Preconditions:
-			The request be a valid JSON object for this request type.
-			
-		Postconditions:
-			The light specified is added if it doesn't exist.
-		"""
-		if self._lm.addLight(req['name'], req['client'], req['permitted']):
-			self._am.addAlias(req['client'], req['address'])
-			return {'success':True, 'message':None}
-		return {'success':False, 'message':'Light name already taken.'}
 		
 	def removeLight(self, req):
 		"""
