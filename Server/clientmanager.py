@@ -66,6 +66,15 @@ class ClientManager(object):
 				'b_t': List of blue timings.
 				'b_v': List of blue values.
 			}
+			
+			Add requests meant for the client are formatted like so:
+			{
+				"name": "<example light name>",
+				"id": "<example light id>",
+				"r_c": <red channel pin number>,
+				"g_c": <green channel pin number>,
+				"b_c": <blue channel pin number>
+			}
 				
 		Returns:	
 			The response to the request as a JSON object.
