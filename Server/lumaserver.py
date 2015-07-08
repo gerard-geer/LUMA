@@ -69,6 +69,7 @@ def stateUpdate():
 	return dumps(rh.lightUpdate(request.get_json()))
 
 # Administrative stuff: Adding a light.
+@app.route('/resources/lights/', methods=['POST'])
 def addLight():
 	print('-------------------------------------------------------------------------------')
 	print(' Light Add from: '+request.remote_addr)
