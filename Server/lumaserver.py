@@ -6,6 +6,7 @@ from json import dumps
 from flask import Flask, send_from_directory, request
 from requesthandler import RequestHandler
 from datetime import datetime
+from sys import exit
 import logging
 
 """
