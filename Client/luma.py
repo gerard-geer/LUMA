@@ -632,15 +632,16 @@ class LUMA(object):
 		inUse = self.pinsInUse([ int(float(req['data']['r_c'])),	\
 							int(float(req['data']['r_c'])),	\
 							int(float(req['data']['r_c']))])
-		if len(inUse) > 0:
-			return encodeResponse('error', None,	\
-			'Pin(s) '+str(inUse)+' already in use on client '+	\
-			str(self.name))
 		
 		# Check to make sure we aren't adding a duplicate light.
 		if self._exists(req['data']['id']):
 			return encodeResponse('error', None,	\
 			'ID '+str(req['data']['id'])+' already in use on client '+	\
+			str(self.name))
+			
+		if len(inUse) > 0:
+			return encodeResponse('error', None,	\
+			'Pin(s) '+str(inUse)+' already in use on client '+	\
 			str(self.name))
 
 		# Now we can finally add the light.
@@ -652,7 +653,7 @@ class LUMA(object):
 					   req['data']['b_c'])
 					   
 		return encodeResponse('success', None,	\
-			"Light '"+str(req['data']['name'])+"' '"+str(req['data']['name'])+	\
+			"Light '"+str(req['data']['id'])+"':'"+str(req['data']['name'])+	\
 			"' added to client "+
 			str(self.name))
 		
