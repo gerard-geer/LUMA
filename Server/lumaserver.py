@@ -89,7 +89,7 @@ def adminTaskPage(filename):
 @app.route('/admin/resources/lights/', methods=['POST'])
 def addLight():
 	print('-------------------------------------------------------------------------------')
-	print(' Light Add from: '+request.remote_addr)
+	print(' ADMIN ACTION: Light Add from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 
