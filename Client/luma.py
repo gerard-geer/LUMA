@@ -638,9 +638,9 @@ class LUMA(object):
 			str(self.name))
 		
 		# Check to make sure we aren't adding a duplicate light.
-		if self._exists(req['id']):
+		if self._exists(req['data']['id']):
 			return encodeResponse('error', None,	\
-			'ID '+str(req['id'])+' already in use on client '+	\
+			'ID '+str(req['data']['id'])+' already in use on client '+	\
 			str(self.name))
 
 		# Now we can finally add the light.
