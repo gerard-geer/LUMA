@@ -297,7 +297,12 @@ class LUMA(object):
 			The light is added.
 		"""
 		# Create the timing and value lists.
-		r_t = [], r_v = [], g_t = [], g_v = [], b_t = [], b_v = []
+		r_t = []
+		r_v = []
+		g_t = []
+		g_v = []
+		b_t = []
+		b_v = []
 		for i in range(numVals):
 			r_t.append(1.0)
 			r_v.append(1.0)
