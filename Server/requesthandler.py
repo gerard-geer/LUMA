@@ -470,6 +470,91 @@ class RequestHandler(object):
 		return {'lights': updated,
 				'success': True,
 				'message': None}
+	
+	def addQuery(self, req):
+		"""
+		Handles a query for adding a Light.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			None.
+		"""
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			return {'success':False, 'message':'Could not decode JSON of request.'}
+			
+		# If the request was invalid, we need to transparently return
+		# nothing.
+		if not self._sanitizeLightQuery(req):
+			print(' Request did not pass sanitation.')
+			return {'success':False, 'message':'Request did not pass sanitation.'}
+			
+		# Print some info.
+		print(' Name: '+str(req['name']))
+		print(' Client: '+str(req['client']))
+		print(' Exists: '+str(req['exists']))
+		if req['exists']:
+			print(' ID: '+str(req['id']))
+		print(' # Permitted: '+str(len(req['permitted'])))
+		print(' Pins: r={1} g={2} b={3}'.format(req['r_c'],req['g_c'],req['b_c']))
+		
+		# Just to make sure we're not adding a light to a rogue client, we
+		# make sure we know where it's going.
+		addr = self._am.getAddress(req['client'])
+		if addr != req['address']:
+			print(" Request address '"+str(req['address'])+	\
+					"' did not match server record")
+			return {'success':False, 'message':"Request address '"+	\
+						str(req['address'])+"' did not match server record"}
+		
+		if not req['exists']:
+			# Finally we create the new light ID.
+			freshID = uuid4()
+			
+			# Need to create the request we're sending to the client.
+			cReq = {
+				'name': req['name'],
+				'id': freshID,
+				'r_c': req['r_c'],
+				'g_c': req['g_c'],
+				'b_c': req['b_c']
+			}
+			
+			# Send the client our request.
+			print(' Adding light to client.')
+			res = self._cm.sendRequest(addr, 'add', cReq)
+		
+			# If the request errors out, then the light wasn't added to the client
+			# and we shan't add it to the server either.
+			if res['type'] == 'error':
+				print(' '+res['message'])
+				return {'success': False, 'message': res['message']}
+			
+				
+			# Finally since the response was good we add the light to the server.
+			print(' Adding new light to server.')
+			self._lm.addLight(freshID, req['name'], req['client'], req['permitted'])
+		
+		else:
+			# Finally since the response was good we add the light to the server.
+			print(' Adding existing light to server.')
+			self._lm.addLight(req['id'], req['name'], req['client'], req['permitted'])
+		
+		return {'success':True, 'message':None}
+		
+
 				
 	def addUUID(self, req):
 		"""
