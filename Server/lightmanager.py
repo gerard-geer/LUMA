@@ -139,7 +139,7 @@ class LightManager(object):
 			permitted ([String]): A white-list of UUIDs.
 		
 		Returns:
-			True if the light was added, False otherwise.
+			The new ID if the light is added, None otherwise.
 		
 		Preconditions:
 			The lights are loaded.
@@ -152,7 +152,8 @@ class LightManager(object):
 		light = {'id':id, 'name':name,'client':client,'permitted':[]}
 		light['permitted'].extend(permitted)
 		self._lights[id] = light
-		return True
+		
+		return id
 		
 	def changeLightName(self, id, new):
 		"""
