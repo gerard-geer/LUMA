@@ -78,7 +78,7 @@ def adminPage():
 	
 # Administrative stuff.
 @app.route('/admin/tasks/<path:filename>', methods=['GET'])
-def adminPage(filename):
+def adminTaskPage(filename):
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN PAGE ACCESS from: '+request.remote_addr)
 	print(' FOR: '+filename)
@@ -86,13 +86,14 @@ def adminPage(filename):
 	return send_from_directory('webs/admin/', filename)
 
 # Administrative stuff: Adding a light.
-@app.route('admin/resources/lights/', methods=['POST'])
+@app.route('/admin/resources/lights/', methods=['POST'])
 def addLight():
 	print('-------------------------------------------------------------------------------')
 	print(' Light Add from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 
+# Draw an initial setup message.
 def printInitialSetupHeader():
 	print('*******************************************************************************')
 	print(" Welcome to the LUMA server!")
