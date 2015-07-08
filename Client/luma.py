@@ -655,7 +655,7 @@ class LUMA(object):
 		return encodeResponse('success', None,	\
 			"Light '"+str(req['data']['id'])+"':'"+str(req['data']['name'])+	\
 			"' added to client "+
-			str(self.name))
+			str(self.name)+'(Lights: '+str(len(self.lights.values()))+')')
 		
 	def onRequest(self, s):
 		"""
