@@ -7,10 +7,11 @@ LUMA Raspberry Pi client.
 """
 from SocketServer import TCPServer, StreamRequestHandler
 from socket import SOL_SOCKET, SO_REUSEADDR
+from system import exit
+from datetime import datetime
 from luma import LUMA
 from select import select
 from lumajson import *
-from datetime import datetime
 
 HOST = ''
 PORT = 8641
