@@ -7,10 +7,11 @@ LUMA Raspberry Pi client.
 """
 from SocketServer import TCPServer, StreamRequestHandler
 from socket import SOL_SOCKET, SO_REUSEADDR
+from sys import exit
+from datetime import datetime
 from luma import LUMA
 from select import select
 from lumajson import *
-from datetime import datetime
 
 HOST = ''
 PORT = 8641
@@ -127,7 +128,7 @@ def firstTimeStartup():
 	print(" Done.")
 	print('*******************************************************************************')
 	
-def main():
+if __name__ == '__main__':
 	"""
 	The main execution function.
 	
@@ -153,7 +154,7 @@ def main():
 		except:
 			print('\n\n Keyboard interrupt. Cancelling.')
 			print('*******************************************************************************')
-		return
+		exit()
 		
 	luma.start()
 	
@@ -176,6 +177,3 @@ def main():
 	# updater.
 	except:
 		luma.stop()
-	
-if __name__ == '__main__':
-	main()
