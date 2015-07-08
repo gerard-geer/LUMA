@@ -68,6 +68,13 @@ def stateUpdate():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 
+# Administrative stuff: Adding a light.
+def addLight():
+	print('-------------------------------------------------------------------------------')
+	print(' Light Add from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return dumps(rh.lightUpdate(request.get_json()))
+
 def printInitialSetupHeader():
 	print('*******************************************************************************')
 	print(" Welcome to the LUMA server!")
