@@ -18,3 +18,9 @@ eventually be implemented, and only reflects what can be done.
 	POST: Sets the state of one or more lights.
 	PUT: Not used.
 	DELETE: Not used.
+	
+<LUMA domain>/admin/resources/lights
+	GET: Not used.
+	POST: Add a light to the server, and optionally to a client.
+	PUT: Not used.
+	DELETE: Not used.
