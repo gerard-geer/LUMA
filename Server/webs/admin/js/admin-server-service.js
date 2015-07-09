@@ -36,25 +36,29 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		{
 			return 'Red pin number is not an integer.';
 		}
-		else if (!nl.exists) nl.r_c=0;
+		else if (nl.exists) nl.r_c=0;
 		if (!nl.exists && isNaN( parseInt(nl.g_c) ) )
 		{
 			return 'Green pin number is not an integer.';
 		}
-		else if (!nl.exists) nl.g_c=0;
+		else if (nl.exists) nl.g_c=0;
 		if (!nl.exists && isNaN( parseInt(nl.b_c) ) )
 		{
 			return 'Blue pin number is not an integer.';
 		}
-		else if (!nl.exists) nl.b_c=0;
+		else if (nl.exists) nl.b_c=0;
 		
 		return '';
 	}
 	
 	function performLightAdd()
 	{
-		nl = AdminStateService.newLight;
-		test = sanitizeNewLight(nl)
+		
+		// Sanitize the light.
+		test = sanitizeNewLight(AdminStateService.newLight);
+		
+		// If the light doesn't pass sanitation, we have to throw up the
+		// ol' error box.
 		if (test != '')
 		{
 			AdminStateService.errorMessage = test;
@@ -62,6 +66,26 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 			return;
 		}
 		
+		// Just a less verbose copy of the new light that we can manipulate.
+		nl = {
+			name: AdminStateService.newLight.name,
+			client: AdminStateService.newLight.client,
+			address: AdminStateService.newLight.address,
+			permitted: AdminStateService.newLight.permitted,
+			id: AdminStateService.newLight.id,
+			exists: AdminStateService.newLight.exists,
+			r_c: AdminStateService.newLight.r_c,
+			g_c: AdminStateService.newLight.g_c,
+			b_c: AdminStateService.newLight.b_c
+		}
+		
+		// Split up the permitted string into a list, and trim the entries.
+		nl.permitted = nl.permitted.split(',');
+		for(var i = 0; i < nl.permitted.length; ++i)
+		{
+			nl.permitted[i] = nl.permitted[i].replace(/ /g,'');
+			console.log(nl.permitted[i]);
+		}
 		$http.post('resources/lights/', nl).
 		success(function(response)
 		{
