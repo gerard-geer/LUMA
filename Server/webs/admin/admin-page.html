@@ -17,12 +17,13 @@
 	</div>
 	<!-- The task containers wrap each task an admin may have into a		 -->
 	<!-- horizontal banner with a button on the left and text to the right.	 -->
+	<div id='tasks' ng-controller='TaskController as task'>
 	<div class='task-container'>
 		<div class='task-button-container'>
 			<div class='task-button'>Add Light</div>
 		</div>
 		<div class='task-description-container'>
-		Adds a light to the server, and optionally a client. To add/create a
+		Adds a light to the server, and optionally to a client. To add/create a
 		completely new light one needs a name, client, client IP and pin numbers
 		for each of the light's color channels. If a PWM pin is already in use,
 		or if the generated ID is already taken, the operation will fail.
@@ -30,6 +31,7 @@
 		one needs the ID of the light, as well as the client's name and IP.
 		In either case, the server must already be aware of the client.
 		</div>
+	</div>
 	</div>
 </body>
 </html>
