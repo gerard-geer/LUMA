@@ -13,6 +13,7 @@
 	<script src='js/task-controller.js'></script>
 	<script src='js/dialog-controller.js'></script>
 	<script src='js/add-light-controller.js'></script>
+	<script src='js/error-dialog-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
 </head>
 <body>
@@ -180,6 +181,21 @@
 				</div>
 			</form>
 			</div>
+		</modal-dialog>
+		
+		<!-- The error Message dialog modal.								 -->
+		<modal-dialog 
+		show='dialog.isDialog(dialog.DIALOG_ENUM.ERROR)'
+		width='30em' 
+		height='auto'>
+			<div class='modal-header'>
+				Error!
+				<div class='modal-subtitle'>
+				An error has occured.
+				</div>
+			</div>
+			<div class='dialog-container' 
+			ng-controller='ErrorDialogController as edc'>{{ state.serrorMessage }}</div>
 		</modal-dialog>
 	</div>
 </body>
