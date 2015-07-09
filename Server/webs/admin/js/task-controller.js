@@ -14,6 +14,7 @@ function($scope, AdminStateService)
 	// A function to set which dialog is open.
 	this.setDialog = function(dialogValue)
 	{
+		AdminStateService.showDialog = true;
 		AdminStateService.dialogToShow = dialogValue;
 	}
 }]);

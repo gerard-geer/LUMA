@@ -16,6 +16,8 @@ angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function()
 		newLight: null,
 		// A slot for potential error messages.
 		errorMessage: null,
+		// Whether or not to show dialogs at all.
+		showDialog: false,
 		// What dialog to show.
 		dialogToShow: dialogEnum.NO_DIALOG,
 		// THe dialog enumerator.

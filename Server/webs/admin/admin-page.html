@@ -44,11 +44,15 @@
 	</div>
 	<!-- The dialog container wraps all the admin task dialogs with a		 -->
 	<!-- controller that gives the dialogs access to state.					 -->
-	<div id='dialog-container' ng-controller='DialogController as dialog'>
+	<div id='dialog-container'
+	ng-controller='DialogController as dialog'>
 		<!-- The new light dialog modal.									 -->
 		<!-- show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)' -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)'
+		>
 		<modal-dialog 
-		show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)'
+		show='dialog.state.showDialog'
 		width='30em' 
 		height='auto'>
 			<div class='modal-header'>
@@ -182,10 +186,13 @@
 			</form>
 			</div>
 		</modal-dialog>
-		
+		</div>
 		<!-- The error Message dialog modal.								 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.ERROR)'
+		>
 		<modal-dialog 
-		show='dialog.isDialog(dialog.DIALOG_ENUM.ERROR)'
+		show='dialog.state.showDialog'
 		width='30em' 
 		height='auto'>
 			<div class='modal-header'>
@@ -197,6 +204,7 @@
 			<div id='error-container'
 			ng-controller='ErrorDialogController as edc'>{{ state.errorMessage }}</div>
 		</modal-dialog>
+		</div>
 	</div>
 </body>
 </html>

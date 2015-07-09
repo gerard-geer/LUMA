@@ -99,12 +99,14 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 			if(response.success)
 			{
 				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.NO_DIALOG;
+				AdminStateService.showDialog = true;
 			}
 			// And if it wasn't, we bring up the error dialog.
 			else
 			{
 				AdminStateService.errorMessage = response.message;
 				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+				AdminStateService.showDialog = true;
 			}
 		}).
 		error(function(response)
@@ -115,6 +117,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 			// Bring up the error message.
 			AdminStateService.errorMessage = response;
 			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			AdminStateService.showDialog = true;
 		});
 	}
 	
