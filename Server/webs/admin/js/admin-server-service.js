@@ -32,17 +32,17 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 			return 'ID must be a non-empty string.';
 		}
 		else if (!nl.exists) nl.id='';
-		if (nl.exists && isNaN( parseInt(nl.r_c) ) )
+		if (!nl.exists && isNaN( parseInt(nl.r_c) ) )
 		{
 			return 'Red pin number is not an integer.';
 		}
 		else if (!nl.exists) nl.r_c=0;
-		if (nl.exists && isNaN( parseInt(nl.g_c) ) )
+		if (!nl.exists && isNaN( parseInt(nl.g_c) ) )
 		{
 			return 'Green pin number is not an integer.';
 		}
 		else if (!nl.exists) nl.g_c=0;
-		if (nl.exists && isNaN( parseInt(nl.b_c) ) )
+		if (!nl.exists && isNaN( parseInt(nl.b_c) ) )
 		{
 			return 'Blue pin number is not an integer.';
 		}
@@ -67,6 +67,13 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		{
 			console.log("Light Add response:");
 			console.log(response);
+		}).
+		error(function(response)
+		{
+			console.log("Light Add response:");
+			console.log(response);
+			AdminStateService.errorMessage = response;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
 		});
 	}
 	

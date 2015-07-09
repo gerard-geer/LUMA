@@ -117,7 +117,7 @@
 				</div>
 				<!-- Existing ID -->
 				<div class='text-input-container'
-				ng-hide='al.newLight.exists'>
+				ng-show='al.newLight.exists'>
 					<div class='text-input-label'>
 					<p class='text-input-title'>Existing ID</p>
 					<p class='text-input-unit'></p>
@@ -195,7 +195,7 @@
 				</div>
 			</div>
 			<div class='dialog-container' 
-			ng-controller='ErrorDialogController as edc'>{{ state.serrorMessage }}</div>
+			ng-controller='ErrorDialogController as edc'>{{ state.errorMessage }}</div>
 		</modal-dialog>
 	</div>
 </body>
