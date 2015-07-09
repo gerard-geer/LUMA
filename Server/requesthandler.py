@@ -133,7 +133,7 @@ class RequestHandler(object):
 		
 	def _sanitizeAddQuery(self, req):
 		"""
-		Sanitizes a state query. This makes sure that a state query is a
+		Sanitizes a light adding query. This makes sure that the query is a
 		JSON Dictionary, then that it has the required keys, and the data 
 		types of those keys' values	are correct.
 		
@@ -497,7 +497,7 @@ class RequestHandler(object):
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
-		if not self._sanitizeLightQuery(req):
+		if not self._sanitizeAddQuery(req):
 			print(' Request did not pass sanitation.')
 			return {'success':False, 'message':'Request did not pass sanitation.'}
 			
