@@ -92,12 +92,13 @@ class ClientManager(object):
 			try:
 				m = dumps(req, separators=(',',':'))+'\n'
 			except ValueError as e:
-				print(' Error encoding JSON when sending '+type+' request to '+str(address))
-				_CONN_ERR['message'] = 'Error encoding JSON when sending '+type+' to '+str(address)+	\
-				'. ('+str(e)+')'
+				print(' Error encoding JSON when sending '+str(type)+' request to '+str(address))
+				_CONN_ERR['message'] = 'Error encoding JSON when sending '+	\
+										str(type)+' to '+str(address)+	\
+										'. ('+str(e)+')'
 				return _CONN_ERR
 				
-			print(' Sending request. (Length: '+str(len(m))+')')
+			print('   Sending request. (Length: '+str(len(m))+')')
 			# Perform socket IO.
 			s = socket(AF_INET, SOCK_STREAM)
 			s.settimeout(_TIMEOUT)
@@ -111,7 +112,7 @@ class ClientManager(object):
 				res += chunk
 			s.close()
 			# Return the client's response.
-			print(' Response received. (length: '+str(len(res))+')')
+			print('   Response received. (length: '+str(len(res))+')')
 			try:
 				return loads(res)
 			except ValueError as e:
