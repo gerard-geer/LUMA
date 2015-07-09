@@ -5,8 +5,8 @@
 	state upon ngClick.
 */
 angular.module('LUMAClientAdminPortal').controller('AddLightController',
-['$scope', 'AdminStateService',
-function($scope, AdminStateService)
+['$scope', 'AdminStateService', 'AdminServerService',
+function($scope, AdminStateService, AdminServerService)
 {
 	// An interfacing object that is used to store the current light described
 	// by the add light form.
@@ -33,6 +33,7 @@ function($scope, AdminStateService)
 	this.onSubmit = function(light)
 	{
 		AdminStateService.newLight = light;
+		AdminServerService.addNewLight();
 	};
 	
 }]);
