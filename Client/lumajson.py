@@ -134,11 +134,13 @@ def decodeRequest(r):
 			None.
 		-change: These signal to change the pattern of a single Light. In this
 			this Light is not decoded beyond Dictionary form.
+		-add:	 These requests add lights to the client. These requests come
+			packaged with a name, ID, and three pin numbers.
 	
 	Parameters:
 		r (String): The request. It should be a JSON String that encodes:
 		{
-			"type":"status"|"change"
+			"type":"status"|"change"|"add"
 			"data":<encoded light object>|null
 		}
 		
@@ -188,8 +190,8 @@ def sanitizeRequest(r):
 	
 	# There are only two acceptable type values at this point in time.
 	# THIS LIST MAY NEED EXPANSION LATER.
-	if r['type'] != 'status' and r['type'] != 'change':
-		return 'Type is not "status" or "change" Type is '+str(r['type'])
+	if r['type'] != 'status' and r['type'] != 'change' and r['type'] != 'add':
+		return 'Type is not "status" or "change" or "add". Type is '+str(r['type'])
 		
 	# Status requests require an ID in their data field.
 	if r['type'] == 'status' and 			\
@@ -200,6 +202,10 @@ def sanitizeRequest(r):
 	# Change requests require a dict of light data.
 	if r['type'] == 'change' and (not isinstance(r['data'], dict)):
 		return 'Type is "change" but data is not a dictionary. Type: '+str(type(r['data']))
+		
+	# Add requests require a dict as well.
+	if r['type'] == 'add' and (not isinstance(r['data'], dict)):
+		return 'Type is "add" but data is not a dictionary. Type: '+str(type(r['data']))
 		
 	return None
 	

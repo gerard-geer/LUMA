@@ -1,0 +1,204 @@
+/* LUMA Copyright (c) Gerard Geer 2014-2015 */
+
+body
+{
+	font-size: 12pt;
+    font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+#admin-header
+{
+	font-size: 32pt;
+	font-weight: bold;
+	width: 100%;
+	box-shadow: #888888 0px 2px 6px;
+	margin: 0px;
+	text-align: left;
+}
+
+#admin-header-subtitle
+{
+	font-size: 10pt;
+	font-weight: normal;
+	padding-left: 4pt;
+}
+
+.task-container
+{
+	width:100;
+	font-size: 10pt;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	border-bottom-width: 1px;
+	padding: 8pt 0pt 8pt 0pt;
+}
+
+.task-button-container
+{
+	display: inline-block;
+	text-align: center;
+	width: 15%;
+	height: 100%;
+	vertical-align: super;
+}
+
+.task-description-container
+{
+	display: inline-block;
+	width: 75%;	
+	border-left-style: solid;
+	border-left-color: #ccc;
+	border-left-width: 1px;
+	padding-left: 24pt;
+}
+
+.task-button
+{
+	transform: translateY(-50%);
+	padding: 4px;
+	display: inline-block;
+	background-color: #FFFFFF;
+	font-weight: bold;
+	box-shadow: #888888 0px 1.5px 3px;
+	cursor: pointer;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	border-color: #FFFF00;
+	-webkit-transition: border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: border-bottom-width .2s, padding-bottom .2s;
+	transition: border-bottom-width .2s, padding-bottom .2s;
+}
+.task-button:hover
+{
+	border-bottom-width: 4px;
+	padding-bottom: 0px;
+}
+
+.modal-header
+{
+	width: 100%;
+	color: #333333;
+	background-color: #FFFFFF;
+	text-align: left;
+	font-size: 20pt;
+	font-weight: bold;
+	padding-left: 4pt;
+	padding-top: 4pt;
+	padding-bottom: 2pt;
+	margin-bottom: 8pt;
+	box-shadow: #888888 0px 1.5px 3px;
+}
+
+.modal-subtitle
+{
+	font-size: 8pt;
+	font-weight: normal;
+}
+
+#error-container
+{
+	padding: 8pt 12pt 14pt 12pt;
+}
+
+.dialog-container
+{
+	display: block;
+	text-align:left;
+}
+.dialog-form
+{
+	display: block;
+	text-align:left;
+}
+
+.text-input-container
+{
+	display:block;
+	text-align: left;
+	width: 90%;
+	margin: 2.5% auto 2.5% auto;
+	box-shadow: #888888 0px 1.5px 3px;
+	padding: 0px;
+}
+
+.text-input-label
+{
+	display:inline-block;
+	background-color: #222;
+	color: #fff;
+	width: 30%;
+	margin: 0px;
+	padding: 3pt 0pt 3pt 3pt;
+}
+
+.text-input-title
+{
+	display: inline;
+}
+
+.text-input-unit
+{
+	display: inline;
+	font-size: 8pt;
+}
+
+.text-input
+{
+	display:inline-block;
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+	width: 67%;
+	height: 100%;
+	font-size: 12pt;
+}
+
+.checkbox-input-container
+{
+	display:block;
+	text-align: left;
+	width: 40%;
+	margin: 2.5% 0px 2.5% 5%;
+	box-shadow: #888888 0px 1.5px 3px;
+	padding: 0px;
+}
+
+.checkbox-input-label
+{
+	display:inline-block;
+	background-color: #222;
+	color: #fff;
+	width: 80%;
+	margin: 0px;
+	padding: 3pt 0pt 3pt 3pt;
+}
+
+.checkbox-input-title
+{
+	display: inline;
+}
+
+.checkbox-input-unit
+{
+	display: inline;
+	font-size: 8pt;
+}
+
+.dialog-button-container
+{  
+	display: inline-block;
+	width: 100%;
+	padding: 12pt 0pt 2pt 0pt;
+	margin: 3pt auto 3pt auto;
+	text-align: center;
+}

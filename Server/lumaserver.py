@@ -68,6 +68,32 @@ def stateUpdate():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightUpdate(request.get_json()))
 
+# Admin page.
+@app.route('/admin/', methods=['GET'])
+def adminPage():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN PAGE ACCESS from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return send_from_directory('webs/admin/', 'admin-page.html')
+	
+# Admin page CSS and JS
+@app.route('/admin/<path:filename>', methods=['GET'])
+def fetchAdminCSS(filename):
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN CSS/JS Request from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()) + ' For: '+request.path)
+	return send_from_directory('webs/admin/', filename)
+
+# Administrative stuff: Adding a light.
+@app.route('/admin/resources/lights/', methods=['POST'])
+def addLight():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Light Add from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	print(request.get_json())
+	return dumps(rh.addQuery(request.get_json()))
+
+# Draw an initial setup message.
 def printInitialSetupHeader():
 	print('*******************************************************************************')
 	print(" Welcome to the LUMA server!")

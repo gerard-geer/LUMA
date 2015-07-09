@@ -6,6 +6,7 @@ from lightmanager import LightManager
 from aliasmanager import AliasManager
 from clientmanager import ClientManager
 from json import loads
+from uuid import uuid4
 
 from singleton import Singleton
 
@@ -125,6 +126,72 @@ class RequestHandler(object):
 		if  not isinstance(req['id'], str) and	\
 			not isinstance(req['id'], unicode):
 			print('id not string. Type: '+str(type(req['id'])))
+			return False
+			
+		# Finally after all that checks out we can return True.
+		return True
+		
+	def _sanitizeAddQuery(self, req):
+		"""
+		Sanitizes a light adding query. This makes sure that the query is a
+		JSON Dictionary, then that it has the required keys, and the data 
+		types of those keys' values	are correct.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		# Make sure the request is a Dictionary.
+		if not isinstance(req, dict):
+			print('Not a dictionary.')
+			return False
+			
+		# Make sure all required keys are present.
+		for key in ['name', 'client', 'address', 'permitted',
+					'exists', 'id', 'r_c', 'g_c', 'b_c']:
+			if key not in req.keys():
+				print(key + ' not in req.keys()')
+				return False
+		# Verify the types of the keys' values.
+		if  not isinstance(req['name'], str) and	\
+			not isinstance(req['name'], unicode):
+			print('name is not string. Type: '+str(type(req['name'])))
+			return False
+		if  not isinstance(req['client'], str) and	\
+			not isinstance(req['client'], unicode):
+			print('client is not string. Type: '+str(type(req['client'])))
+			return False
+		if  not isinstance(req['address'], str) and	\
+			not isinstance(req['address'], unicode):
+			print('address is not string. Type: '+str(type(req['address'])))
+			return False
+		if  not isinstance(req['permitted'], list):
+			print('permitted is not a list. Type: '+str(type(req['permitted'])))
+			return False
+		if  not isinstance(req['exists'], bool):
+			print('exists is not a boolean. Type: '+str(type(req['exists'])))
+			return False
+		if  req['exists'] and	\
+			not isinstance(req['id'], str) and	\
+			not isinstance(req['id'], unicode):
+			print('id is not a string. Type: '+str(type(req['string'])))
+			return False
+		if  not isinstance(req['r_c'], int):
+			print('r_c is not an integer. Type: '+str(type(req['r_c'])))
+			return False
+		if  not isinstance(req['g_c'], int):
+			print('g_c is not an integer. Type: '+str(type(req['g_c'])))
+			return False
+		if  not isinstance(req['b_c'], int):
+			print('b_c is not an integer. Type: '+str(type(req['b_c'])))
 			return False
 			
 		# Finally after all that checks out we can return True.
@@ -295,7 +362,7 @@ class RequestHandler(object):
 		
 		# If we can, well, that's good.
 		print(' To: '+address+' ('+light['client']+')')
-		res = self._cm.sendStatusRequest(address, req['id'])
+		res = self._cm.sendRequest(address, 'status', req['id'])
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if res['type'] == 'error':
@@ -384,7 +451,7 @@ class RequestHandler(object):
 			# Now that we have a valid light and a valid address, let's
 			# send the update.
 			print('   To: '+str(addr)+' ('+str(submitted['client'])+')')
-			clientRes = self._cm.sendChangeRequest(addr, submitted)
+			clientRes = self._cm.sendRequest(addr, 'change', submitted)
 			# If that action errors out, we have to pass it up the ladder too.
 			if clientRes['type'] == 'error':
 				print('   Error in client interaction: '+clientRes['message'])
@@ -402,6 +469,102 @@ class RequestHandler(object):
 		return {'lights': updated,
 				'success': True,
 				'message': None}
+	
+	def addQuery(self, req):
+		"""
+		Handles a query for adding a Light.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			None.
+		"""
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			return {'success':False, 'message':'Could not decode JSON of request.'}
+			
+		# If the request was invalid, we need to transparently return
+		# nothing.
+		if not self._sanitizeAddQuery(req):
+			print(' Request did not pass sanitation.')
+			return {'success':False, 'message':'Request did not pass sanitation. '}
+			
+		# Print some info.
+		print(' Name: '+str(req['name']))
+		print(' Client: '+str(req['client']))
+		print(' Exists: '+str(req['exists']))
+		if req['exists']:
+			print(' ID: '+str(req['id']))
+		print(' # Permitted: '+str(len(req['permitted'])))
+		print(' Pins: r={0} g={1} b={2}'.format(req['r_c'],req['g_c'],req['b_c']))
+		
+		# Just to make sure we're not adding a light to a rogue client, we
+		# make sure we know where it's going.
+		addr = self._am.getAddress(req['client'])
+		if addr != req['address']:
+			print(" Request address '"+str(req['address'])+	\
+					"' did not match server record")
+			return {'success':False, 'message':"Request address '"+	\
+						str(req['address'])+"' did not match server record. "}
+		
+		if not req['exists']:
+			# Finally we create the new light ID.
+			freshID = str(uuid4())
+			
+			# Need to create the request we're sending to the client.
+			cReq = {
+				'name': req['name'],
+				'id': freshID,
+				'r_c': req['r_c'],
+				'g_c': req['g_c'],
+				'b_c': req['b_c']
+			}
+			
+			# Send the client our request.
+			print(' Adding light to client.')
+			res = self._cm.sendRequest(addr, 'add', cReq)
+			# If the request errors out, then the light wasn't added to the client
+			# and we shan't add it to the server either.
+			if res['type'] == 'error':
+				print(' Client error: '+res['message'])
+				return {'success': False, 'message': res['message']}
+			
+				
+			# Finally since the response was good we add the light to the server.
+			print(' Adding new light to server.')
+			if not self._lm.addLight(freshID, req['name'], req['client'], req['permitted']):
+				print(' Could not add light to server.')
+				return {'success':False, 'message':' Could not add light to server.'}
+		
+		# If the light supposedly already exists, we should check to make sure.
+		else:
+			print(' Checking if light actually exists.')
+			res = self._cm.sendRequest(addr, 'status', req['id'])
+			if res['type'] != 'status':
+				print(" The '"+str(req['name'])+"' Light doesn't actually exist"+	\
+				" on the '"+str(req['client'])+"' client, or the given ID was wrong.")
+				return {'success':False, 
+				'message':" The '"+str(req['name'])+"' Light doesn't actually exist"+	\
+				" on the '"+str(req['client'])+"' client, or the given ID was wrong."}
+			else:
+				print(' Adding existing light to server.')
+				self._lm.addLight(req['id'], req['name'], req['client'], req['permitted'])
+		
+		print(' done.')
+		return {'success':True, 'message':None}
+		
+
 				
 	def addUUID(self, req):
 		"""
@@ -438,27 +601,6 @@ class RequestHandler(object):
 			The given UUID is removed from the given lights, if they exist.
 		"""
 		return self._lm.removeUUIDfromSubset(req['uuid'], req['lights'])
-		
-	def addLight(self, req):
-		"""
-		Adds a new light to the light manager.
-		
-		Parameters:
-			req (JSON): The Dictionary that contains the request.
-			
-		Returns:
-			A dictionary containing the response to the request.
-			
-		Preconditions:
-			The request be a valid JSON object for this request type.
-			
-		Postconditions:
-			The light specified is added if it doesn't exist.
-		"""
-		if self._lm.addLight(req['name'], req['client'], req['permitted']):
-			self._am.addAlias(req['client'], req['address'])
-			return {'success':True, 'message':None}
-		return {'success':False, 'message':'Light name already taken.'}
 		
 	def removeLight(self, req):
 		"""

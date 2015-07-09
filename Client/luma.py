@@ -275,6 +275,78 @@ class LUMA(object):
 		self.lightLock.release()
 		return l
 		
+	def _addLight(self, id, name, numVals, r_c, g_c, b_c):
+		"""
+		Safely creates and adds a new light instance to the client.
+		
+		Parameters:
+			id (String): The ID number of the new light.
+			name (String): The name of the new light.
+			numVals (String): The number of values the light shall start with.
+			r (Integer): The pin number of the light's red channel.
+			g (Integer): The pin number of the light's green channel.
+			b (Integer): The pin number of the light's blue channel.
+			
+		Returns:
+			None.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			The light is added.
+		"""
+		# Create the timing and value lists.
+		r_t = [];r_v = [];g_t = [];g_v = [];b_t = [];b_v = [];
+		for i in range(numVals):
+			r_t.append(1.0)
+			r_v.append(1.0)
+			g_t.append(1.0)
+			g_v.append(1.0)
+			b_t.append(1.0)
+			b_v.append(1.0)
+		
+		# Use those to construct the ColorChannels of the new Light.
+		r = ColorChannel(r_t, r_v, r_c)
+		g = ColorChannel(g_t, g_v, g_c)
+		b = ColorChannel(b_t, b_v, b_c)
+		
+		# Now we can create the new Light instance.
+		newLight = Light(r, g, b, name, id)
+		
+		# The tricky part is adding it to the data structures that
+		# are nearly strictly in the domain of the update thread.
+		self.lightLock.acquire(True)
+		self.lights[id] = newLight
+		self.lightLock.release()
+		
+	
+	def pinsInUse(self, pins):
+		"""
+		Checks to see if any number of pins are already in use. Returns the
+		pin numbers that are in use.
+		
+		Parameters:
+			pins (Integer List): A list of all the pin numbers to check.
+			
+		Returns:
+			The pin numbers that are in use already.
+			
+		Preconditions:
+			The LUMA instance is initialized.
+			
+		Postconditions:
+			None.
+		"""
+		inUse = []
+		lights = self.getLights()
+		for l in lights:
+			for p in pins:
+				if	l.r.chan == p or \
+					l.g.chan == p or \
+					l.b.chan == p:
+					inUse.append(p)
+		return inUse
 		
 	def _changeLight(self, id, rtimes, rvals, gtimes, gvals, btimes, bvals):
 		"""
@@ -498,7 +570,7 @@ class LUMA(object):
 			The request is valid.
 			
 		Postconditions:
-			None.
+			The change request is acted upon.
 		"""
 		# Similarly log some info.
 		print(	"  For:    id='"+str(req['data']['id'])+"'"+	\
@@ -530,6 +602,60 @@ class LUMA(object):
 			return encodeResponse('error', None,	\
 			'Light '+str(req['data']['id'])+' does not exist on client '+	\
 			str(self.name))
+			
+			
+	def _onAddRequest(self, req):
+		"""
+		Defines behaviour when given an add-light request.
+		
+		Parameters:
+			req (Dictionary): The decoded request Dictionary.
+		
+		Returns:
+			A JSON String encoding the response to this request.
+		
+		Preconditions:
+			The request is valid.
+		
+		Postconditions:
+			A light is added should no hurdles arise. (Pins already
+			being used, etc...
+		"""
+		# Log the same ol' info.
+		print(	"  id: '"+str(req['data']['id'])+"'")
+		print(	"  name: '"+str(req['data']['name'])+"'")
+		print(	"  pins: R='"+str(req['data']['r_c'])+"'"	\
+				" G='"+str(req['data']['g_c'])+"'"	\
+				" B='"+str(req['data']['b_c'])+"'")
+				
+		# Check to see if any pins are in use already.
+		inUse = self.pinsInUse([ int(float(req['data']['r_c'])),	\
+							int(float(req['data']['r_c'])),	\
+							int(float(req['data']['r_c']))])
+		
+		# Check to make sure we aren't adding a duplicate light.
+		if self._exists(req['data']['id']):
+			return encodeResponse('error', None,	\
+			'ID '+str(req['data']['id'])+' already in use on client '+	\
+			str(self.name))
+			
+		if len(inUse) > 0:
+			return encodeResponse('error', None,	\
+			'Pin(s) '+str(inUse)+' already in use on client '+	\
+			str(self.name))
+
+		# Now we can finally add the light.
+		self._addLight(req['data']['id'],
+					   req['data']['name'],
+					   24,
+					   req['data']['r_c'],
+					   req['data']['g_c'],
+					   req['data']['b_c'])
+					   
+		return encodeResponse('success', None,	\
+			"Light '"+str(req['data']['id'])+"':'"+str(req['data']['name'])+	\
+			"' added to client "+
+			str(self.name)+'(Lights: '+str(len(self.lights.values()))+')')
 		
 	def onRequest(self, s):
 		"""
@@ -571,6 +697,8 @@ class LUMA(object):
 			return self._onStatusRequest(r)
 		elif r['type'] == 'change':
 			return self._onChangeRequest(r)
+		elif r['type'] == 'add':
+			return self._onAddRequest(r)
 		else:
 			print('  Request of invalid type.')
 			return encodeResponse('error', None, 'Invalid request type sent to '+
