@@ -20,7 +20,10 @@
 	<div id='tasks' ng-controller='TaskController as task'>
 	<div class='task-container'>
 		<div class='task-button-container'>
-			<div class='task-button'>Add Light</div>
+			<div class='task-button' 
+			ng-click='task.setDialog(task.DIALOG_ENUM.NEW_LIGHT)'>
+				Add Light
+			</div>
 		</div>
 		<div class='task-description-container'>
 		Adds a light to the server, and optionally to a client. To add/create a
