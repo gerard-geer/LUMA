@@ -78,3 +78,24 @@ body
 	border-bottom-width: 4px;
 	padding-bottom: 0px;
 }
+
+.modal-header
+{
+	width: 100%;
+	color: #333333;
+	background-color: #FFFFFF;
+	text-align: left;
+	font-size: 20pt;
+	font-weight: bold;
+	padding-left: 4pt;
+	padding-top: 4pt;
+	padding-bottom: 2pt;
+	margin-bottom: 8pt;
+	box-shadow: #888888 0px 1.5px 3px;
+}
+
+.modal-subtitle
+{
+	font-size: 10pt;
+	font-weight: normal;
+}

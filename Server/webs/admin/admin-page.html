@@ -43,10 +43,18 @@
 	<!-- controller that gives the dialogs access to state.					 -->
 	<div id='dialog-container' ng-controller='DialogController as dialog'>
 		<!-- The new light dialog modal.									 -->
+		<!-- show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)' -->
 		<modal-dialog 
-		show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)'
+		show='show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)'
 		width='30em' 
 		height='18em'>
+			<div class='modal-header'>
+				Add New Light
+				<div class='modal-subtitle'>
+				An ID is required to add an existing light. Clients must already
+				exist on server.
+				</div>
+			</div>
 			DOING STUFF
 		</modal-dialog>
 	</div>
