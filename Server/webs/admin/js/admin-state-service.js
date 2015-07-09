@@ -4,7 +4,7 @@
 	The Admin Portal's state service. This essentially serves as a globally
 	accessible singleton that stores state between disjoint controllers.
 */
-angular.module('LUMAClient').factory('AdminStateService', [function() {
+angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function() {
     
 	var dialogEnum = {
 		NO_DIALOG: 0,
