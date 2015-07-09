@@ -4,7 +4,7 @@
 	The task controller. Allows each task container to set interface
 	state upon ngClick.
 */
-angular.module('LUMAClientAdminPortal').controller('TaskController',
+angular.module('LUMAClientAdminPortal').controller('DialogController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {

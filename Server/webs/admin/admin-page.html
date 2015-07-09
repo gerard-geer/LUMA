@@ -10,6 +10,7 @@
 	<script src='js/ng-modal.min.js'></script>
 	<script src='js/admin-state-service.js'></script>
 	<script src='js/task-controller.js'></script>
+	<script src='js/dialog-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
 </head>
 <body>
@@ -40,7 +41,7 @@
 	</div>
 	<!-- The dialog container wraps all the admin task dialogs with a		 -->
 	<!-- controller that gives the dialogs access to state.					 -->
-	<div id='dialog-container'>
+	<div id='dialog-container' ng-controller='DialogController as dialog'>
 		<!-- The new light dialog modal.									 -->
 		<modal-dialog 
 		show='true'
