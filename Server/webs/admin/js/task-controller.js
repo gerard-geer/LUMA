@@ -9,7 +9,7 @@ angular.module('LUMAClientAdminPortal').controller('TaskController',
 function($scope, AdminStateService)
 {
 	// Bind some elements of the state to the controller for use in the markup.
-	this.DIALONG_ENUM = AdminStateService.DIALOG_ENUM
+	this.DIALOG_ENUM = AdminStateService.DIALOG_ENUM
 	
 	// A function to set which dialog is open.
 	this.setDialog = function(dialogValue)
