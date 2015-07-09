@@ -147,11 +147,12 @@ class LightManager(object):
 		Postconditions:
 			The light is added to the list.
 		"""
-			
+		
+		startingWith = len(self._lights.keys())
 		light = {'id':id, 'name':name,'client':client,'permitted':[]}
 		light['permitted'].extend(permitted)
 		self._lights[id] = light
-		return True
+		return len(self._lights.keys()) > startingWith
 		
 	def changeLightName(self, id, new):
 		"""

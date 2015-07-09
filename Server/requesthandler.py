@@ -543,7 +543,11 @@ class RequestHandler(object):
 				
 			# Finally since the response was good we add the light to the server.
 			print(' Adding new light to server.')
-			self._lm.addLight(freshID, req['name'], req['client'], req['permitted'])
+			if not self._lm.addLight(freshID, req['name'], req['client'], req['permitted']):
+				print(' Could not add light to server.')
+				return {'success':False, 'message':' Could not add light to server.'}
+		
+				
 		
 		else:
 			# Finally since the response was good we add the light to the server.
