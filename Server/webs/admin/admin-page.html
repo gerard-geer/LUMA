@@ -11,6 +11,7 @@
 	<script src='js/admin-state-service.js'></script>
 	<script src='js/task-controller.js'></script>
 	<script src='js/dialog-controller.js'></script>
+	<script src='js/add-light-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
 </head>
 <body>
@@ -55,7 +56,7 @@
 				exist on server.
 				</div>
 			</div>
-			<div class='dialog-container'>
+			<div class='dialog-container' ng-controller='AddLightController as al'>
 			<form class='dialog-form'>
 				<!-- Name  -->
 				<div class='text-input-container'>
@@ -64,6 +65,7 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.name'
 					placeholder='Name'
 					type='text'/>
 				</div>
@@ -74,6 +76,7 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.client'
 					placeholder='Client Name'
 					type='text'/>
 				</div>
@@ -84,6 +87,7 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.address'
 					placeholder='xxx.xxx.xxx.xxx'
 					type='text'/>
 				</div>
@@ -94,7 +98,31 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.permitted'
 					placeholder='Separate by commas'
+					type='text'/>
+				</div>
+				<!-- Exists -->
+				<div class='checkbox-input-container'>
+					<div class='checkbox-input-label'>
+					<p class='checkbox-input-title'>Already On Client?</p>
+					<p class='checkbox-input-unit'></p>
+					</div>
+					<input 
+					ng-model='al.newLight.exists'
+					class='checkbox-input' 
+					type='checkbox'/>
+				</div>
+				<!-- Existing ID -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Existing ID</p>
+					<p class='text-input-unit'></p>
+					</div>
+					<input
+					class='text-input'
+					ng-model='al.newLight.id'
+					placeholder='Existing Light ID number'
 					type='text'/>
 				</div>
 				<!-- Red Pin -->
@@ -105,6 +133,7 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.r_c'
 					placeholder='Red PWM channel pin number'
 					type='text'/>
 				</div>
@@ -116,6 +145,7 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.g_c'
 					placeholder='Green PWM channel pin number'
 					type='text'/>
 				</div>
@@ -127,26 +157,8 @@
 					</div>
 					<input
 					class='text-input'
+					ng-model='al.newLight.b_c'
 					placeholder='Blue PWM channel pin number'
-					type='text'/>
-				</div>
-				<!-- Exists -->
-				<div class='checkbox-input-container'>
-					<div class='checkbox-input-label'>
-					<p class='checkbox-input-title'>Already On Client?</p>
-					<p class='checkbox-input-unit'></p>
-					</div>
-					<input class='checkbox-input' type='checkbox'/>
-				</div>
-				<!-- Existing ID -->
-				<div class='text-input-container'>
-					<div class='text-input-label'>
-					<p class='text-input-title'>Existing ID</p>
-					<p class='text-input-unit'></p>
-					</div>
-					<input
-					class='text-input'
-					placeholder='Existing Light ID number'
 					type='text'/>
 				</div>
 				<div class='dialog-button-container'>
