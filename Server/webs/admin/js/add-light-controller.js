@@ -11,15 +11,15 @@ function($scope, AdminStateService, AdminServerService)
 	// An interfacing object that is used to store the current light described
 	// by the add light form.
 	this.newLight = {
-		name: null,
-		client: null,
-		address: null,
-		permitted: null,
-		exists: true,
-		id: null,
-		r_c: null,
-		g_c: null,
-		b_c: null
+		name: 'new light',
+		client: 'Research Room',
+		address: '127.0.0.1',
+		permitted: '1, 2, 3, 4, asdf adf, asdf asdf, asdf',
+		exists: false,
+		id: 'as',
+		r_c: 1,
+		g_c: 1,
+		b_c: 1
 	};
 	
 	// A function to see if the given dialog matches that of the global state.
