@@ -47,7 +47,7 @@
 		<modal-dialog 
 		show='true'
 		width='30em' 
-		height='18em'>
+		height='auto'>
 			<div class='modal-header'>
 				Add New Light
 				<div class='modal-subtitle'>
@@ -59,8 +59,7 @@
 				<!-- Name  -->
 				<div class='text-input-container'>
 					<div class='text-input-label'>
-					<p class='text-input-title'>Red</p>
-					<p class='text-input-unit'>(sec)</p>
+					<p class='text-input-title'>Name</p>
 					</div>
 					<input
 					class='text-input'
@@ -68,12 +67,69 @@
 					type='text'/>
 				</div>
 				<!-- Client -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Client Name</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Client Name'
+					type='text'/>
+				</div>
 				<!-- Client Address -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Client IP</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='xxx.xxx.xxx.xxx'
+					type='text'/>
+				</div>
 				<!-- Permitted -->
-				<!-- Exists -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Permitted UUIDs</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Seperate by commas'
+					type='text'/>
+				</div>
 				<!-- Red Pin -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Red Pin</p>
+					<p class='text-input-unit'>(integer)</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Red PWM channel pin number'
+					type='text'/>
+				</div>
 				<!-- Green Pin -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Green Pin</p>
+					<p class='text-input-unit'>(integer)</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Green PWM channel pin number'
+					type='text'/>
+				</div>
 				<!-- Blue Pin -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Blue Pin</p>
+					<p class='text-input-unit'>(integer)</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Blue PWM channel pin number'
+					type='text'/>
+				</div>
+				<!-- Exists -->
 			</form>
 		</modal-dialog>
 	</div>
