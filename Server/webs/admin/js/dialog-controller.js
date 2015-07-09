@@ -1,8 +1,7 @@
 // LUMA Copyright (c) Gerard Geer 2014-2015 
 
 /*
-	The task controller. Allows each task container to set interface
-	state upon ngClick.
+	The dialog controller. Allows each dialog to see if it needs to be displayed.
 */
 angular.module('LUMAClientAdminPortal').controller('DialogController',
 ['$scope', 'AdminStateService',
