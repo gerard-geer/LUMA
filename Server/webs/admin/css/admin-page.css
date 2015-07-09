@@ -32,7 +32,7 @@ body
 	font-size: 10pt;
 	border-bottom-style: solid;
 	border-bottom-color: black;
-	border-bottom-width: 2px;
+	border-bottom-width: 1px;
 	padding: 8pt 0pt 8pt 0pt;
 }
 
@@ -40,17 +40,18 @@ body
 {
 	display: inline-block;
 	text-align: center;
-	width: 20%;
+	width: 15%;
 	height: 100%;
 	vertical-align: super;
-	background-color: #ff0;
 }
 
 .task-description-container
 {
 	display: inline-block;
 	width: 75%;	
-	background-color: #0ff;
+	border-left-style: solid;
+	border-left-color: #ccc;
+	border-left-width: 1px;
 	padding-left: 24pt;
 }
 
