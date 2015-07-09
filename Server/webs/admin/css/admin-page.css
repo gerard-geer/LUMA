@@ -105,6 +105,11 @@ button:focus {
 	font-weight: normal;
 }
 
+#error-container
+{
+	padding: 8pt 12pt 14pt 12pt;
+}
+
 .dialog-container
 {
 	display: block;
