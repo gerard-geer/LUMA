@@ -55,7 +55,8 @@
 				exist on server.
 				</div>
 			</div>
-			<form>
+			<div class='dialog-container'>
+			<form class='dialog-form'>
 				<!-- Name  -->
 				<div class='text-input-container'>
 					<div class='text-input-label'>
@@ -93,7 +94,7 @@
 					</div>
 					<input
 					class='text-input'
-					placeholder='Seperate by commas'
+					placeholder='Separate by commas'
 					type='text'/>
 				</div>
 				<!-- Red Pin -->
@@ -130,6 +131,13 @@
 					type='text'/>
 				</div>
 				<!-- Exists -->
+				<div class='checkbox-input-container'>
+					<div class='checkbox-input-label'>
+					<p class='checkbox-input-title'>Already On Client?</p>
+					<p class='checkbox-input-unit'></p>
+					</div>
+					<input class='checkbox-input' type='checkbox'/>
+				</div>
 				<!-- Existing ID -->
 				<div class='text-input-container'>
 					<div class='text-input-label'>
@@ -141,7 +149,14 @@
 					placeholder='Existing Light ID number'
 					type='text'/>
 				</div>
+				<div class='dialog-button-container'>
+					<!-- The cancel button just closes the dialog. -->
+					<div class='task-button'>Cancel</div>
+					<!-- And the submit calls the submit function. -->
+					<div class='task-button'>Submit</div>
+				</div>
 			</form>
+			</div>
 		</modal-dialog>
 	</div>
 </body>

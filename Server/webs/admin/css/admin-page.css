@@ -106,6 +106,17 @@ button:focus {
 	font-weight: normal;
 }
 
+.dialog-container
+{
+	display: block;
+	text-align:left;
+}
+.dialog-form
+{
+	display: block;
+	text-align:left;
+}
+
 .text-input-container
 {
 	display:block;
@@ -125,7 +136,6 @@ button:focus {
 	margin: 0px;
 	padding: 3pt 0pt 3pt 3pt;
 }
-
 
 .text-input-title
 {
@@ -147,4 +157,44 @@ button:focus {
 	width: 67%;
 	height: 100%;
 	font-size: 12pt;
+}
+
+.checkbox-input-container
+{
+	display:block;
+	text-align: left;
+	width: 40%;
+	margin: 2.5% 0px 2.5% 5%;
+	box-shadow: #888888 0px 1.5px 3px;
+	padding: 0px;
+}
+
+.checkbox-input-label
+{
+	display:inline-block;
+	background-color: #222;
+	color: #fff;
+	width: 80%;
+	margin: 0px;
+	padding: 3pt 0pt 3pt 3pt;
+}
+
+.checkbox-input-title
+{
+	display: inline;
+}
+
+.checkbox-input-unit
+{
+	display: inline;
+	font-size: 8pt;
+}
+
+.dialog-button-container
+{  
+	display: inline-block;
+	width: 100%;
+	padding: 12pt 0pt 2pt 0pt;
+	margin: 3pt auto 3pt auto;
+	text-align: center;
 }
