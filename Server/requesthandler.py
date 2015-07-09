@@ -550,7 +550,6 @@ class RequestHandler(object):
 				
 		
 		else:
-			# Finally since the response was good we add the light to the server.
 			print(' Adding existing light to server.')
 			self._lm.addLight(req['id'], req['name'], req['client'], req['permitted'])
 		
