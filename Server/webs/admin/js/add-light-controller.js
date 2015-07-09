@@ -33,7 +33,6 @@ function($scope, AdminStateService)
 	this.onSubmit = function(light)
 	{
 		AdminStateService.newLight = light;
-		alert('submitted: '+light);
 	};
 	
 }]);
