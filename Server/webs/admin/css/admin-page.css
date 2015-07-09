@@ -7,6 +7,12 @@ body
 	padding: 0;
 	margin: 0;
 }
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
 
 #admin-header
 {
@@ -98,4 +104,47 @@ body
 {
 	font-size: 8pt;
 	font-weight: normal;
+}
+
+.text-input-container
+{
+	display:block;
+	text-align: left;
+	width: 90%;
+	margin: 2.5% auto 2.5% auto;
+	box-shadow: #888888 0px 1.5px 3px;
+	padding: 0px;
+}
+
+.text-input-label
+{
+	display:inline-block;
+	background-color: #222;
+	color: #fff;
+	width: 30%;
+	margin: 0px;
+	padding: 3pt 0pt 3pt 3pt;
+}
+
+
+.text-input-title
+{
+	display: inline;
+}
+
+.text-input-unit
+{
+	display: inline;
+	font-size: 8pt;
+}
+
+.text-input
+{
+	display:inline-block;
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+	width: 67%;
+	height: 100%;
+	font-size: 12pt;
 }
