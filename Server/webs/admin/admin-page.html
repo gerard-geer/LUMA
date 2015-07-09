@@ -14,16 +14,16 @@
 	<!-- horizontal banner with a button on the left and text to the right.	 -->
 	<div class='task-container'>
 		<div class='task-button-container'>
-		Button goes here.
+			<div class='task-button'>Add Light</div>
 		</div>
 		<div class='task-description-container'>
-		Description goes here. Description goes here. Description goes here. 
-		Description goes here. Description goes here. Description goes here. 
-		Description goes here. Description goes here. Description goes here. 
-		Description goes here. Description goes here. Description goes here. 
-		Description goes here. Description goes here. Description goes here. 
-		Description goes here. Description goes here. Description goes here. 
-		Description goes here. 
+		Adds a light to the server, and optionally a client. To add/create a
+		completely new light one needs a name, client, client IP and pin numbers
+		for each of the light's color channels. If a PWM pin is already in use,
+		or if the generated ID is already taken, the operation will fail.
+		To add a light to the server that already exists on a client, then
+		one needs the ID of the light, as well as the client's name and IP.
+		In either case, the server must already be aware of the client.
 		</div>
 	</div>
 	<div class='task-container'>

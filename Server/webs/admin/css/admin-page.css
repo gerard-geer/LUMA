@@ -39,13 +39,41 @@ body
 .task-button-container
 {
 	display: inline-block;
+	text-align: center;
 	width: 20%;
+	height: 100%;
+	vertical-align: super;
 	background-color: #ff0;
 }
 
 .task-description-container
 {
 	display: inline-block;
-	width: 79%;	
+	width: 75%;	
 	background-color: #0ff;
+	padding-left: 24pt;
+}
+
+.task-button
+{
+	transform: translateY(-50%);
+	padding: 4px;
+	display: inline-block;
+	background-color: #FFFFFF;
+	font-weight: bold;
+	box-shadow: #888888 0px 1.5px 3px;
+	cursor: pointer;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	border-color: #FFFF00;
+	-webkit-transition: border-bottom-width .2s, padding-bottom .2s;
+	-moz-transition: border-bottom-width .2s, padding-bottom .2s;
+	-o-transition: border-bottom-width .2s, padding-bottom .2s;
+	-ms-transition: border-bottom-width .2s, padding-bottom .2s;
+	transition: border-bottom-width .2s, padding-bottom .2s;
+}
+.task-button:hover
+{
+	border-bottom-width: 4px;
+	padding-bottom: 0px;
 }
