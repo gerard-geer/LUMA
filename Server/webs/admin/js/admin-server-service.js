@@ -74,9 +74,9 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 			permitted: AdminStateService.newLight.permitted,
 			id: AdminStateService.newLight.id,
 			exists: AdminStateService.newLight.exists,
-			r_c: AdminStateService.newLight.r_c,
-			g_c: AdminStateService.newLight.g_c,
-			b_c: AdminStateService.newLight.b_c
+			r_c: parseInt(AdminStateService.newLight.r_c),
+			g_c: parseInt(AdminStateService.newLight.g_c),
+			b_c: parseInt(AdminStateService.newLight.b_c)
 		}
 		
 		// Split up the permitted string into a list, and trim the entries.
