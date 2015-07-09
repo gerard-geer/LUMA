@@ -83,15 +83,6 @@ def fetchAdminCSS(filename):
 	print(' ADMIN CSS/JS Request from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()) + ' For: '+request.path)
 	return send_from_directory('webs/admin/', filename)
-	
-# Administrative stuff.
-@app.route('/admin/tasks/<path:filename>', methods=['GET'])
-def adminTaskPage(filename):
-	print('-------------------------------------------------------------------------------')
-	print(' ADMIN PAGE ACCESS from: '+request.remote_addr)
-	print(' FOR: '+filename)
-	print(' Time: '+str(datetime.now()))
-	return send_from_directory('webs/admin/', filename)
 
 # Administrative stuff: Adding a light.
 @app.route('/admin/resources/lights/', methods=['POST'])
