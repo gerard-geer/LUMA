@@ -160,7 +160,6 @@ class RequestHandler(object):
 			if key not in req.keys():
 				print(key + ' not in req.keys()')
 				return False
-		
 		# Verify the types of the keys' values.
 		if  not isinstance(req['name'], str) and	\
 			not isinstance(req['name'], unicode):
@@ -175,15 +174,15 @@ class RequestHandler(object):
 			print('address is not string. Type: '+str(type(req['address'])))
 			return False
 		if  not isinstance(req['permitted'], list):
-			print('permitted is not a list. Type: '+str(stype(req['permitted'])))
+			print('permitted is not a list. Type: '+str(type(req['permitted'])))
 			return False
 		if  not isinstance(req['exists'], bool):
-			print('exists is not a boolean. Type: '+str(stype(req['exists'])))
+			print('exists is not a boolean. Type: '+str(type(req['exists'])))
 			return False
 		if  req['exists'] and	\
 			not isinstance(req['id'], str) and	\
 			not isinstance(req['id'], unicode):
-			print('id is not a string. Type: '+str(stype(req['string'])))
+			print('id is not a string. Type: '+str(type(req['string'])))
 			return False
 		if  not isinstance(req['r_c'], int):
 			print('r_c is not an integer. Type: '+str(type(req['r_c'])))
@@ -499,7 +498,7 @@ class RequestHandler(object):
 		# nothing.
 		if not self._sanitizeAddQuery(req):
 			print(' Request did not pass sanitation.')
-			return {'success':False, 'message':'Request did not pass sanitation.'}
+			return {'success':False, 'message':'Request did not pass sanitation. '}
 			
 		# Print some info.
 		print(' Name: '+str(req['name']))
@@ -508,7 +507,7 @@ class RequestHandler(object):
 		if req['exists']:
 			print(' ID: '+str(req['id']))
 		print(' # Permitted: '+str(len(req['permitted'])))
-		print(' Pins: r={1} g={2} b={3}'.format(req['r_c'],req['g_c'],req['b_c']))
+		print(' Pins: r={0} g={1} b={2}'.format(req['r_c'],req['g_c'],req['b_c']))
 		
 		# Just to make sure we're not adding a light to a rogue client, we
 		# make sure we know where it's going.
@@ -517,11 +516,11 @@ class RequestHandler(object):
 			print(" Request address '"+str(req['address'])+	\
 					"' did not match server record")
 			return {'success':False, 'message':"Request address '"+	\
-						str(req['address'])+"' did not match server record"}
+						str(req['address'])+"' did not match server record. "}
 		
 		if not req['exists']:
 			# Finally we create the new light ID.
-			freshID = uuid4()
+			freshID = str(uuid4())
 			
 			# Need to create the request we're sending to the client.
 			cReq = {
@@ -535,11 +534,10 @@ class RequestHandler(object):
 			# Send the client our request.
 			print(' Adding light to client.')
 			res = self._cm.sendRequest(addr, 'add', cReq)
-		
 			# If the request errors out, then the light wasn't added to the client
 			# and we shan't add it to the server either.
 			if res['type'] == 'error':
-				print(' '+res['message'])
+				print(' Client error: '+res['message'])
 				return {'success': False, 'message': res['message']}
 			
 				
@@ -552,6 +550,7 @@ class RequestHandler(object):
 			print(' Adding existing light to server.')
 			self._lm.addLight(req['id'], req['name'], req['client'], req['permitted'])
 		
+		print(' done.')
 		return {'success':True, 'message':None}
 		
 
