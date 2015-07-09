@@ -167,9 +167,15 @@
 				</div>
 				<div class='dialog-button-container'>
 					<!-- The cancel button just closes the dialog. -->
-					<div class='task-button'>Cancel</div>
+					<div class='task-button' 
+					ng-click='dialog.setDialog(dialog.DIALOG_ENUM.NO_DIALOG)'>
+						Cancel
+					</div>
 					<!-- And the submit calls the submit function. -->
-					<div class='task-button' ng-click='al.onSubmit(al.newLight)'>Submit</div>
+					<div class='task-button' 
+					ng-click='al.onSubmit(al.newLight)'>
+						Submit
+					</div>
 				</div>
 			</form>
 			</div>
