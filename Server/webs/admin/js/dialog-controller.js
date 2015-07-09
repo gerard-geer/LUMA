@@ -15,4 +15,10 @@ function($scope, AdminStateService)
 	{
 		return AdminStateService.dialogToShow == dialogValue;
 	}
+	
+	// A function that allows dialogs to change their caste.
+	this.setDialog = function(dialogValue)
+	{
+		AdminStateService.dialogToShow = dialogValue;
+	}
 }]);
