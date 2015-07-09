@@ -83,19 +83,36 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		nl.permitted = nl.permitted.split(',');
 		for(var i = 0; i < nl.permitted.length; ++i)
 		{
+			// YOU SHALT NOT HAVE SPACES.
 			nl.permitted[i] = nl.permitted[i].replace(/ /g,'');
-			console.log(nl.permitted[i]);
 		}
+		
+		// Finally we can send the request to the server.
 		$http.post('resources/lights/', nl).
 		success(function(response)
 		{
+			// Let's just go ahead and log the raw response.
 			console.log("Light Add response:");
 			console.log(response);
+			
+			// Now if the light was successful we close the add-light dialog.
+			if(response.success)
+			{
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.NO_DIALOG;
+			}
+			// And if it wasn't, we bring up the error dialog.
+			else
+			{
+				AdminStateService.errorMessage = response.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			}
 		}).
 		error(function(response)
 		{
+			// Log the response anyhow.
 			console.log("Light Add response:");
 			console.log(response);
+			// Bring up the error message.
 			AdminStateService.errorMessage = response;
 			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
 		});
