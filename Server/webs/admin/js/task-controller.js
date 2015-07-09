@@ -8,6 +8,12 @@ angular.module('LUMAClientAdminPortal').controller('TaskController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {
-	// Bind the state service to the scope so we can have two-way binding.
-	$scope.state = AdminStateService;
+	// Bind some elements of the state to the controller for use in the markup.
+	this.DIALONG_ENUM = AdminStateService.DIALOG_ENUM
+	
+	// A function to set which dialog is open.
+	this.setDialog = function(dialogValue)
+	{
+		AdminStateService.dialogToShow = dialogValue;
+	}
 }
