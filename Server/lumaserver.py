@@ -99,7 +99,7 @@ def addLight():
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN ACTION: Light Add from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	return dumps(rh.lightUpdate(request.get_json()))
+	return dumps(rh.addLight(request.get_json()))
 
 # Draw an initial setup message.
 def printInitialSetupHeader():

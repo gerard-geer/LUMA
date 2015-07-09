@@ -60,7 +60,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 			AdminStateService.errorMessage = test;
 			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
 		}
-		$http.post('admin/resources/lights/', nl).
+		$http.post('resources/lights/', nl).
 		success(function(response)
 		{
 			console.log("Light Add response:");

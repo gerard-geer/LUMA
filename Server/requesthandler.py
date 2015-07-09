@@ -131,7 +131,7 @@ class RequestHandler(object):
 		# Finally after all that checks out we can return True.
 		return True
 		
-	def _sanitizeLAddQuery(self, req):
+	def _sanitizeAddQuery(self, req):
 		"""
 		Sanitizes a state query. This makes sure that a state query is a
 		JSON Dictionary, then that it has the required keys, and the data 
