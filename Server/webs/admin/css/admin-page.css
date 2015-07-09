@@ -1,0 +1,51 @@
+/* LUMA Copyright (c) Gerard Geer 2014-2015 */
+
+body
+{
+	font-size: 12pt;
+    font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+#admin-header
+{
+	font-size: 32pt;
+	font-weight: bold;
+	width: 100%;
+	box-shadow: #888888 0px 2px 6px;
+	margin: 0px;
+	text-align: left;
+	padding: 8pt;
+}
+
+#admin-header-subtitle
+{
+	font-size: 10pt;
+	font-weight: normal;
+	padding-left: 4pt;
+}
+
+.task-container
+{
+	width:100;
+	font-size: 10pt;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	border-bottom-width: 2px;
+	padding: 8pt 0pt 8pt 0pt;
+}
+
+.task-button-container
+{
+	display: inline-block;
+	width: 20%;
+	background-color: #ff0;
+}
+
+.task-description-container
+{
+	display: inline-block;
+	width: 79%;	
+	background-color: #0ff;
+}

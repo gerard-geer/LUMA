@@ -74,7 +74,15 @@ def adminPage():
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN PAGE ACCESS from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	return send_from_directory('webs/admin/', 'admin_page.html')
+	return send_from_directory('webs/admin/', 'admin-page.html')
+	
+# Admin page CSS and JS
+@app.route('/admin/<path:filename>', methods=['GET'])
+def fetchAdminCSS(filename):
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN CSS/JS Request from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()) + ' For: '+request.path)
+	return send_from_directory('webs/admin/', filename)
 	
 # Administrative stuff.
 @app.route('/admin/tasks/<path:filename>', methods=['GET'])
