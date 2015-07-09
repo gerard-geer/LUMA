@@ -44,7 +44,7 @@
 	<div id='dialog-container' ng-controller='DialogController as dialog'>
 		<!-- The new light dialog modal.									 -->
 		<modal-dialog 
-		show='true'
+		show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_LIGHT)'
 		width='30em' 
 		height='18em'>
 			DOING STUFF
