@@ -547,11 +547,19 @@ class RequestHandler(object):
 				print(' Could not add light to server.')
 				return {'success':False, 'message':' Could not add light to server.'}
 		
-				
-		
+		# If the light supposedly already exists, we should check to make sure.
 		else:
-			print(' Adding existing light to server.')
-			self._lm.addLight(req['id'], req['name'], req['client'], req['permitted'])
+			print(' Checking if light actually exists.')
+			res = self._cm.sendRequest(addr, 'status', req['id'])
+			if res['type'] != 'status':
+				print(" The '"+str(req['name'])+"' Light doesn't actually exist"+	\
+				" on the '"+str(req['client'])+"' client, or the given ID was wrong.")
+				return {'success':False, 
+				'message':" The '"+str(req['name'])+"' Light doesn't actually exist"+	\
+				" on the '"+str(req['client'])+"' client, or the given ID was wrong."}
+			else:
+				print(' Adding existing light to server.')
+				self._lm.addLight(req['id'], req['name'], req['client'], req['permitted'])
 		
 		print(' done.')
 		return {'success':True, 'message':None}
