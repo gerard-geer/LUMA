@@ -239,7 +239,7 @@
 		>
 		<modal-dialog 
 		show='dialog.state.showDialog'
-		width='500pt' 
+		width='auto' 
 		height='auto'>
 			<div class='modal-header'>
 				Lights
@@ -249,21 +249,16 @@
 			</div>
 			<div class='modal-text-container'
 			ng-controller='LightListingController as llc'>
-				<table style='width:100%'>
+				<table class='listing-table'>
 				  <tr>
-					<td>Jill</td>
-					<td>Smith</td>		
-					<td>50</td>
+					<th class='listing-header'>ID</th>
+					<th class='listing-header'>Name</th>		
+					<th class='listing-header'>Client</th>
 				  </tr>
-				  <tr>
-					<td>Eve</td>
-					<td>Jackson</td>		
-					<td>94</td>
-				  </tr>
-				  <tr>
-					<td>John</td>
-					<td>Doe</td>		
-					<td>80</td>
+				  <tr ng-repeat='x in state.listing'>
+					<td class='listing-element outside'>{{x}}</td>
+					<td class='listing-element inside'>{{x[0]}}</td>		
+					<td class='listing-element outside'>{{x[1]}}</td>
 				  </tr>
 				</table>
 			</div>
