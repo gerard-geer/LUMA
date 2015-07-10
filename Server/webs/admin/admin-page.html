@@ -13,6 +13,7 @@
 	<script src='js/task-controller.js'></script>
 	<script src='js/dialog-controller.js'></script>
 	<script src='js/add-light-controller.js'></script>
+	<script src='js/light-listing-controller.js'></script>
 	<script src='js/error-dialog-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
 </head>
@@ -47,7 +48,7 @@
 	<div class='task-container'>
 		<div class='task-button-container'>
 			<div class='task-button' 
-			ng-click='task.setDialog(task.DIALOG_ENUM.LIGHT_LISTING)'>
+			ng-click='task.setDialog(task.DIALOG_ENUM.LIGHT_LISTING);task.server.getLightListing()'>
 			Get Light List
 			</div>
 		</div>
@@ -247,8 +248,9 @@
 				</div>
 			</div>
 			<div class='modal-text-container'
-			ng-controller='ErrorDialogController as edc'>
+			ng-controller='LightListingController as llc'>
 				<table style='width:100%'>
+					{{listing}}
 				  <tr>
 					<td>Jill</td>
 					<td>Smith</td>		
