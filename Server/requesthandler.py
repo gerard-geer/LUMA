@@ -706,5 +706,5 @@ class RequestHandler(object):
 			print('   '+client)
 		print('\n Lights: ('+str(len(lights.keys()))+')')
 		for key in lights.keys():
-			print("   %-20s : "%str(key)+str(lights[key]))
+			print("   %-20s : "%str(key)+str(lights[key][0]))
 		
