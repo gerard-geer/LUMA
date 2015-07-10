@@ -93,7 +93,7 @@ def addLight():
 	print(request.get_json())
 	return dumps(rh.addQuery(request.get_json()))
 	
-# Administrative stuff: Getting a listing of all lights..
+# Administrative stuff: Getting a listing of all lights.
 @app.route('/admin/resources/lights/', methods=['GET'])
 def getLights():
 	print('-------------------------------------------------------------------------------')
@@ -101,6 +101,15 @@ def getLights():
 	print(' Time: '+str(datetime.now()))
 	print(request.get_json())
 	return dumps(rh.lightCatalogRequest())
+	
+# Administrative stuff: Getting a listing of all clients.
+@app.route('/admin/resources/clients/', methods=['GET'])
+def getLights():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Client Listing Request from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	print(request.get_json())
+	return dumps(rh.clientCatalogRequest())
 
 # Draw an initial setup message.
 def printInitialSetupHeader():
