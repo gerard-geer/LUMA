@@ -127,7 +127,7 @@ button:focus {
 	font-weight: normal;
 }
 
-#error-container
+.modal-text-container
 {
 	padding: 8pt 12pt 14pt 12pt;
 }
