@@ -99,16 +99,14 @@ def getLights():
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN ACTION: Light Listing Request from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	print(request.get_json())
 	return dumps(rh.lightCatalogRequest())
 	
 # Administrative stuff: Getting a listing of all clients.
 @app.route('/admin/resources/clients/', methods=['GET'])
-def getLights():
+def getClients():
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN ACTION: Client Listing Request from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	print(request.get_json())
 	return dumps(rh.clientCatalogRequest())
 
 # Draw an initial setup message.
