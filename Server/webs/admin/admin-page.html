@@ -44,6 +44,28 @@
 		In either case, the server must already be aware of the client.
 		</div>
 	</div>
+	<div class='task-container'>
+		<div class='task-button-container'>
+			<div class='task-button' 
+			ng-click='task.setDialog(task.DIALOG_ENUM.NEW_LIGHT)'>
+			Get Light List
+			</div>
+		</div>
+		<div class='task-description-container'>
+		Returns a list of all the lights on the server.
+		</div>
+	</div>
+	<div class='task-container'>
+		<div class='task-button-container'>
+			<div class='task-button' 
+			ng-click='task.setDialog(task.DIALOG_ENUM.NEW_LIGHT)'>
+			Get Client List
+			</div>
+		</div>
+		<div class='task-description-container'>
+		Returns a list of all the clients on the server.
+		</div>
+	</div>
 	</div>
 	<!-- The dialog container wraps all the admin task dialogs with a		 -->
 	<!-- controller that gives the dialogs access to state.					 -->
