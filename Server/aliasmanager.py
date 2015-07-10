@@ -178,3 +178,25 @@ class AliasManager(object):
 			return False
 		del self._aliases[alias]
 		return True
+		
+	def getClientCatalog(self):
+		"""
+		Returns a catalog of all the clients in the manager, with
+		names keyed to addresses.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			A dictionary of clients, name->address.
+			
+		Preconditions:
+			The client manager is loaded.
+			
+		Postconditions:
+			None.
+		"""
+		res = {}
+		for key in self._aliases.keys():
+			res[key] = self._aliases[key]
+		return res
