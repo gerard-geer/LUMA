@@ -122,21 +122,21 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		});
 	}
 	
-	// A function to request the light listing from the server.
-	function performLightListingRequest()
+	// A function to request a listing from the server.
+	function performListingRequest(path)
 	{
 		// Not much to this one.
-		$http.get('resources/lights/').
+		$http.get(path).
 		success(function(response)
 		{
-			console.log("Light listing response:");
+			console.log("Client listing response:");
 			console.log(response);
 			// Store the light listing on the state for access elsewhere.
 			AdminStateService.listing = response;
 		}).
 		error(function(response)
 		{
-			console.log("Light listing response:");
+			console.log("Client listing response:");
 			console.log(response);
 			// Bring up the error message.
 			AdminStateService.errorMessage = response;
@@ -147,6 +147,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	
     return {
 		addNewLight: function(){performLightAdd();},
-		getLightListing: function(){performLightListingRequest();}
+		getLightListing: function(){performListingRequest('resources/lights/');},
+		getClientListing: function(){performListingRequest('resources/clients/');}
     };
 }]);
