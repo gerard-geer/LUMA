@@ -131,6 +131,8 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		{
 			console.log("Light listing response:");
 			console.log(response);
+			// Store the light listing on the state for access elsewhere.
+			AdminStateService.listing = response;
 		}).
 		error(function(response)
 		{
