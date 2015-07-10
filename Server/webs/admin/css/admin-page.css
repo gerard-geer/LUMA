@@ -84,7 +84,7 @@ button:focus {
 
 .task-button
 {
-	transform: translateY(-50%);
+	/* transform: translateY(-50%); */
 	padding: 4px;
 	display: inline-block;
 	background-color: #FFFFFF;
