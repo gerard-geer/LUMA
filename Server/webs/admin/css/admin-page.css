@@ -245,12 +245,12 @@ button:focus {
 	padding: 4pt 5pt 3pt 5pt;
 }
 
-.listing-element.inside
+.listing-element.odd
 {
 	background-color: #bbb;
 }
 
-.listing-element.outside
+.listing-element.even
 {
 	background-color: #999;
 }
