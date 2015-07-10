@@ -185,6 +185,17 @@ EXAMPLE ADMIN LIGHT LISTING REQUEST
 EXAMPLE RESPONSE
 {
 	. . ., 
-	<light ID>: [<light name>, <light host client>],
+	"<light ID>": ["<light name>", "<light host client>"],
+	. . .
+}
+
+EXAMPLE ADMIN CLIENT LISTING REQUEST
+{
+	<No JSON is parsed server side.>
+}
+EXAMPLE RESPONSE
+{
+	. . .,
+	"<client name>": "<client address>",
 	. . .
 }
