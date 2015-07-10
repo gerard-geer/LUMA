@@ -358,7 +358,8 @@ class LightManager(object):
 			None.
 			
 		Returns:
-			A dictionary with light IDs keying into light names.
+			A dictionary with light IDs keying into tuples consisting
+			of the light name then its client.
 			
 		Preconditions:
 			The Light Manager is initialized.
@@ -368,5 +369,5 @@ class LightManager(object):
 		"""
 		catalog = {}
 		for id in self._lights.keys():
-			catalog[id] = self._lights[id]['name']
+			catalog[id] = ( self._lights[id]['name'], self._lights[id]['client'] )
 		return catalog
