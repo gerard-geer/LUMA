@@ -255,10 +255,10 @@
 					<th class='listing-header'>Name</th>		
 					<th class='listing-header'>Client</th>
 				  </tr>
-				  <tr ng-repeat='x in state.listing'>
-					<td class='listing-element outside'>{{x}}</td>
-					<td class='listing-element inside'>{{x[0]}}</td>		
-					<td class='listing-element outside'>{{x[1]}}</td>
+				  <tr ng-repeat='(id, light) in state.listing'>
+					<td class='listing-element outside'>{{id}}</td>
+					<td class='listing-element inside'>{{light[0]}}</td>		
+					<td class='listing-element outside'>{{light[1]}}</td>
 				  </tr>
 				</table>
 			</div>
