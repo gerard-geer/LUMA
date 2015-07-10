@@ -51,6 +51,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		return '';
 	}
 	
+	// A function to perform adding lights.
 	function performLightAdd()
 	{
 		
@@ -121,7 +122,29 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		});
 	}
 	
+	// A function to request the light listing from the server.
+	function performLightListingRequest()
+	{
+		// Not much to this one.
+		$http.get('resources/lights/').
+		success(function(response)
+		{
+			console.log("Light listing response:");
+			console.log(response);
+		}).
+		error(function(response)
+		{
+			console.log("Light listing response:");
+			console.log(response);
+			// Bring up the error message.
+			AdminStateService.errorMessage = response;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			AdminStateService.showDialog = true;
+		});
+	}
+	
     return {
-		addNewLight: function(){performLightAdd();}
+		addNewLight: function(){performLightAdd();},
+		getLightListing: function(){performLightListingRequest();}
     };
 }]);
