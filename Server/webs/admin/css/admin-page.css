@@ -31,6 +31,28 @@ button:focus {
 	padding-left: 4pt;
 }
 
+#leave-admin-portal
+{	
+	font-size: 10pt;
+	float: right;
+	margin: 0pt 32pt 0pt 0pt;
+}
+
+#leave-admin-portal:link
+{	
+	color: #000;
+}
+
+#leave-admin-portal:visited
+{	
+	color: #000;
+}
+
+#leave-admin-portal:hover
+{	
+	color: #777;
+}
+
 .task-container
 {
 	width:100;
