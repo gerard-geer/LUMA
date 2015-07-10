@@ -598,7 +598,7 @@ class RequestHandler(object):
 		Postconditions:
 			None.
 		"""
-		return self._cm.getClientCatalog()
+		return self._am.getClientCatalog()
 				
 	def addUUID(self, req):
 		"""
