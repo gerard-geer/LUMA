@@ -8,7 +8,7 @@ angular.module('LUMAClientAdminPortal').controller('LightListingController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {
-	// We really only need to copy the state's error message to scope.
+	// We really only need to copy state to scope. The DOM can do the rest.
 	$scope.state = AdminStateService;
 	
 }]);
