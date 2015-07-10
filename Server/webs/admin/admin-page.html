@@ -264,6 +264,36 @@
 			</div>
 		</modal-dialog>
 		</div>
+		
+		<!-- The client listing modal.								 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.CLIENT_LISTING)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='auto' 
+		height='auto'>
+			<div class='modal-header'>
+				Lights
+				<div class='modal-subtitle'>
+				All lights on the server.
+				</div>
+			</div>
+			<div class='modal-text-container'
+			ng-controller='ListingController as listing'>
+				<table class='listing-table'>
+				  <tr>
+					<th class='listing-header'>Name</th>		
+					<th class='listing-header'>IP Address</th>
+				  </tr>
+				  <tr ng-repeat='(name, addr) in state.listing'>
+					<td class='listing-element outside'>{{name}}</td>
+					<td class='listing-element inside'>{{addr}}</td>		
+				  </tr>
+				</table>
+			</div>
+		</modal-dialog>
+		</div>
 	</div>
 </body>
 </html>
