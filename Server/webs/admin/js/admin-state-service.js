@@ -23,6 +23,8 @@ angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function()
 		// What dialog to show.
 		dialogToShow: dialogEnum.NO_DIALOG,
 		// THe dialog enumerator.
-		DIALOG_ENUM: dialogEnum
+		DIALOG_ENUM: dialogEnum,
+		// A place to store listings.
+		listing: null
     };
 }]);
