@@ -9,7 +9,9 @@ angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function()
 	var dialogEnum = {
 		NO_DIALOG: 0,
 		NEW_LIGHT: 1,
-		ERROR: 2,
+		LIGHT_LISTING: 2,
+		CLIENT_LISTING: 4,
+		ERROR: 8
 	}
 	return {
 		// An object in which to create and store a new light.
