@@ -212,6 +212,7 @@
 			</div>
 		</modal-dialog>
 		</div>
+		
 		<!-- The error Message dialog modal.								 -->
 		<div class='modal-container'
 		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.ERROR)'
@@ -228,6 +229,43 @@
 			</div>
 			<div id='error-container'
 			ng-controller='ErrorDialogController as edc'>{{ state.errorMessage }}</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The light listing modal.								 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.LIGHT_LISTING)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='500pt' 
+		height='auto'>
+			<div class='modal-header'>
+				Lights
+				<div class='modal-subtitle'>
+				All lights on the server.
+				</div>
+			</div>
+			<div id='error-container'
+			ng-controller='ErrorDialogController as edc'>
+				<table style='width:100%'>
+				  <tr>
+					<td>Jill</td>
+					<td>Smith</td>		
+					<td>50</td>
+				  </tr>
+				  <tr>
+					<td>Eve</td>
+					<td>Jackson</td>		
+					<td>94</td>
+				  </tr>
+				  <tr>
+					<td>John</td>
+					<td>Doe</td>		
+					<td>80</td>
+				  </tr>
+				</table>
+			</div>
 		</modal-dialog>
 		</div>
 	</div>
