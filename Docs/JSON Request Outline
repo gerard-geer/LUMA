@@ -177,3 +177,14 @@ EXAMPLE RESPONSE:
 	"success":<True | False>,
 	"message": <None | "<Example message>">
 }
+
+EXAMPLE ADMIN LIGHT LISTING REQUEST
+{
+	<No JSON is parsed server side.>
+}
+EXAMPLE RESPONSE
+{
+	. . ., 
+	<light ID>: [<light name>, <light host client>],
+	. . .
+}
