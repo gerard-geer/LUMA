@@ -84,7 +84,7 @@ button:focus {
 
 .task-button
 {
-	transform: translateY(-50%);
+	/* transform: translateY(-50%); */
 	padding: 4px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -127,7 +127,7 @@ button:focus {
 	font-weight: normal;
 }
 
-#error-container
+.modal-text-container
 {
 	padding: 8pt 12pt 14pt 12pt;
 }
@@ -223,4 +223,34 @@ button:focus {
 	padding: 12pt 0pt 2pt 0pt;
 	margin: 3pt auto 3pt auto;
 	text-align: center;
+}
+
+.listing-table
+{
+	width: 100%;
+	font-size: 9pt;
+	border-collapse: collapse;
+	box-shadow: #888888 0px 1.5px 3px;
+	
+	
+}
+
+.listing-header
+{
+}
+
+.listing-element
+{
+	font-family: "Lucida Console", monospace, Arial;
+	padding: 4pt 5pt 3pt 5pt;
+}
+
+.listing-element.inside
+{
+	background-color: #bbb;
+}
+
+.listing-element.outside
+{
+	background-color: #999;
 }

@@ -20,7 +20,13 @@ eventually be implemented, and only reflects what can be done.
 	DELETE: Not used.
 	
 <LUMA domain>/admin/resources/lights
-	GET: Not used.
+	GET: Returns a listing of all the lights on the server.
 	POST: Add a light to the server, and optionally to a client.
+	PUT: Not used.
+	DELETE: Not used.
+	
+<LUMA domain>/admin/resources/clients
+	GET: Returns a listing of all the clients on the server.
+	POST: Not used.
 	PUT: Not used.
 	DELETE: Not used.

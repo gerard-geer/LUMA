@@ -564,7 +564,41 @@ class RequestHandler(object):
 		print(' done.')
 		return {'success':True, 'message':None}
 		
-
+	def lightCatalogRequest(self):
+		"""
+		Returns a catalog of all the lights in the server. 
+		
+		Parameters:
+			None.
+			
+		Returns:
+			A catalog of all the lights in the server.
+			
+		Preconditions:
+			The light manager is properly loaded.
+			
+		Postconditions:
+			None.
+		"""
+		return self._lm.getLightCatalog()
+		
+	def clientCatalogRequest(self):
+		"""
+		Returns a catalog of all the clients on the server.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			A catalog of all the clients on the server.
+			
+		Preconditions:
+			The client manager is properly loaded.
+			
+		Postconditions:
+			None.
+		"""
+		return self._am.getClientCatalog()
 				
 	def addUUID(self, req):
 		"""
@@ -672,5 +706,5 @@ class RequestHandler(object):
 			print('   '+client)
 		print('\n Lights: ('+str(len(lights.keys()))+')')
 		for key in lights.keys():
-			print("   %-20s : "%str(key)+str(lights[key]))
+			print("   %-20s : "%str(key)+str(lights[key][0]))
 		

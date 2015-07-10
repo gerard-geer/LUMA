@@ -13,6 +13,7 @@
 	<script src='js/task-controller.js'></script>
 	<script src='js/dialog-controller.js'></script>
 	<script src='js/add-light-controller.js'></script>
+	<script src='js/listing-controller.js'></script>
 	<script src='js/error-dialog-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
 </head>
@@ -42,6 +43,28 @@
 		To add a light to the server that already exists on a client, then
 		one needs the ID of the light, as well as the client's name and IP.
 		In either case, the server must already be aware of the client.
+		</div>
+	</div>
+	<div class='task-container'>
+		<div class='task-button-container'>
+			<div class='task-button' 
+			ng-click='task.setDialog(task.DIALOG_ENUM.LIGHT_LISTING);task.server.getLightListing()'>
+			Get Light List
+			</div>
+		</div>
+		<div class='task-description-container'>
+		Display a list of all the lights on the server.
+		</div>
+	</div>
+	<div class='task-container'>
+		<div class='task-button-container'>
+			<div class='task-button' 
+			ng-click='task.setDialog(task.DIALOG_ENUM.CLIENT_LISTING);task.server.getClientListing()'>
+			Get Client List
+			</div>
+		</div>
+		<div class='task-description-container'>
+		Display a list of all the clients on the server.
 		</div>
 	</div>
 	</div>
@@ -190,6 +213,7 @@
 			</div>
 		</modal-dialog>
 		</div>
+		
 		<!-- The error Message dialog modal.								 -->
 		<div class='modal-container'
 		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.ERROR)'
@@ -204,8 +228,70 @@
 				An error has occured.
 				</div>
 			</div>
-			<div id='error-container'
+			<div class='modal-text-container'
 			ng-controller='ErrorDialogController as edc'>{{ state.errorMessage }}</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The light listing modal.								 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.LIGHT_LISTING)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='auto' 
+		height='auto'>
+			<div class='modal-header'>
+				Lights
+				<div class='modal-subtitle'>
+				A listing of all the lights on the server.
+				</div>
+			</div>
+			<div class='modal-text-container'
+			ng-controller='ListingController as listing'>
+				<table class='listing-table'>
+				  <tr>
+					<th class='listing-header'>ID</th>
+					<th class='listing-header'>Name</th>		
+					<th class='listing-header'>Client</th>
+				  </tr>
+				  <tr ng-repeat='(id, light) in state.listing'>
+					<td class='listing-element outside'>{{id}}</td>
+					<td class='listing-element inside'>{{light[0]}}</td>		
+					<td class='listing-element outside'>{{light[1]}}</td>
+				  </tr>
+				</table>
+			</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The client listing modal.								 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.CLIENT_LISTING)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='auto' 
+		height='auto'>
+			<div class='modal-header'>
+				Clients
+				<div class='modal-subtitle'>
+				A listing of all clients on the server.
+				</div>
+			</div>
+			<div class='modal-text-container'
+			ng-controller='ListingController as listing'>
+				<table class='listing-table'>
+				  <tr>
+					<th class='listing-header'>Name</th>		
+					<th class='listing-header'>IP Address</th>
+				  </tr>
+				  <tr ng-repeat='(name, addr) in state.listing'>
+					<td class='listing-element outside'>{{name}}</td>
+					<td class='listing-element inside'>{{addr}}</td>		
+				  </tr>
+				</table>
+			</div>
 		</modal-dialog>
 		</div>
 	</div>
