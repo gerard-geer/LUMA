@@ -239,7 +239,7 @@
 		>
 		<modal-dialog 
 		show='dialog.state.showDialog'
-		width='auto' 
+		width='90%' 
 		height='auto'>
 			<div class='modal-header'>
 				Lights
@@ -247,18 +247,20 @@
 				A listing of all the lights on the server.
 				</div>
 			</div>
-			<div class='modal-text-container'
+			<div class='modal-text-container' id='light-listing-container'
 			ng-controller='ListingController as listing'>
 				<table class='listing-table'>
 				  <tr>
 					<th class='listing-header'>ID</th>
 					<th class='listing-header'>Name</th>		
 					<th class='listing-header'>Client</th>
+					<th class='listing-header'>Permitted</th>
 				  </tr>
 				  <tr ng-repeat='(id, light) in state.listing'>
-					<td class='listing-element outside'>{{id}}</td>
-					<td class='listing-element inside'>{{light[0]}}</td>		
-					<td class='listing-element outside'>{{light[1]}}</td>
+					<td class='listing-element odd'>{{id}}</td>
+					<td class='listing-element even'>{{light[0]}}</td>		
+					<td class='listing-element odd'>{{light[1]}}</td>
+					<td class='listing-element even'>{{light[2]}}</td>
 				  </tr>
 				</table>
 			</div>
@@ -287,8 +289,8 @@
 					<th class='listing-header'>IP Address</th>
 				  </tr>
 				  <tr ng-repeat='(name, addr) in state.listing'>
-					<td class='listing-element outside'>{{name}}</td>
-					<td class='listing-element inside'>{{addr}}</td>		
+					<td class='listing-element odd'>{{name}}</td>
+					<td class='listing-element even'>{{addr}}</td>		
 				  </tr>
 				</table>
 			</div>
