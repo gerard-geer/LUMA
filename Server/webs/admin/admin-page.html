@@ -251,17 +251,16 @@
 			<div class='modal-text-container' id='light-listing-container'
 			ng-controller='ListingController as listing'>
 				<table class='listing-table'>
-				  <tr>
-					<th class='listing-header'>ID</th>
-					<th class='listing-header'>Name</th>		
-					<th class='listing-header'>Client</th>
-					<th class='listing-header'>Permitted</th>
-				  </tr>
-				  <tr ng-repeat='(id, light) in state.listing'>
-					<td class='listing-element odd'>{{id}}</td>
-					<td class='listing-element even'>{{light[0]}}</td>		
-					<td class='listing-element odd'>{{light[1]}}</td>
-				  </tr>
+					<tr>
+						<th class='listing-header'>ID</th>
+						<th class='listing-header'>Name</th>		
+						<th class='listing-header'>Client</th>
+					</tr>
+					<tr ng-repeat='(id, light) in state.listing'>
+						<td class='listing-element odd'>{{id}}</td>
+						<td class='listing-element even'>{{light[0]}}</td>		
+						<td class='listing-element odd'>{{light[1]}}</td>
+					</tr>
 				</table>
 			</div>
 		</modal-dialog>
