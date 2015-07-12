@@ -13,6 +13,8 @@
 	<script src='js/task-controller.js'></script>
 	<script src='js/dialog-controller.js'></script>
 	<script src='js/add-light-controller.js'></script>
+	<script src='js/selected-light-controller.js'></script>
+	<script src='js/light-info-controller.js'></script>
 	<script src='js/listing-controller.js'></script>
 	<script src='js/error-dialog-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
@@ -239,35 +241,37 @@
 		>
 		<modal-dialog 
 		show='dialog.state.showDialog'
-		width='90%' 
+		width='auto' 
 		height='auto'>
 			<div class='modal-header'>
 				Lights
 				<div class='modal-subtitle'>
 				A listing of all the lights on the server.
+				Click a light for more information.
 				</div>
 			</div>
-			<div class='modal-text-container' id='light-listing-container'
+			<div class='modal-text-container listing-container'
 			ng-controller='ListingController as listing'>
 				<table class='listing-table'>
-				  <tr>
-					<th class='listing-header'>ID</th>
-					<th class='listing-header'>Name</th>		
-					<th class='listing-header'>Client</th>
-					<th class='listing-header'>Permitted</th>
-				  </tr>
-				  <tr ng-repeat='(id, light) in state.listing'>
-					<td class='listing-element odd'>{{id}}</td>
-					<td class='listing-element even'>{{light[0]}}</td>		
-					<td class='listing-element odd'>{{light[1]}}</td>
-					<td class='listing-element even'>{{light[2]}}</td>
-				  </tr>
+					<tr>
+						<th class='listing-header'>ID</th>
+						<th class='listing-header'>Name</th>		
+						<th class='listing-header'>Client</th>
+					</tr>
+					<tr class='listing'
+						ng-repeat='(id, light) in state.listing'
+						ng-controller='LightListingController as ll'
+						ng-click='ll.onLightClick(id, light)'>
+						<td class='listing-element odd'>{{id}}</td>
+						<td class='listing-element even'>{{light[0]}}</td>		
+						<td class='listing-element odd'>{{light[1]}}</td>
+					</tr>
 				</table>
 			</div>
 		</modal-dialog>
 		</div>
 		
-		<!-- The client listing modal.								 -->
+		<!-- The client listing modal.										 -->
 		<div class='modal-container'
 		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.CLIENT_LISTING)'
 		>
@@ -281,18 +285,73 @@
 				A listing of all clients on the server.
 				</div>
 			</div>
-			<div class='modal-text-container'
+			<div class='modal-text-container listing-container'
 			ng-controller='ListingController as listing'>
 				<table class='listing-table'>
 				  <tr>
 					<th class='listing-header'>Name</th>		
 					<th class='listing-header'>IP Address</th>
 				  </tr>
-				  <tr ng-repeat='(name, addr) in state.listing'>
+				  <tr
+					class='listing'
+					ng-repeat='(name, addr) in state.listing'>
 					<td class='listing-element odd'>{{name}}</td>
 					<td class='listing-element even'>{{addr}}</td>		
 				  </tr>
 				</table>
+			</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The specific light modal.										 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.LIGHT_INFO)'
+		ng-controller='LightInfoController as info'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='auto' 
+		height='auto'>
+			<div class='modal-header'>
+				{{state.selected.name}}
+				<div class='modal-subtitle'>
+				{{state.selected.id}}
+				</div>
+			</div>
+			<div class='modal-text-container'>
+				<!-- Name -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Name</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Light name'
+					type='text'
+					ng-model='state.selected.name'/>
+				</div>
+				<!-- Client -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Client</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Light Client'
+					type='text'
+					ng-model='state.selected.client'/>
+				</div>
+				<!-- Permitted -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Permitted UUIDs</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Separate by commas'
+					type='text'
+					ng-model='state.selected.permitted'/>
+				</div>
 			</div>
 		</modal-dialog>
 		</div>
