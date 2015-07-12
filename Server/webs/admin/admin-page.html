@@ -269,7 +269,7 @@
 		</modal-dialog>
 		</div>
 		
-		<!-- The client listing modal.								 -->
+		<!-- The client listing modal.										 -->
 		<div class='modal-container'
 		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.CLIENT_LISTING)'
 		>
@@ -295,6 +295,26 @@
 					<td class='listing-element even'>{{addr}}</td>		
 				  </tr>
 				</table>
+			</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The specific light modal.										 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.LIGHT_LISTING)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='auto' 
+		height='auto'>
+			<div class='modal-header'>
+				Lights
+				<div class='modal-subtitle'>
+				A listing of all the lights on the server.
+				</div>
+			</div>
+			<div class='modal-text-container' id='light-listing-container'>
+				STUFF
 			</div>
 		</modal-dialog>
 		</div>
