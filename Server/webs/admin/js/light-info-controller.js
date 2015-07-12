@@ -8,5 +8,4 @@ angular.module('LUMAClientAdminPortal').controller('LightInfoController',
 function($scope, AdminStateService)
 {
 	$scope.state = AdminStateService;
-	
 }]);
