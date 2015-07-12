@@ -311,13 +311,12 @@
 		width='auto' 
 		height='auto'>
 			<div class='modal-header'>
-				{{state.selectedLight.name}}
+				{{state.selected.name}}
 				<div class='modal-subtitle'>
-				{{state.selectedLight.id}}
+				{{state.selected.id}}
 				</div>
 			</div>
 			<div class='modal-text-container' id='light-listing-container'>
-				
 				<!-- Name -->
 				<div class='text-input-container'>
 					<div class='text-input-label'>
@@ -326,9 +325,20 @@
 					<input
 					class='text-input'
 					placeholder='Light name'
-					type='text'/>
+					type='text'
+					ng-model='state.selected.name'/>
 				</div>
-				
+				<!-- Client -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Client</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Light Client'
+					type='text'
+					ng-model='state.selected.client'/>
+				</div>
 				<!-- Permitted -->
 				<div class='text-input-container'>
 					<div class='text-input-label'>
@@ -337,7 +347,8 @@
 					<input
 					class='text-input'
 					placeholder='Separate by commas'
-					type='text'/>
+					type='text'
+					ng-model='state.selected.permitted'/>
 				</div>
 			</div>
 		</modal-dialog>
