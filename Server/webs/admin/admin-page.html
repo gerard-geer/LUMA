@@ -258,7 +258,7 @@
 						<th class='listing-header'>Name</th>		
 						<th class='listing-header'>Client</th>
 					</tr>
-					<tr class='light-listing'
+					<tr class='listing'
 						ng-repeat='(id, light) in state.listing'
 						ng-controller='LightListingController as ll'
 						ng-click='ll.onLightClick(id, light)'>
@@ -292,7 +292,9 @@
 					<th class='listing-header'>Name</th>		
 					<th class='listing-header'>IP Address</th>
 				  </tr>
-				  <tr ng-repeat='(name, addr) in state.listing'>
+				  <tr
+					class='listing'
+					ng-repeat='(name, addr) in state.listing'>
 					<td class='listing-element odd'>{{name}}</td>
 					<td class='listing-element even'>{{addr}}</td>		
 				  </tr>
