@@ -9,7 +9,7 @@ angular.module('LUMAClientAdminPortal').controller('ListingController',
 function($scope, AdminStateService)
 {
 	
-	this.onClick = function(light)
+	this.onLightClick = function(light)
 	{
 		AdminStateService.selectedLight = light;
 		alert(light);
