@@ -256,7 +256,8 @@
 						<th class='listing-header'>Name</th>		
 						<th class='listing-header'>Client</th>
 					</tr>
-					<tr ng-repeat='(id, light) in state.listing'
+					<tr class='light-listing'
+						ng-repeat='(id, light) in state.listing'
 						ng-controller='LightListingController as ll'
 						ng-click='ll.onLightClick(id, light)'>
 						<td class='listing-element odd'>{{id}}</td>
