@@ -258,7 +258,7 @@ button:focus {
 	background-color: #999;
 }
 
-#light-listing-container
+.listing-container
 {
-	overflow: scroll;
+	overflow: auto;
 }
