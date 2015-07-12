@@ -10,8 +10,8 @@ function($scope, AdminStateService)
 {
 	this.onLightClick = function(id_number, light)
 	{
-		// Create the light.
-		AdminStateService.selectedLight = {
+		// Recreate the selected light on the state.
+		AdminStateService.selected = {
 			id:id_number,
 			name:light[0],
 			client:light[1],
