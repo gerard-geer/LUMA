@@ -7,6 +7,6 @@ angular.module('LUMAClientAdminPortal').controller('LightInfoController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {
-	this.light = AdminStateService.selectedLight;
+	$scope.state = AdminStateService;
 	
 }]);

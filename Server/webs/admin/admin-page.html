@@ -304,15 +304,16 @@
 		<!-- The specific light modal.										 -->
 		<div class='modal-container'
 		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.LIGHT_INFO)'
+		ng-controller='LightInfoController as info'
 		>
 		<modal-dialog 
 		show='dialog.state.showDialog'
 		width='auto' 
 		height='auto'>
 			<div class='modal-header'>
-				Lights
+				{{state.selectedLight.name}}
 				<div class='modal-subtitle'>
-				A listing of all the lights on the server.
+				{{state.selectedLight.id}}
 				</div>
 			</div>
 			<div class='modal-text-container' id='light-listing-container'>
