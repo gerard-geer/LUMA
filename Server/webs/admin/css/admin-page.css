@@ -239,6 +239,11 @@ button:focus {
 {
 }
 
+.light-listing
+{
+	cursor: pointer;
+}
+
 .listing-element
 {
 	font-family: "Lucida Console", monospace, Arial;
