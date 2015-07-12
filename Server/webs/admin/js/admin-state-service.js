@@ -26,6 +26,8 @@ angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function()
 		// THe dialog enumerator.
 		DIALOG_ENUM: dialogEnum,
 		// A place to store listings.
-		listing: null
+		listing: null,
+		// A place to store lights selected from the light listing.
+		selected: null
     };
 }]);
