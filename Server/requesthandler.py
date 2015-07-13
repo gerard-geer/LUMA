@@ -380,7 +380,7 @@ class RequestHandler(object):
 			resp.update(res['data'])
 			return resp
 				
-	def lightUpdate(self, req):
+	def lightChange(self, req):
 		"""
 		Handles a request to update the state of one or more lights.
 		
