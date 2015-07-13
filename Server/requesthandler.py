@@ -197,7 +197,7 @@ class RequestHandler(object):
 		# Finally after all that checks out we can return True.
 		return True
 		
-	def _sanitizeStateUpdate(self, req):
+	def _sanitizeChangeQuery(self, req):
 		"""
 		Sanitizes a state update request. This makes sure that the form of the
 		object passed as the request is valid for the request. Again, this does
@@ -399,7 +399,7 @@ class RequestHandler(object):
 		# Since the light update request is already JSON, we don't
 		# need to worry about parsing it.
 		
-		if not self._sanitizeStateUpdate(req):
+		if not self._sanitizeChangeQuery(req):
 			print(' Could not decode JSON request.')
 			return {'lights':None,
 					'success': False,
