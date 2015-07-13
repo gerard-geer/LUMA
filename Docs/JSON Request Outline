@@ -87,38 +87,43 @@ EXAMPLE RESPONSE:
 	"message": <example message pertaining to all lights in the request.>
 }
 
-EXAMPLE UUID ADD:
+EXAMPLE LIGHT INFO UPDATE:
 {
-	"uuid": "<example UUID>"
-	"lights": [
-		"<example light id>",
-		. . .
-	]
+	"<light id>": {
+		"name":	<None | "<New light name>">
+		"client":	<None | "<New client name>">
+		"permitted": <None | "<New UUID list comma-delimited>">
+		}
 }
 EXAMPLE RESPONSE:
 {
 	"<light id>": {
 		"success": <True | False>,
-		"message": <None | "<Example message>">
+		"message": <None | "<Example message>">,
+		"name":	{
+			"success": <True | False>,
+			"message": <None | "<Example message>">
+			},
+		"client":	{
+			"success": <True | False>,
+			"message": <None | "<Example message>">
+			},
+		"permitted":	{
+			"success": <True | False>,
+			"message": <None | "<Example message>">
+			}
 		}
-	. . .
 }
 
-EXAMPLE UUID REMOVE:
+EXAMPLE CLIENT LIGHT INFO UPDATE (Type: "update"):
 {
-	"uuid": "<example UUID>"
-	"lights": [
-		"<example light id>",
-		. . .
-	]
+	"name": "<example light name>",
+	"id": "<example light id>"
 }
 EXAMPLE RESPONSE:
 {
-	"<light id>": {
-		"success": <True | False>,
-		"message": <None | "<Example message>">
-		}
-	. . .
+	"success":<True | False>,
+	"message": <None | "<Example message>">
 }
 
 EXAMPLE LIGHT ADD:
@@ -143,7 +148,7 @@ EXAMPLE RESPONSE:
 	"message": <"<new id> | "<Example message>">
 }
 
-EXAMPLE CLIENT LIGHT ADD:
+EXAMPLE CLIENT LIGHT ADD (Type: "add"):
 {
 	"name": "<example light name>",
 	"id": "<example light id>",
@@ -151,7 +156,7 @@ EXAMPLE CLIENT LIGHT ADD:
 	"g_c": <green channel pin number>,
 	"b_c": <blue channel pin number>
 }
-EXAMPLE:
+EXAMPLE RESPONSE:
 {
 	"type": "<success|error>",
 	"data": None,
@@ -161,6 +166,16 @@ EXAMPLE:
 EXAMPLE LIGHT REMOVE:
 {
 	"name": "<example light id>"
+}
+EXAMPLE RESPONSE:
+{
+	"success":<True | False>,
+	"message": <None | "<Example message>">
+}
+
+EXAMPLE CLIENT LIGHT DELETE (Type: "DELETE"):
+{
+	id:	"<light id>"
 }
 EXAMPLE RESPONSE:
 {
