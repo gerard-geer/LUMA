@@ -484,7 +484,7 @@ class RequestHandler(object):
 			The request be a valid JSON object for this request type.
 			
 		Postconditions:
-			None.
+			A new light is added.
 		"""
 		# Try to decode the JSON.
 		try:
@@ -563,6 +563,24 @@ class RequestHandler(object):
 		
 		print(' done.')
 		return {'success':True, 'message':None}
+		
+	def lightUpdate(self, req):
+		"""
+		Handles requests for changing the information of a light.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			The information for a light is updated.		
+		"""
+		pass
 		
 	def lightCatalogRequest(self):
 		"""
