@@ -62,11 +62,11 @@ def stateQuery(light_state_query):
 	
 # Set light state.
 @app.route('/resources/lights/state/', methods=['POST'])
-def stateUpdate():
+def lightChangeQuery():
 	print('-------------------------------------------------------------------------------')
 	print(' Light State Update from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	return dumps(rh.lightUpdate(request.get_json()))
+	return dumps(rh.lightChange(request.get_json()))
 
 # Admin page.
 @app.route('/admin/', methods=['GET'])
