@@ -231,6 +231,51 @@ class RequestHandler(object):
 			
 		return True
 		
+	def _sanitizeInfoUpdate(self, req):
+		"""
+		Sanitizes a request to change the info of a light.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		if not isinstance(req, dict):
+			return False
+			
+		for key in ['id', 'name', 'client', 'permitted']:
+			if key not in req.keys():
+				return False
+		
+		if  not isinstance(req['id'],str) and	\
+			not isinstance(req['id'],unicode):
+			return False
+		
+		if  not isinstance(req['name'],str) and	\
+			not isinstance(req['name'],unicode):
+			return False
+		
+		if  not isinstance(req['client'],str) and	\
+			not isinstance(req['client'],unicode):
+			return False
+		
+		if  not isinstance(req['permitted'],list):
+			return False
+			
+		for id in req['permitted']:
+			if  not isinstance(id,str) and	\
+				not isinstance(id,unicode):
+				return False
+				
+		return True
+		
 	def lightQuery(self, req):
 		"""
 		Handles a query for light instances.
