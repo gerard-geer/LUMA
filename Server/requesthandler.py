@@ -625,7 +625,99 @@ class RequestHandler(object):
 		Postconditions:
 			The information for a light is updated.		
 		"""
-		pass
+		# Since this response is so large, we create it beforehand.
+		resp = {
+				'id': None,
+				'success': False,
+				'message': None,
+				'name':	{
+					'success': False,
+					'message': None
+					},
+				'client':	{
+					'success': False,
+					'message': None
+					},
+				'permitted':	{
+					'success': False,
+					'message': None
+					}
+			}
+
+		# Try to decode the JSON if hasn't been already.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			resp['message'] = 'Could not decode request JSON.'
+			return resp
+			
+		# Sanitize the request.
+		if not self._sanitizeStateQuery(req):
+			print(' Request did not pass sanitation.')
+			resp['message'] = 'Request did not pass sanitation.'
+			return resp
+					
+		# Get the server's copy of the light.
+		light = self._lm.getLight(req['id'])
+		if light == None:
+			print(' Light does not exist on server.')
+			resp['message'] = "Light doesn't exist or invalid ID."
+			return resp
+		print(' For: '+str(light['id'])+' ('+str(light['name'])+')')
+					
+		# Check first to see if the request changes the light's client...
+		if req['client'] != None:
+			# And if it does make sure it's setting the client to a 
+			# valid one.
+			addr = self._am.getAddress(req['client'])
+			if not addr:
+				print(' new client not recognized.')
+				resp['message'] = 'New client not recognized.'
+				return resp
+		
+		# Now that we have both the request and the existing light we need to
+		# see if we need to swap clients.
+		if req['client'] != None and req['client'] != light['client']:
+			"""
+			TODO: Delete light from original client.
+			"""
+			# We have to report, ya know...
+			print("   Updating client from from '"+light['client']+"' to '"+req['client']+"'...")
+			resp['name']['success'] = self._lm.changeLightClient(req['id'], req['client'])
+			if resp['client']['success']:
+				print("  Name updated'.")
+				resp['client']['message'] = None
+			else:
+				print('  ID not recognized when updating client.')
+				resp['client']['message'] = 'ID not recognized.'
+			
+		# Now that the hairy bit is over, we change the names and the permitted
+		# list.
+		if req['permitted'] != None:
+			print("   Updating permissions list...")
+			resp['permitted']['success'] = self._lm.setUUIDs(req['id'], req['permitted'])
+			if resp['permitted']['success']:
+				print('   Permitted list updated.')
+				resp['permitted']['message'] = None
+			else:
+				print('   ID not recognized when updating permissions.')
+				resp['permitted']['message'] = 'ID not recognized.'
+		
+		# Changing the name.
+		if req['name'] != None and req['name'] != light['name']:
+			print("   Updating name from from '"+light['name']+"' to '"+req['name']+"'...")
+			resp['name']['success'] = self._lm.changeLightName(req['id'], req['name'])
+			if resp['name']['success']:
+				print("  Name updated'.")
+				resp['name']['message'] = None
+			else:
+				print('  ID not recognized when updating name.')
+				resp['name']['message'] = 'ID not recognized.'
+		
+		return resp
+		
 		
 	def lightCatalogRequest(self):
 		"""
