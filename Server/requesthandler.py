@@ -231,7 +231,7 @@ class RequestHandler(object):
 			
 		return True
 		
-	def _sanitizeInfoUpdate(self, req):
+	def _sanitizeLightInfoUpdate(self, req):
 		"""
 		Sanitizes a request to change the info of a light.
 		
@@ -654,7 +654,7 @@ class RequestHandler(object):
 			return resp
 			
 		# Sanitize the request.
-		if not self._sanitizeStateQuery(req):
+		if not self._sanitizeLightInfoUpdate(req):
 			print(' Request did not pass sanitation.')
 			resp['message'] = 'Request did not pass sanitation.'
 			return resp
