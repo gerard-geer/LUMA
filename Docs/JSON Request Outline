@@ -96,7 +96,6 @@ EXAMPLE LIGHT INFO UPDATE:
 }
 EXAMPLE RESPONSE:
 {
-	"id": "<light id>",
 	"success": <True | False>,
 	"message": <None | "<Example message>">,
 	"name":	{
