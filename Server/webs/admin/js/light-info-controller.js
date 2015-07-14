@@ -4,8 +4,8 @@
 	This is the controller for the more light info dialog.
 */
 angular.module('LUMAClientAdminPortal').controller('LightInfoController',
-['$scope', 'AdminStateService',
-function($scope, AdminStateService)
+['$scope', 'AdminStateService', 'AdminServerService',
+function($scope, AdminStateService, AdminServerService)
 {
 	$scope.state = AdminStateService;
 }]);
