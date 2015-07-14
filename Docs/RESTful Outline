@@ -22,7 +22,7 @@ eventually be implemented, and only reflects what can be done.
 <LUMA domain>/admin/resources/lights
 	GET: Returns a listing of all the lights on the server.
 	POST: Add a light to the server, and optionally to a client.
-	PUT: Not used.
+	PUT: Change a light's information (client, permission list, and/or name).
 	DELETE: Not used.
 	
 <LUMA domain>/admin/resources/clients
