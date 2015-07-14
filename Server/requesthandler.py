@@ -609,7 +609,7 @@ class RequestHandler(object):
 		print(' done.')
 		return {'success':True, 'message':None}
 		
-	def infoUpdate(self, req):
+	def lightInfoUpdate(self, req):
 		"""
 		Handles requests for changing the information of a light.
 		
