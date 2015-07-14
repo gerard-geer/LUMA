@@ -89,30 +89,29 @@ EXAMPLE RESPONSE:
 
 EXAMPLE LIGHT INFO UPDATE:
 {
-	"<light id>": {
-		"name":	<None | "<New light name>">
-		"client":	<None | "<New client name>">
-		"permitted": <None | "<New UUID list comma-delimited>">
-		}
+	"id": <light id (IMMUTABLE)>,
+	"name":	<None | "<New light name>">,
+	"client":	<None | "<New client name>">,
+	"permitted": <None | "<New UUID list comma-delimited>">
 }
 EXAMPLE RESPONSE:
 {
-	"<light id>": {
+	"id": "<light id>",
+	"success": <True | False>,
+	"message": <None | "<Example message>">,
+	"name":	{
 		"success": <True | False>,
-		"message": <None | "<Example message>">,
-		"name":	{
-			"success": <True | False>,
-			"message": <None | "<Example message>">
-			},
-		"client":	{
-			"success": <True | False>,
-			"message": <None | "<Example message>">
-			},
-		"permitted":	{
-			"success": <True | False>,
-			"message": <None | "<Example message>">
-			}
+		"message": <None | "<Example message>">
+		},
+	"client":	{
+		"success": <True | False>,
+		"message": <None | "<Example message>">
+		},
+	"permitted":	{
+		"success": <True | False>,
+		"message": <None | "<Example message>">
 		}
+	}
 }
 
 EXAMPLE CLIENT LIGHT INFO UPDATE (Type: "update"):
