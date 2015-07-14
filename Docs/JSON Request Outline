@@ -92,7 +92,7 @@ EXAMPLE LIGHT INFO UPDATE:
 	"id": <light id (IMMUTABLE)>,
 	"name":	<None | "<New light name>">,
 	"client":	<None | "<New client name>">,
-	"permitted": <None | "<New UUID list comma-delimited>">
+	"permitted": <None | [ new uuid list ] >
 }
 EXAMPLE RESPONSE:
 {
