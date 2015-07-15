@@ -8,4 +8,9 @@ angular.module('LUMAClientAdminPortal').controller('LightInfoController',
 function($scope, AdminStateService, AdminServerService)
 {
 	$scope.state = AdminStateService;
+	
+	this.onUpdateSubmit = function()
+	{
+		AdminServerService.updateLightInfo();
+	}
 }]);
