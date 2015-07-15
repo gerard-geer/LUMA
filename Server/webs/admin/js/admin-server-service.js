@@ -171,6 +171,29 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		{	
 			console.log("Light info update response:");
 			console.log(response);
+			if(response.success==false)
+			{
+				AdminStateService.errorMessage = response.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			}
+			if(response.client.success==false && response.client.message!=null)
+			{
+				AdminStateService.errorMessage += 
+				'\nWhen processing new client: '+response.client.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			}
+			if(response.name.success==false && response.name.message!=null)
+			{
+				AdminStateService.errorMessage += 
+				'\nWhen processing new name: '+response.name.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			}
+			if(response.permitted.success==false && response.name.message!=null)
+			{
+				AdminStateService.errorMessage += 
+				'\nWhen processing new permitted list: '+response.permitted.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			}
 		}).
 		error(function(response)
 		{
