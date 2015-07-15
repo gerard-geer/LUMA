@@ -145,9 +145,32 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		});
 	}
 	
+	// A function to perform a light info update.
+	function performLightInfoUpdate()
+	{
+		console.log(JSON.stringify(AdminStateService.selected));
+		$http.put('resources/lights/', AdminStateService.selected).
+		success(function(response)
+		{	
+			console.log("Light info update response:");
+			console.log(response);
+		}).
+		error(function(response)
+		{
+			
+			console.log("Light info update response:");
+			console.log(response);
+			// Bring up the error message.
+			AdminStateService.errorMessage = response;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			AdminStateService.showDialog = true;
+		});
+	}
+	
     return {
 		addNewLight: function(){performLightAdd();},
 		getLightListing: function(){performListingRequest('resources/lights/');},
-		getClientListing: function(){performListingRequest('resources/clients/');}
+		getClientListing: function(){performListingRequest('resources/clients/');},
+		updateLightInfo: function(){performLightInfoUpdate();}
     };
 }]);
