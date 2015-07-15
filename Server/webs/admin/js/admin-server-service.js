@@ -148,7 +148,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	// A function to perform a light info update.
 	function performLightInfoUpdate()
 	{
-		console.log(json.stringify(AdminStateService.selected));
+		console.log(JSON.stringify(AdminStateService.selected));
 	}
 	
     return {
