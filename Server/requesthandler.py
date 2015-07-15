@@ -197,7 +197,7 @@ class RequestHandler(object):
 		# Finally after all that checks out we can return True.
 		return True
 		
-	def _sanitizeStateUpdate(self, req):
+	def _sanitizeChangeQuery(self, req):
 		"""
 		Sanitizes a state update request. This makes sure that the form of the
 		object passed as the request is valid for the request. Again, this does
@@ -229,6 +229,51 @@ class RequestHandler(object):
 		if not isinstance(req['lights'], list):
 			return False
 			
+		return True
+		
+	def _sanitizeLightInfoUpdate(self, req):
+		"""
+		Sanitizes a request to change the info of a light.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the light query was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		if not isinstance(req, dict):
+			return False
+			
+		for key in ['id', 'name', 'client', 'permitted']:
+			if key not in req.keys():
+				return False
+		
+		if  not isinstance(req['id'],str) and	\
+			not isinstance(req['id'],unicode):
+			return False
+		
+		if  not isinstance(req['name'],str) and	\
+			not isinstance(req['name'],unicode):
+			return False
+		
+		if  not isinstance(req['client'],str) and	\
+			not isinstance(req['client'],unicode):
+			return False
+		
+		if  not isinstance(req['permitted'],list):
+			return False
+			
+		for id in req['permitted']:
+			if  not isinstance(id,str) and	\
+				not isinstance(id,unicode):
+				return False
+				
 		return True
 		
 	def lightQuery(self, req):
@@ -380,7 +425,7 @@ class RequestHandler(object):
 			resp.update(res['data'])
 			return resp
 				
-	def lightUpdate(self, req):
+	def lightChange(self, req):
 		"""
 		Handles a request to update the state of one or more lights.
 		
@@ -399,7 +444,7 @@ class RequestHandler(object):
 		# Since the light update request is already JSON, we don't
 		# need to worry about parsing it.
 		
-		if not self._sanitizeStateUpdate(req):
+		if not self._sanitizeChangeQuery(req):
 			print(' Could not decode JSON request.')
 			return {'lights':None,
 					'success': False,
@@ -484,7 +529,7 @@ class RequestHandler(object):
 			The request be a valid JSON object for this request type.
 			
 		Postconditions:
-			None.
+			A new light is added.
 		"""
 		# Try to decode the JSON.
 		try:
@@ -563,6 +608,127 @@ class RequestHandler(object):
 		
 		print(' done.')
 		return {'success':True, 'message':None}
+		
+	def lightInfoUpdate(self, req):
+		"""
+		Handles requests for changing the information of a light.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			The information for a light is updated.		
+		"""
+		# Since this response is so large, we create it beforehand.
+		resp = {
+				'id': None,
+				'success': False,
+				'message': None,
+				'name':	{
+					'success': False,
+					'message': None
+					},
+				'client':	{
+					'success': False,
+					'message': None
+					},
+				'permitted':	{
+					'success': False,
+					'message': None
+					}
+			}
+
+		# Try to decode the JSON if hasn't been already.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			resp['message'] = 'Could not decode request JSON.'
+			return resp
+			
+		# Sanitize the request.
+		if not self._sanitizeLightInfoUpdate(req):
+			print(' Request did not pass sanitation.')
+			resp['message'] = 'Request did not pass sanitation.'
+			return resp
+					
+		# Get the server's copy of the light.
+		light = self._lm.getLight(req['id'])
+		if light == None:
+			print(' Light does not exist on server.')
+			resp['message'] = "Light doesn't exist or invalid ID."
+			return resp
+		print(' For: '+str(light['id'])+' ('+str(light['name'])+')')
+					
+		# Check first to see if the request changes the light's client...
+		if req['client'] != None:
+			# And if it does make sure it's setting the client to a 
+			# valid one.
+			addr = self._am.getAddress(req['client'])
+			if not addr:
+				print(' new client not recognized.')
+				resp['message'] = 'New client not recognized.'
+				return resp
+		
+		# Now that we have both the request and the existing light we need to
+		# see if we need to swap clients.
+		if req['client'] != None and req['client'] != light['client']:
+			"""
+			TODO: Delete light from original client.
+			"""
+			# We have to report, ya know...
+			print("   Updating client from from '"+light['client']+"' to '"+req['client']+"'...")
+			resp['name']['success'] = self._lm.changeLightClient(req['id'], req['client'])
+			if resp['client']['success']:
+				print("  Name updated'.")
+				resp['client']['message'] = None
+			else:
+				print('  ID not recognized when updating client.')
+				resp['client']['message'] = 'ID not recognized.'
+		print('  Client need not be updated.')
+			
+		# Now that the hairy bit is over, we change the names and the permitted
+		# list.
+		# OH AND THE NOT NOT. Since cmp returns numerical values, if the lists aren't
+		# equal it will return a non-zero number. When they are the same it returns
+		# zero. "not 0" coerces to a boolean value and returns true. However, a boolean
+		# value "and"ed with a non-zero number does not return True, but rather the
+		# non-zero value. Therefore we have to use the not not to make the if work.
+		if req['permitted'] != None and not not cmp(req['permitted'], light['permitted']):
+			print("   Updating permissions list...")
+			resp['permitted']['success'] = self._lm.setUUIDs(req['id'], req['permitted'])
+			if resp['permitted']['success']:
+				print('   Permitted list updated.')
+				resp['permitted']['message'] = None
+			else:
+				print('   ID not recognized when updating permissions.')
+				resp['permitted']['message'] = 'ID not recognized.'
+		print('  Permitted whitelist need not be updated.')
+		
+		# Changing the name.
+		if req['name'] != None and req['name'] != light['name']:
+			print("   Updating name from from '"+light['name']+"' to '"+req['name']+"'...")
+			resp['name']['success'] = self._lm.changeLightName(req['id'], req['name'])
+			if resp['name']['success']:
+				print("  Name updated'.")
+				resp['name']['message'] = None
+			else:
+				print('  ID not recognized when updating name.')
+				resp['name']['message'] = 'ID not recognized.'
+		print('  Name need not be updated.')
+		
+		# Finally if all things have worked out, then we set the whole success
+		# to true and return the response.
+		resp['success'] = True
+		return resp
+		
 		
 	def lightCatalogRequest(self):
 		"""

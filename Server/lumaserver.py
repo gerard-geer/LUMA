@@ -62,11 +62,11 @@ def stateQuery(light_state_query):
 	
 # Set light state.
 @app.route('/resources/lights/state/', methods=['POST'])
-def stateUpdate():
+def lightChangeQuery():
 	print('-------------------------------------------------------------------------------')
 	print(' Light State Update from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	return dumps(rh.lightUpdate(request.get_json()))
+	return dumps(rh.lightChange(request.get_json()))
 
 # Admin page.
 @app.route('/admin/', methods=['GET'])
@@ -90,7 +90,6 @@ def addLight():
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN ACTION: Light Add from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
-	print(request.get_json())
 	return dumps(rh.addQuery(request.get_json()))
 	
 # Administrative stuff: Getting a listing of all lights.
@@ -108,7 +107,15 @@ def getClients():
 	print(' ADMIN ACTION: Client Listing Request from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.clientCatalogRequest())
-
+	
+# Administrative stuff: Changing light info.
+@app.route('/admin/resources/lights/', methods=['PUT'])
+def updateLightInfo():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Light info update from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return dumps(rh.lightInfoUpdate(request.get_json()))
+	
 # Draw an initial setup message.
 def printInitialSetupHeader():
 	print('*******************************************************************************')
@@ -242,4 +249,4 @@ if __name__ == '__main__':
 	# Print the startup header.
 	printStartupHeader(rh)
 	# Start the server.
-	app.run(host='0.0.0.0')
+	app.run(host='0.0.0.0', debug=True)

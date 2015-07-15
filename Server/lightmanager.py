@@ -289,6 +289,28 @@ class LightManager(object):
 				result[id]['message'] = 'Light does not exist.'
 		return result
 		
+	def setUUIDs(self, id, uuids):
+		"""
+		Sets a single light's permitted list.
+		
+		Parameters:
+			id (String): The ID of the light to modify.
+			uuids(List of Strings): The new UUIDs.
+			
+		Returns:
+			True if the operation was successful, False otherwise.
+			
+		Preconditions:
+			The Light Manager has been loaded.
+			
+		Postconditions:
+			The selected light has a whole new whitelist.
+		"""
+		if id in self._lights.keys():
+			self._lights[id]['permitted'] = []+uuids
+			return True
+		return False
+		
 	def lightExists(self, id):
 		"""
 		Returns whether or not the light exists on the server.
