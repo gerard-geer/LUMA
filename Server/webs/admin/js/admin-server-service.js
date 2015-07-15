@@ -145,6 +145,12 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		});
 	}
 	
+	// A function to perform a light info update.
+	function performLightInfoUpdate()
+	{
+		return;
+	}
+	
     return {
 		addNewLight: function(){performLightAdd();},
 		getLightListing: function(){performListingRequest('resources/lights/');},
