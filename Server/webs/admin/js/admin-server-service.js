@@ -171,6 +171,11 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		{	
 			console.log("Light info update response:");
 			console.log(response);
+			if(response.success==true)
+			{
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.NO_DIALOG;
+			AdminStateService.showDialog = false;
+			}
 			if(response.success==false)
 			{
 				AdminStateService.errorMessage = response.message;
