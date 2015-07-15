@@ -307,7 +307,7 @@ class LightManager(object):
 			The selected light has a whole new whitelist.
 		"""
 		if id in self._lights.keys():
-			self._lights[id] = []+uuids
+			self._lights[id]['permitted'] = []+uuids
 			return True
 		return False
 		
