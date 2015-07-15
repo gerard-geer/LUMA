@@ -276,6 +276,39 @@ class RequestHandler(object):
 				
 		return True
 		
+	def _sanitizeClientInfoUpdate(self, req):
+		"""
+		Sanitizes a request to change the info of a client.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the info update was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		if not isinstance(req, dict):
+			return False
+			
+		for key in ['name', 'address']:
+			if key not in req.keys():
+				return False
+				
+		if  not isinstance(req['name'],str) and	\
+			not isinstance(req['name'],unicode):
+			return False
+		
+		if  not isinstance(req['address'],str) and	\
+			not isinstance(req['address'],unicode):
+			return False
+				
+		return True
+		
 	def lightQuery(self, req):
 		"""
 		Handles a query for light instances.
