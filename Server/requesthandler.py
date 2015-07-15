@@ -692,10 +692,16 @@ class RequestHandler(object):
 			else:
 				print('  ID not recognized when updating client.')
 				resp['client']['message'] = 'ID not recognized.'
+		print('  Client need not be updated.')
 			
 		# Now that the hairy bit is over, we change the names and the permitted
 		# list.
-		if req['permitted'] != None:
+		# OH AND THE NOT NOT. Since cmp returns numerical values, if the lists aren't
+		# equal it will return a non-zero number. When they are the same it returns
+		# zero. "not 0" coerces to a boolean value and returns true. However, a boolean
+		# value "and"ed with a non-zero number does not return True, but rather the
+		# non-zero value. Therefore we have to use the not not to make the if work.
+		if req['permitted'] != None and not not cmp(req['permitted'], light['permitted']):
 			print("   Updating permissions list...")
 			resp['permitted']['success'] = self._lm.setUUIDs(req['id'], req['permitted'])
 			if resp['permitted']['success']:
@@ -704,6 +710,7 @@ class RequestHandler(object):
 			else:
 				print('   ID not recognized when updating permissions.')
 				resp['permitted']['message'] = 'ID not recognized.'
+		print('  Permitted whitelist need not be updated.')
 		
 		# Changing the name.
 		if req['name'] != None and req['name'] != light['name']:
@@ -715,7 +722,11 @@ class RequestHandler(object):
 			else:
 				print('  ID not recognized when updating name.')
 				resp['name']['message'] = 'ID not recognized.'
+		print('  Name need not be updated.')
 		
+		# Finally if all things have worked out, then we set the whole success
+		# to true and return the response.
+		resp['success'] = True
 		return resp
 		
 		
