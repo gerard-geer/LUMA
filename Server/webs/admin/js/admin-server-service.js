@@ -8,6 +8,18 @@
 angular.module('LUMAClientAdminPortal').factory('AdminServerService', 
 ['$http', 'AdminStateService', function($http, AdminStateService) {
 	
+	// Split up the permitted string into a list, and trim the entries.
+	function listify(permitted)
+	{
+		permitted = permitted.split(',');
+		for(var i = 0; i < permitted.length; ++i)
+		{
+			// YOU SHALT NOT HAVE SPACES.
+			permitted[i] = permitted[i].replace(/ /g,'');
+		}
+		return permitted;
+	}
+	
 	// Sanitizes the values passed in for the new light.
 	function sanitizeNewLight(nl)
 	{
@@ -81,12 +93,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		}
 		
 		// Split up the permitted string into a list, and trim the entries.
-		nl.permitted = nl.permitted.split(',');
-		for(var i = 0; i < nl.permitted.length; ++i)
-		{
-			// YOU SHALT NOT HAVE SPACES.
-			nl.permitted[i] = nl.permitted[i].replace(/ /g,'');
-		}
+		nl.permitted = listify(nl.permitted);
 		
 		// Finally we can send the request to the server.
 		$http.post('resources/lights/', nl).
@@ -148,7 +155,17 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	// A function to perform a light info update.
 	function performLightInfoUpdate()
 	{
+		console.log('before');
 		console.log(JSON.stringify(AdminStateService.selected));
+		
+		// Make sure the new permitted list is actually a list.
+		if( typeof AdminStateService.selected.permitted == 'string' )
+		{
+			AdminStateService.selected.permitted = listify(AdminStateService.selected.permitted);
+		}
+		console.log('after');
+		console.log(JSON.stringify(AdminStateService.selected));
+		
 		$http.put('resources/lights/', AdminStateService.selected).
 		success(function(response)
 		{	
