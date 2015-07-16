@@ -400,11 +400,13 @@
 				</div>
 				<div class='dialog-button-container'>
 					<!-- The cancel button just closes the dialog. -->
-					<div class='task-button' >
+					<div class='task-button'
+					ng-click='dialog.setDialog(dialog.DIALOG_ENUM.NO_DIALOG)'>
 						Cancel
 					</div>
 					<!-- And the update button calls the update info callback. -->
-					<div class='task-button'>
+					<div class='task-button'
+					ng-click='info.onUpdateSubmit()'>
 						Update
 					</div>
 				</div>
