@@ -4,7 +4,7 @@
 	Each client listing also needs to have an on-click callback to
 	organize its goods into a nice object.
 */
-angular.module('LUMAClientAdminPortal').controller('LightListingController',
+angular.module('LUMAClientAdminPortal').controller('ClientListingController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {
