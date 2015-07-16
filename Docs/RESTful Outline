@@ -27,6 +27,6 @@ eventually be implemented, and only reflects what can be done.
 	
 <LUMA domain>/admin/resources/clients
 	GET: Returns a listing of all the clients on the server.
-	POST: Not used.
+	POST: Add a client.
 	PUT: Change a client's address.
 	DELETE: Not used.
