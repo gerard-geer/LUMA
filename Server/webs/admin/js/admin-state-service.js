@@ -12,7 +12,8 @@ angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function()
 		LIGHT_LISTING: 2,
 		CLIENT_LISTING: 4,
 		LIGHT_INFO: 8,
-		ERROR: 16
+		CLIENT_INFO: 16,
+		ERROR: 32
 	}
 	return {
 		// An object in which to create and store a new light.
