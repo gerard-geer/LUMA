@@ -289,7 +289,7 @@ class RequestHandler(object):
 				'success': True,
 				'message': None}
 	
-	def addQuery(self, req):
+	def lightAddQuery(self, req):
 		"""
 		Handles a query for adding a Light.
 		
@@ -315,7 +315,7 @@ class RequestHandler(object):
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
-		if not sanitizeAddQuery(req):
+		if not sanitizeLightAddQuery(req):
 			print(' Request did not pass sanitation.')
 			return {'success':False, 'message':'Request did not pass sanitation. '}
 			

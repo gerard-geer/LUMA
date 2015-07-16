@@ -86,7 +86,7 @@ def sanitizeStateQuery(req):
 	# Finally after all that checks out we can return True.
 	return True
 	
-def sanitizeAddQuery(req):
+def sanitizeLightAddQuery(req):
 	"""
 	Sanitizes a light adding query. This makes sure that the query is a
 	JSON Dictionary, then that it has the required keys, and the data 
