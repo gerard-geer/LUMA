@@ -179,6 +179,28 @@ class AliasManager(object):
 		del self._aliases[alias]
 		return True
 		
+	def updateAlias(self, alias, newAddr):
+		"""
+		Changes the address bound to an alias.
+		
+		Parameters:
+			alias (String): The alias to update.
+			address (String): The new address.
+			
+		Returns:
+			True if the alias was found, False otherwise.
+		
+		Preconditions:
+			The aliases were loaded from the configuration file.
+			
+		Postconditions:
+			The alias now has a new address if it exists.
+		"""
+		if alias not in self._aliases.keys():
+			return False
+		self._aliases[alias] = newAddr
+		return True
+		
 	def getClientCatalog(self):
 		"""
 		Returns a catalog of all the clients in the manager, with

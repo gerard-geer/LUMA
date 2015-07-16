@@ -276,6 +276,39 @@ class RequestHandler(object):
 				
 		return True
 		
+	def _sanitizeClientInfoUpdate(self, req):
+		"""
+		Sanitizes a request to change the info of a client.
+		
+		Parameters:
+			req (JSON): The Dictionary that contains the request.
+			
+		Returns:
+			True if the info update was valid, false otherwise.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		if not isinstance(req, dict):
+			return False
+			
+		for key in ['name', 'address']:
+			if key not in req.keys():
+				return False
+				
+		if  not isinstance(req['name'],str) and	\
+			not isinstance(req['name'],unicode):
+			return False
+		
+		if  not isinstance(req['address'],str) and	\
+			not isinstance(req['address'],unicode):
+			return False
+				
+		return True
+		
 	def lightQuery(self, req):
 		"""
 		Handles a query for light instances.
@@ -728,7 +761,51 @@ class RequestHandler(object):
 		# to true and return the response.
 		resp['success'] = True
 		return resp
+	
+	def clientInfoUpdate(self):
+		"""
+		Handles requests for changing the information of a client.
 		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			The information for a light is updated.		
+		"""
+		# Create the response for simplicity.
+		resp = {'success':False, 'message':None}
+		
+		# Try to decode the JSON if hasn't been already.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			resp['message'] = 'Could not decode request JSON.'
+			return resp
+			
+		# Sanitize the request.
+		if not self._sanitizeLightInfoUpdate(req):
+			print(' Request did not pass sanitation.')
+			resp['message'] = 'Request did not pass sanitation.'
+			return resp
+			
+		# This one is simple. If the client exists this function will
+		# return True, and perform all the operations of the success
+		# scenario of updating the address of the client.
+		resp['success'] = self._am.updateAlias(req['name'],req['newAddr'])
+		if not resp['success']:
+			print(" Client name '"+req['name']+"' not recognized."
+			resp['message'] = "Client name '"+req['name']+"' not recognized."
+		
+		# Finally we return the response.
+		return resp
 		
 	def lightCatalogRequest(self):
 		"""

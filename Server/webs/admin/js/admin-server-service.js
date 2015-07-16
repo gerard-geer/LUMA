@@ -212,10 +212,43 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		});
 	}
 	
+	// A function to perform a client info update.
+	function performClientInfoUpdate()
+	{
+		// Not much to do here besides send the request.
+		$http.put('resources/clients/', AdminStateService.selected).
+		success(function(response)
+		{
+			console.log("Light info update response:");
+			console.log(response);
+			
+			if(response.success==true)
+			{
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.NO_DIALOG;
+			AdminStateService.showDialog = false;
+			}
+			if(response.success==false)
+			{
+				AdminStateService.errorMessage = response.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			}
+		}).
+		error(function(response)
+		{
+			console.log("Light info update response:");
+			console.log(response);
+			// Bring up the error message.
+			AdminStateService.errorMessage = response;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			AdminStateService.showDialog = true;
+		});
+	}
+	
     return {
 		addNewLight: function(){performLightAdd();},
 		getLightListing: function(){performListingRequest('resources/lights/');},
 		getClientListing: function(){performListingRequest('resources/clients/');},
-		updateLightInfo: function(){performLightInfoUpdate();}
+		updateLightInfo: function(){performLightInfoUpdate();},
+		updateClientInfo: function(){performClientInfoUpdate();}
     };
 }]);

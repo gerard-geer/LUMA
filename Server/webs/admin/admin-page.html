@@ -14,7 +14,9 @@
 	<script src='js/dialog-controller.js'></script>
 	<script src='js/add-light-controller.js'></script>
 	<script src='js/light-listing-controller.js'></script>
+	<script src='js/client-listing-controller.js'></script>
 	<script src='js/light-info-controller.js'></script>
+	<script src='js/client-info-controller.js'></script>
 	<script src='js/listing-controller.js'></script>
 	<script src='js/error-dialog-controller.js'></script>
 	<title>CSH LUMA Admin Portal</title>
@@ -247,7 +249,7 @@
 				Lights
 				<div class='modal-subtitle'>
 				A listing of all the lights on the server.
-				Click a light for more information.
+				Click a light for information and to edit.
 				</div>
 			</div>
 			<div class='modal-text-container listing-container'
@@ -282,7 +284,7 @@
 			<div class='modal-header'>
 				Clients
 				<div class='modal-subtitle'>
-				A listing of all clients on the server.
+				A listing of all clients on the server. Click to edit.
 				</div>
 			</div>
 			<div class='modal-text-container listing-container'
@@ -294,7 +296,9 @@
 				  </tr>
 				  <tr
 					class='listing'
-					ng-repeat='(name, addr) in state.listing'>
+					ng-repeat='(name, addr) in state.listing'
+						ng-controller='ClientListingController as cl'
+						ng-click='cl.onClientClick(name, addr)'>
 					<td class='listing-element odd'>{{name}}</td>
 					<td class='listing-element even'>{{addr}}</td>		
 				  </tr>
@@ -355,6 +359,49 @@
 				<div class='dialog-button-container'>
 					<!-- The cancel button just closes the dialog. -->
 					<div class='task-button' 
+					ng-click='dialog.setDialog(dialog.DIALOG_ENUM.NO_DIALOG)'>
+						Cancel
+					</div>
+					<!-- And the update button calls the update info callback. -->
+					<div class='task-button'
+					ng-click='info.onUpdateSubmit()'>
+						Update
+					</div>
+				</div>
+			</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The specific client modal container -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.CLIENT_INFO)'
+		ng-controller='ClientInfoController as info'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='275pt' 
+		height='auto'>
+			<div class='modal-header'>
+				{{state.selected.name}}
+				<div class='modal-subtitle'>
+				{{state.selected.address}}
+				</div>
+			</div>
+			<div class='modal-text-container'>
+				<!-- address -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Address</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Client IP Address'
+					ng-model='state.selected.address'
+					type='text'/>
+				</div>
+				<div class='dialog-button-container'>
+					<!-- The cancel button just closes the dialog. -->
+					<div class='task-button'
 					ng-click='dialog.setDialog(dialog.DIALOG_ENUM.NO_DIALOG)'>
 						Cancel
 					</div>

@@ -125,6 +125,17 @@ EXAMPLE RESPONSE:
 	"message": <None | "<Example message>">
 }
 
+EXAMPLE CLIENT INFO UPDATE:
+{
+	"name": "<client name (IMMUTABLE)>",
+	"address": "<new client address>"
+}
+EXAMPLE RESPONSE:
+{
+	"success": <True | False>,
+	"message": <None | "<Example message>">
+}
+
 EXAMPLE LIGHT ADD:
 {
 	"name": "<example light name>",
