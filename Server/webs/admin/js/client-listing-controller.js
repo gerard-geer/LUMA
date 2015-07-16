@@ -8,14 +8,12 @@ angular.module('LUMAClientAdminPortal').controller('LightListingController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {
-	this.onLightClick = function(id_number, light)
+	this.onLightClick = function(clientName, clientAddress)
 	{
 		// Recreate the selected light on the state.
 		AdminStateService.selected = {
-			id:id_number,
-			name:light[0],
-			client:light[1],
-			permitted:light[2]
+			name:clientName,
+			address:clientAddress
 		};
 		
 		// Change to the light info modal.
