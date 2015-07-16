@@ -8,7 +8,7 @@ angular.module('LUMAClientAdminPortal').controller('ClientListingController',
 ['$scope', 'AdminStateService',
 function($scope, AdminStateService)
 {
-	this.onLightClick = function(clientName, clientAddress)
+	this.onClientClick = function(clientName, clientAddress)
 	{
 		// Recreate the selected light on the state.
 		AdminStateService.selected = {
