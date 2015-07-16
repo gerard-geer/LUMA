@@ -13,6 +13,7 @@
 	<script src='js/task-controller.js'></script>
 	<script src='js/dialog-controller.js'></script>
 	<script src='js/add-light-controller.js'></script>
+	<script src='js/add-client-controller.js'></script>
 	<script src='js/light-listing-controller.js'></script>
 	<script src='js/client-listing-controller.js'></script>
 	<script src='js/light-info-controller.js'></script>
@@ -52,7 +53,7 @@
 	<div class='task-container'>
 		<div class='task-button-container'>
 			<div class='task-button' 
-			ng-click='task.setDialog(task.DIALOG_ENUM.NEW_LIGHT)'>
+			ng-click='task.setDialog(task.DIALOG_ENUM.NEW_CLIENT)'>
 			Add Client
 			</div>
 		</div>
@@ -224,6 +225,62 @@
 					<!-- And the submit calls the submit function. -->
 					<div class='task-button' 
 					ng-click='al.onSubmit(al.newLight)'>
+						Submit
+					</div>
+				</div>
+			</form>
+			</div>
+		</modal-dialog>
+		</div>
+		
+		<!-- The new client dialog modal.									 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.NEW_CLIENT)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='30em' 
+		height='auto'>
+			<div class='modal-header'>
+				Add New Client
+				<div class='modal-subtitle'>
+				Create a reference to a client on the server. 
+				The client must already be set up.
+				</div>
+			</div>
+			<div class='dialog-container' ng-controller='AddClientController as cl'>
+			<form class='dialog-form'>
+				<!-- Name  -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Name</p>
+					</div>
+					<input
+					class='text-input'
+					ng-model='cl.newClient.name'
+					placeholder='Name'
+					type='text'/>
+				</div>
+				<!-- Address -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Client IP</p>
+					</div>
+					<input
+					class='text-input'
+					ng-model='cl.newClient.address'
+					placeholder='xxx.xxx.xxx.xxx'
+					type='text'/>
+				</div>
+				<div class='dialog-button-container'>
+					<!-- The cancel button just closes the dialog. -->
+					<div class='task-button' 
+					ng-click='dialog.setDialog(dialog.DIALOG_ENUM.NO_DIALOG)'>
+						Cancel
+					</div>
+					<!-- And the submit calls the submit function. -->
+					<div class='task-button' 
+					ng-click='cl.onSubmit(cl.newClient)'>
 						Submit
 					</div>
 				</div>
