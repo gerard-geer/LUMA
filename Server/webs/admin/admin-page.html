@@ -52,6 +52,19 @@
 	<div class='task-container'>
 		<div class='task-button-container'>
 			<div class='task-button' 
+			ng-click='task.setDialog(task.DIALOG_ENUM.NEW_LIGHT)'>
+			Add Client
+			</div>
+		</div>
+		<div class='task-description-container'>
+		Adds a client to the server. Make sure that you've already set up the
+		client before you go through with this. Clients with the same name or
+		IP are not allowed.
+		</div>
+	</div>
+	<div class='task-container'>
+		<div class='task-button-container'>
+			<div class='task-button' 
 			ng-click='task.setDialog(task.DIALOG_ENUM.LIGHT_LISTING);task.server.getLightListing()'>
 			Get Light List
 			</div>
