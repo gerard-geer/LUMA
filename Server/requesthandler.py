@@ -399,6 +399,10 @@ class RequestHandler(object):
 		Postconditions:
 			A new light is added.
 		"""
+		# Create our response object.
+		resp = {'success':False,
+				'message':None}
+				
 		# Try to decode the JSON.
 		try:
 			if isinstance(req, unicode) or isinstance(req, str):
@@ -412,6 +416,20 @@ class RequestHandler(object):
 		if not sanitizeClientAddQuery(req):
 			print(' Request did not pass sanitation.')
 			return {'success':False, 'message':'Request did not pass sanitation. '}
+			
+		# Oh this is nice and simple. The addAlias function's success and
+		# failure scenarios directly reflect the success and failure causes
+		# of the request. Therefore there's nothing to do besides sanitation.
+		resp['success'] = self._am.addAlias(req['name'],req['address'])
+		
+		# Create a message if need be.
+		if not resp['success']:
+			print('Could not create a new client. Either name or '+	\
+				  'address already in use.')
+			resp['message'] = 'Could not create a new client. Either name or '+	\
+							  'address already in use.'
+							  
+		return resp
 		
 	def lightInfoUpdate(self, req):
 		"""
