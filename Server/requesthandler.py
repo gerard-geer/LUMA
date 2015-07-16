@@ -762,7 +762,7 @@ class RequestHandler(object):
 		resp['success'] = True
 		return resp
 	
-	def clientInfoUpdate(self):
+	def clientInfoUpdate(self, req):
 		"""
 		Handles requests for changing the information of a client.
 		
@@ -791,7 +791,7 @@ class RequestHandler(object):
 			return resp
 			
 		# Sanitize the request.
-		if not self._sanitizeLightInfoUpdate(req):
+		if not self._sanitizeClientInfoUpdate(req):
 			print(' Request did not pass sanitation.')
 			resp['message'] = 'Request did not pass sanitation.'
 			return resp
@@ -799,9 +799,9 @@ class RequestHandler(object):
 		# This one is simple. If the client exists this function will
 		# return True, and perform all the operations of the success
 		# scenario of updating the address of the client.
-		resp['success'] = self._am.updateAlias(req['name'],req['newAddr'])
+		resp['success'] = self._am.updateAlias(req['name'],req['address'])
 		if not resp['success']:
-			print(" Client name '"+req['name']+"' not recognized."
+			print(" Client name '"+req['name']+"' not recognized.")
 			resp['message'] = "Client name '"+req['name']+"' not recognized."
 		
 		# Finally we return the response.
