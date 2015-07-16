@@ -153,7 +153,8 @@ class AliasManager(object):
 		Postconditions:
 			The alias was added if it didn't already exist.
 		"""
-		if alias not in self._aliases.keys():
+		if  alias not in self._aliases.keys()	\
+			and address not in self._aliases.values():
 			self._aliases[alias] = address
 			return True
 		return False
