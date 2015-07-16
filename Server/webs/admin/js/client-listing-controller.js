@@ -17,7 +17,7 @@ function($scope, AdminStateService)
 		};
 		
 		// Change to the light info modal.
-		AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.LIGHT_INFO;
+		AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.CLIENT_INFO;
 	}
 	
 }]);
