@@ -92,6 +92,14 @@ def addLight():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.addLightQuery(request.get_json()))
 	
+# Administrative stuff: Adding a light.
+@app.route('/admin/resources/clients/', methods=['POST'])
+def addClient():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Light Add from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return dumps(rh.clientAddQuery(request.get_json()))
+	
 # Administrative stuff: Getting a listing of all lights.
 @app.route('/admin/resources/lights/', methods=['GET'])
 def getLights():
