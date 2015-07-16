@@ -409,13 +409,15 @@ class RequestHandler(object):
 				req = loads(req)
 		except:
 			print(' Could not decode JSON of request.')
-			return {'success':False, 'message':'Could not decode JSON of request.'}
+			resp['message'] = 'Could not decode JSON of request.'
+			return resp
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
 		if not sanitizeClientAddQuery(req):
 			print(' Request did not pass sanitation.')
-			return {'success':False, 'message':'Request did not pass sanitation. '}
+			resp['message']= 'Request did not pass sanitation. '
+			return resp
 			
 		# Oh this is nice and simple. The addAlias function's success and
 		# failure scenarios directly reflect the success and failure causes
