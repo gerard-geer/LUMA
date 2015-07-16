@@ -264,3 +264,38 @@ def sanitizeClientInfoUpdate(req):
 			
 	return True
 	
+def sanitizeClientAddQuery(req):
+	"""
+	Sanitizes a request to add a client.
+	
+	Parameters:
+		req (JSON): The Dictionary that contains the request.
+		
+	Returns:
+		True if the info update was valid, false otherwise.
+		
+	Preconditions:
+		None.
+		
+	Postconditions:
+		None.
+	"""
+	# Yeah yeah I know it's the same as the client info update.
+	# But as these two requests are not guaranteed to have
+	# the same contents, it's unsafe to sanitize both as one.
+	if not isinstance(req, dict):
+		return False
+		
+	for key in ['name', 'address']:
+		if key not in req.keys():
+			return False
+			
+	if  not isinstance(req['name'],str) and	\
+		not isinstance(req['name'],unicode):
+		return False
+	
+	if  not isinstance(req['address'],str) and	\
+		not isinstance(req['address'],unicode):
+		return False
+			
+	return True
