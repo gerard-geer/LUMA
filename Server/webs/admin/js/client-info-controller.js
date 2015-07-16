@@ -11,6 +11,6 @@ function($scope, AdminStateService, AdminServerService)
 	
 	this.onUpdateSubmit = function()
 	{
-		alert(JSON.stringify($scope.state.selected)); 
+		AdminServerService.updateClientInfo();
 	}
 }]);

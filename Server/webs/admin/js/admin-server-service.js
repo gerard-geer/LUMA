@@ -216,7 +216,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	function performClientInfoUpdate()
 	{
 		// Not much to do here besides send the request.
-		$http.put('resources/clients/', Adminstateervice.selected).
+		$http.put('resources/clients/', AdminStateService.selected).
 		success(function(response)
 		{
 			console.log("Light info update response:");
