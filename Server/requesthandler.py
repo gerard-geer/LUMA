@@ -383,6 +383,36 @@ class RequestHandler(object):
 		print(' done.')
 		return {'success':True, 'message':None}
 		
+	def clientAddQuery(self, req):
+		"""
+		Handles a query for adding a Client.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			A new light is added.
+		"""
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			return {'success':False, 'message':'Could not decode JSON of request.'}
+			
+		# If the request was invalid, we need to transparently return
+		# nothing.
+		if not sanitizeClientAddQuery(req):
+			print(' Request did not pass sanitation.')
+			return {'success':False, 'message':'Request did not pass sanitation. '}
+		
 	def lightInfoUpdate(self, req):
 		"""
 		Handles requests for changing the information of a light.
