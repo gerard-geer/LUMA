@@ -173,6 +173,17 @@ EXAMPLE RESPONSE:
 	"message": "<example client response>"
 }
 
+EXAMPLE CLIENT ADD:
+{
+	"name": "<example client name>",
+	"address": "<example client IP address>"
+}
+EXAMPLE RESPONSE:
+{
+	"success":<True | False>,
+	"message": <None | "<Example message>">
+}
+
 EXAMPLE LIGHT REMOVE:
 {
 	"name": "<example light id>"
