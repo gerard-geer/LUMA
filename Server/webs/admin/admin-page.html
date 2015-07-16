@@ -294,7 +294,9 @@
 				  </tr>
 				  <tr
 					class='listing'
-					ng-repeat='(name, addr) in state.listing'>
+					ng-repeat='(name, addr) in state.listing'
+						ng-controller='ClientListingController as cl'
+						ng-click='cl.onClientClick(name, addr)'>
 					<td class='listing-element odd'>{{name}}</td>
 					<td class='listing-element even'>{{addr}}</td>		
 				  </tr>
