@@ -367,6 +367,45 @@
 			</div>
 		</modal-dialog>
 		</div>
+		
+		<!-- The specific client modal container -->
+		<div class='modal-container'
+		ng-show='true'
+		>
+		<modal-dialog 
+		show='true'
+		width='275pt' 
+		height='auto'>
+			<div class='modal-header'>
+				{{state.selected.name}}
+				<div class='modal-subtitle'>
+				{{state.selected.address}}
+				</div>
+			</div>
+			<div class='modal-text-container'>
+				<!-- address -->
+				<div class='text-input-container'>
+					<div class='text-input-label'>
+					<p class='text-input-title'>Address</p>
+					</div>
+					<input
+					class='text-input'
+					placeholder='Client IP Address'
+					type='text'/>
+				</div>
+				<div class='dialog-button-container'>
+					<!-- The cancel button just closes the dialog. -->
+					<div class='task-button' >
+						Cancel
+					</div>
+					<!-- And the update button calls the update info callback. -->
+					<div class='task-button'>
+						Update
+					</div>
+				</div>
+			</div>
+		</modal-dialog>
+		</div>
 	</div>
 </body>
 </html>
