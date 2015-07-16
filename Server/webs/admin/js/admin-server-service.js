@@ -143,6 +143,60 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		});
 	}
 	
+	// The function that sends new client requests to the server.
+	function performClientAdd()
+	{
+		// Take the hinkiness out of it.
+		test = sanitizeNewClient(AdminStateService.newLight);
+		
+		// If the light doesn't pass sanitation, we present an error.
+		if (test != '')
+		{
+			AdminStateService.errorMessage = test;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			return;
+		}
+		
+		// Create a copy so we don't have to type as much.
+		nc = {
+			name: AdminStateService.newClient.name,
+			address: AdminStateService.newClient.address
+		}
+		
+		// Now with our fresh object we can send a request to the server.
+		$http.post('/resources/clients/', nc).
+		success(function(response)
+		{
+			// Let's just go ahead and log the raw response.
+			console.log("Cient Add response:");
+			console.log(response);
+			
+			// Now if the light was successful we close the add-light dialog.
+			if(response.success)
+			{
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.NO_DIALOG;
+				AdminStateService.showDialog = true;
+			}
+			// And if it wasn't, we bring up the error dialog.
+			else
+			{
+				AdminStateService.errorMessage = response.message;
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+				AdminStateService.showDialog = true;
+			}
+		}).
+		error(function(response)
+		{
+			// Log the response anyhow.
+			console.log("Client Add response:");
+			console.log(response);
+			// Bring up the error message.
+			AdminStateService.errorMessage = response;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			AdminStateService.showDialog = true;
+		});
+	}
+	
 	// A function to request a listing from the server.
 	function performListingRequest(path)
 	{
@@ -260,6 +314,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	
     return {
 		addNewLight: function(){performLightAdd();},
+		addNewClient: function(){performClientAdd();},
 		getLightListing: function(){performListingRequest('resources/lights/');},
 		getClientListing: function(){performListingRequest('resources/clients/');},
 		updateLightInfo: function(){performLightInfoUpdate();},
