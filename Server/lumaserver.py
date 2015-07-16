@@ -116,6 +116,14 @@ def updateLightInfo():
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.lightInfoUpdate(request.get_json()))
 	
+# Administrative stuff: Changing client info.
+@app.route('/admin/resources/clients/', methods=['PUT'])
+def updateClientInfo():
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Client info update from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return dumps(rh.clientInfoUpdate(request.get_json()))
+	
 # Draw an initial setup message.
 def printInitialSetupHeader():
 	print('*******************************************************************************')
