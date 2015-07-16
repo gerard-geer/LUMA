@@ -63,6 +63,20 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		return '';
 	}
 	
+	// Sanitizes the values passed in for new clients.
+	function sanitizeNewClient(nc)
+	{
+		if (nl.name == null || nl.name == '')
+		{
+			return 'Name must be a non-empty string.';
+		}
+		if (nl.address == null || nl.address == '')
+		{
+			return 'Address must be a non-empty string.';
+		}
+		return '';
+	}
+	
 	// A function to perform adding lights.
 	function performLightAdd()
 	{
