@@ -164,7 +164,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 		}
 		
 		// Now with our fresh object we can send a request to the server.
-		$http.post('/resources/clients/', nc).
+		$http.post('resources/clients/', nc).
 		success(function(response)
 		{
 			// Let's just go ahead and log the raw response.
