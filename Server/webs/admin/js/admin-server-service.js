@@ -66,11 +66,11 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	// Sanitizes the values passed in for new clients.
 	function sanitizeNewClient(nc)
 	{
-		if (nl.name == null || nl.name == '')
+		if (nc.name == null || nc.name == '')
 		{
 			return 'Name must be a non-empty string.';
 		}
-		if (nl.address == null || nl.address == '')
+		if (nc.address == null || nc.address == '')
 		{
 			return 'Address must be a non-empty string.';
 		}
@@ -147,7 +147,7 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	function performClientAdd()
 	{
 		// Take the hinkiness out of it.
-		test = sanitizeNewClient(AdminStateService.newLight);
+		test = sanitizeNewClient(AdminStateService.newClient);
 		
 		// If the light doesn't pass sanitation, we present an error.
 		if (test != '')
