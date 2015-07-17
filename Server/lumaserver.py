@@ -96,7 +96,7 @@ def addLight():
 @app.route('/admin/resources/clients/', methods=['POST'])
 def addClient():
 	print('-------------------------------------------------------------------------------')
-	print(' ADMIN ACTION: Light Add from: '+request.remote_addr)
+	print(' ADMIN ACTION: Client Add from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.clientAddQuery(request.get_json()))
 	
