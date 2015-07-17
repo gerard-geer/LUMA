@@ -9,15 +9,19 @@ angular.module('LUMAClientAdminPortal').factory('AdminStateService', [function()
 	var dialogEnum = {
 		NO_DIALOG: 0,
 		NEW_LIGHT: 1,
-		LIGHT_LISTING: 2,
-		CLIENT_LISTING: 4,
-		LIGHT_INFO: 8,
-		CLIENT_INFO: 16,
-		ERROR: 32
+		NEW_CLIENT: 2,
+		LIGHT_LISTING: 4,
+		CLIENT_LISTING: 8,
+		LIGHT_INFO: 16,
+		CLIENT_INFO: 32,
+		ERROR: 64
 	}
 	return {
-		// An object in which to create and store a new light.
+		// An object in which to create and store a new light before subission.
 		newLight: null,
+		// And object in which to create and store a new client before 
+		// it is submitted.
+		newClient: null,
 		// A slot for potential error messages.
 		errorMessage: null,
 		// Whether or not to show dialogs at all.

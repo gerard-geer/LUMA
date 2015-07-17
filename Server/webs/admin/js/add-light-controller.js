@@ -1,8 +1,7 @@
 // LUMA Copyright (c) Gerard Geer 2014-2015 
 
 /*
-	The task controller. Allows each task container to set interface
-	state upon ngClick.
+	The controller for adding a light. 
 */
 angular.module('LUMAClientAdminPortal').controller('AddLightController',
 ['$scope', 'AdminStateService', 'AdminServerService',
@@ -20,12 +19,6 @@ function($scope, AdminStateService, AdminServerService)
 		r_c: 1,
 		g_c: 1,
 		b_c: 1
-	};
-	
-	// A function to see if the given dialog matches that of the global state.
-	this.isDialog = function(dialogValue)
-	{
-		return AdminStateService.dialogToShow == dialogValue;
 	};
 	
 	// The on submit callback. This copies our local new light dialog to the

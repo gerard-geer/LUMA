@@ -289,7 +289,7 @@ class RequestHandler(object):
 				'success': True,
 				'message': None}
 	
-	def addQuery(self, req):
+	def lightAddQuery(self, req):
 		"""
 		Handles a query for adding a Light.
 		
@@ -315,7 +315,7 @@ class RequestHandler(object):
 			
 		# If the request was invalid, we need to transparently return
 		# nothing.
-		if not sanitizeAddQuery(req):
+		if not sanitizeLightAddQuery(req):
 			print(' Request did not pass sanitation.')
 			return {'success':False, 'message':'Request did not pass sanitation. '}
 			
@@ -382,6 +382,56 @@ class RequestHandler(object):
 		
 		print(' done.')
 		return {'success':True, 'message':None}
+		
+	def clientAddQuery(self, req):
+		"""
+		Handles a query for adding a Client.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			A new light is added.
+		"""
+		# Create our response object.
+		resp = {'success':False,
+				'message':None}
+				
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			resp['message'] = 'Could not decode JSON of request.'
+			return resp
+			
+		# If the request was invalid, we need to transparently return
+		# nothing.
+		if not sanitizeClientAddQuery(req):
+			print(' Request did not pass sanitation.')
+			resp['message']= 'Request did not pass sanitation. '
+			return resp
+			
+		# Oh this is nice and simple. The addAlias function's success and
+		# failure scenarios directly reflect the success and failure causes
+		# of the request. Therefore there's nothing to do besides sanitation.
+		resp['success'] = self._am.addAlias(req['name'],req['address'])
+		
+		# Create a message if need be.
+		if not resp['success']:
+			print('Could not create a new client. Either name or '+	\
+				  'address already in use.')
+			resp['message'] = 'Could not create a new client. Either name or '+	\
+							  'address already in use.'
+							  
+		return resp
 		
 	def lightInfoUpdate(self, req):
 		"""
