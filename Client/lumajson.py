@@ -190,8 +190,11 @@ def sanitizeRequest(r):
 	
 	# There are only two acceptable type values at this point in time.
 	# THIS LIST MAY NEED EXPANSION LATER.
-	if r['type'] != 'status' and r['type'] != 'change' and r['type'] != 'add':
-		return 'Type is not "status" or "change" or "add". Type is '+str(r['type'])
+	if r['type'] != 'status'	\
+	and r['type'] != 'change'	\
+	and r['type'] != 'add'		\
+	and r['type'] != 'info':
+		return 'Type is not "status" or "change" or "add" or "info". Type is '+str(r['type'])
 		
 	# Status requests require an ID in their data field.
 	if r['type'] == 'status' and 			\
@@ -206,6 +209,10 @@ def sanitizeRequest(r):
 	# Add requests require a dict as well.
 	if r['type'] == 'add' and (not isinstance(r['data'], dict)):
 		return 'Type is "add" but data is not a dictionary. Type: '+str(type(r['data']))
+	
+	# Info requests don't use the data field.
+	if r['type'] == 'info':
+		pass
 		
 	return None
 	
