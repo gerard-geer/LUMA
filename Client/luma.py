@@ -240,13 +240,13 @@ class LUMA(object):
 			l = []
 			self.lightLock.acquire(True)
 			for light in self.lights.values():
-				l.append(light)
+				l.append(light.clone())
 			self.lightLock.release()
 			return l
 		
 		# Otherwise we return the specific light.
 		self.lightLock.acquire(True)
-		l = self.lights[lightID]
+		l = self.lights[lightID].clone()
 		self.lightLock.release()
 		return l
 		

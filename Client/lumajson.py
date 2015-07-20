@@ -45,7 +45,8 @@ def _encode_light(l, type='state'):
 		d['g_c'] = l.g.chan
 		d['b_c'] = l.b.chan
 	if type == 'info':
-		d['time'] = l.r.chan.cur
+		# d['time'] = l.r.chan.cur
+		pass
 
 	return d
 
