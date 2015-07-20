@@ -656,6 +656,27 @@ class LUMA(object):
 			"Light '"+str(req['data']['id'])+"':'"+str(req['data']['name'])+	\
 			"' added to client "+
 			str(self.name)+'(Lights: '+str(len(self.lights.values()))+')')
+			
+	def _onInfoRequest(self, req):
+		"""
+		Defines behaviour when given a detailed information request.
+		
+		Parameters:
+			req (Dictionary): The decoded request Dictionary.
+			
+		Returns:
+			A JSON String encoding the response to this request.
+			
+		Preconditions:
+			The request is valid.
+			
+		Postconditions:
+			None.
+		"""
+		# Log some info. 
+		print(' Fetching info.')
+		return encodeResponse('info', self._getLight(),	\
+		'info returned.')
 		
 	def onRequest(self, s):
 		"""
@@ -699,6 +720,8 @@ class LUMA(object):
 			return self._onChangeRequest(r)
 		elif r['type'] == 'add':
 			return self._onAddRequest(r)
+		elif r['type'] == 'info':
+			return self._onInfoRequest(r)
 		else:
 			print('  Request of invalid type.')
 			return encodeResponse('error', None, 'Invalid request type sent to '+

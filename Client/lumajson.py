@@ -287,13 +287,13 @@ def encodeResponse(type, light_s, message):
 	print("  Type:    "+str(r['type']))
 	print("  Message: "+str(r['message']))
 	
-	if str(r['type']) == 'info'
+	if str(r['type']) == 'info':
 		s = dumps(r, cls=_LightDetailEncoder, separators=(',',':'))
-	elif str(r['type']) == 'status'
+	elif str(r['type']) == 'status':
 		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
-	elif str(r['type']) == 'success'
+	elif str(r['type']) == 'success':
 		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
-	elif str(r['type']) == 'error'
+	elif str(r['type']) == 'error':
 		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
 		
 	print("  Length:  "+str(len(s)))
