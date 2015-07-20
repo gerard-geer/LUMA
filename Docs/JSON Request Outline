@@ -238,7 +238,7 @@ EXAMPLE RESPONSE
 
 EXAMPLE ADVANCED CLIENT INFO
 {
-	<No JSON is parsed server side.
+	id: "<light id>"
 }
 EXAMPLE RESPONSE
 {
@@ -251,7 +251,7 @@ EXAMPLE RESPONSE
 	. . .
 }
 
-EXAMPLE CLIENT LIGHT DELETE (Type: "DELETE"):
+EXAMPLE S->C CLIENT INFO(Type: "INFO"):
 {
 	id:	"<light id>"
 }
