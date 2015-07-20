@@ -186,7 +186,7 @@ EXAMPLE RESPONSE:
 
 EXAMPLE LIGHT REMOVE:
 {
-	"name": "<example light id>"
+	"id": "<example light id>"
 }
 EXAMPLE RESPONSE:
 {
