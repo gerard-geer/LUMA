@@ -299,3 +299,71 @@ def sanitizeClientInfoUpdate(req):
 		return False
 			
 	return True
+	
+def sanitizeDetailedClientInfoQuery(req):
+	"""
+	Sanitizes a detailed client info request. This one is pretty 
+	straightforward.
+	
+	Parameters:
+		req (JSON): The Dictionary that contains the request.
+		
+	Returns:
+		True if the light query was valid, false otherwise.
+		
+	Preconditions:
+		None.
+	"""
+	# Make sure the request is a Dictionary.
+	if not isinstance(req, dict):
+		print('Not a dictionary.')
+		return False
+		
+	# Make sure all required keys are present.
+	for key in ['client']:
+		if key not in req.keys():
+			print(key + ' not in req.keys()')
+			return False
+	
+	# Verify the types of the keys' values.
+	if  not isinstance(req['client'], str) and	\
+		not isinstance(req['client'], unicode):
+		print('client not string. Type: '+str(type(req['client'])))
+		return False
+		
+	# Finally after all that checks out we can return True.
+	return True
+	
+def sanitizeClientInfoQuery(req):
+	"""
+	Sanitizes a detailed client info request. This one is pretty 
+	straightforward.
+	
+	Parameters:
+		req (JSON): The Dictionary that contains the request.
+		
+	Returns:
+		True if the light query was valid, false otherwise.
+		
+	Preconditions:
+		None.
+	"""
+	# Make sure the request is a Dictionary.
+	if not isinstance(req, dict):
+		print('Not a dictionary.')
+		return False
+		
+	# Make sure all required keys are present.
+	for key in ['client']:
+		if key not in req.keys():
+			print(key + ' not in req.keys()')
+			return False
+	
+	# Verify the types of the keys' values.
+	if  not isinstance(req['client'], str) and	\
+		not isinstance(req['client'], unicode):
+		print('client not string. Type: '+str(type(req['client'])))
+		return False
+		
+	# Finally after all that checks out we can return True.
+	return True
