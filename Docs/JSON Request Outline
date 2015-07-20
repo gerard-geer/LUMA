@@ -238,7 +238,7 @@ EXAMPLE RESPONSE
 
 EXAMPLE ADVANCED CLIENT INFO
 {
-	id: "<light id>"
+	<No JSON is parsed server side.>
 }
 EXAMPLE RESPONSE
 {
@@ -253,7 +253,7 @@ EXAMPLE RESPONSE
 
 EXAMPLE S->C CLIENT INFO(Type: "INFO"):
 {
-	id:	"<light id>"
+	<No JSON is parsed server side.>
 }
 EXAMPLE RESPONSE
 {
