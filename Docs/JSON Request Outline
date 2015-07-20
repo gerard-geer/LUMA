@@ -258,6 +258,10 @@ EXAMPLE CLIENT LIGHT DELETE (Type: "DELETE"):
 EXAMPLE RESPONSE
 {
 	. . ., 
-	"<light ID>": ["<light name>", "<mode>", <red pin>, <green pin>, <blue pin>],
+	"<light ID>": {
+		"name": "<light name>",
+		"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
+		"current time": <current time>
+		},
 	. . .
 }
