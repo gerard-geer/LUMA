@@ -9,15 +9,17 @@ from json import dumps, loads, JSONEncoder
 from light import Light
 from colorchannel import ColorChannel
 
-def _encode_light(l, complete=False):
+def _encode_light(l, type='state'):
 	"""
 	Encodes a light object into a dictionary.
 	
 	Parameters:
 		l (Light): The Light instance to encode.
-		complete (Boolean) (Default = False): Whether or not to encode
-			all components of the light. This mode is meant for saving
-			the state of the lights to file.
+		type (String): The type of encoding to perform.
+		-state: Returns data encoded for a state request.
+		-save: Returns a more complete light meant for saving to file.
+		-info: Returns that of save, with also the current time.
+		(Default = "state")
 	
 	Returns:
 		A dictionary containing all the fields of the Light instance.
@@ -29,18 +31,22 @@ def _encode_light(l, complete=False):
 		None.
 	"""
 	d = {}
-	d['name'] = l.name
-	d['id'] = l.id
-	d['r_t'] = l.r.times.aslist()
-	d['r_v'] = l.r.vals.aslist()
-	d['g_t'] = l.g.times.aslist()
-	d['g_v'] = l.g.vals.aslist()
-	d['b_t'] = l.b.times.aslist()
-	d['b_v'] = l.b.vals.aslist()
-	if complete:
+	if type == 'state':
+		d['name'] = l.name
+		d['id'] = l.id
+		d['r_t'] = l.r.times.aslist()
+		d['r_v'] = l.r.vals.aslist()
+		d['g_t'] = l.g.times.aslist()
+		d['g_v'] = l.g.vals.aslist()
+		d['b_t'] = l.b.times.aslist()
+		d['b_v'] = l.b.vals.aslist()
+	if type == 'save':
 		d['r_c'] = l.r.chan
 		d['g_c'] = l.g.chan
 		d['b_c'] = l.b.chan
+	if type == 'info':
+		d['time'] = l.r.chan.cur
+
 	return d
 
 class _LightEncoder(JSONEncoder):
