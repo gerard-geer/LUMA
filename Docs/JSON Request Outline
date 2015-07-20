@@ -261,7 +261,7 @@ EXAMPLE RESPONSE
 	"<light ID>": {
 		"name": "<light name>",
 		"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
-		"current time": <current time>
+		"time": <current time>
 		},
 	. . .
 }
