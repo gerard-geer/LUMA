@@ -235,3 +235,29 @@ EXAMPLE RESPONSE
 	"<client name>": "<client address>",
 	. . .
 }
+
+EXAMPLE ADVANCED CLIENT INFO
+{
+	<No JSON is parsed server side.
+}
+EXAMPLE RESPONSE
+{
+	. . ., 
+	"<light ID>": {
+		"name": "<light name>",
+		"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
+		"current time": <current time>
+		},
+	. . .
+}
+
+EXAMPLE CLIENT LIGHT DELETE (Type: "DELETE"):
+{
+	id:	"<light id>"
+}
+EXAMPLE RESPONSE
+{
+	. . ., 
+	"<light ID>": ["<light name>", "<mode>", <red pin>, <green pin>, <blue pin>],
+	. . .
+}
