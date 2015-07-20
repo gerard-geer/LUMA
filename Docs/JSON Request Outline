@@ -238,7 +238,7 @@ EXAMPLE RESPONSE
 
 EXAMPLE ADVANCED CLIENT INFO
 {
-	<No JSON is parsed server side.>
+	"client": "<client name>"
 }
 EXAMPLE RESPONSE
 {
