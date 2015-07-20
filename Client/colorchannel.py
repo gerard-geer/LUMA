@@ -47,6 +47,26 @@ class ColorChannel(object):
 		self.chan = channel
 		self.cur = 0.0
 		
+	def clone(self):
+		"""
+		Returns a copy of this ColorChannel.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			A copy of this ColorChannel.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		fresh = ColorChannel(self.times.aslist(), self.vals.aslist(), self.chan)
+		fresh.cur = self.cur
+		return fresh
+		
 	def update(self, pwm):
 		"""
 		Performs a per-"frame" update of the lighting channel, by incrementing
