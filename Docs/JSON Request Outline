@@ -242,13 +242,18 @@ EXAMPLE ADVANCED CLIENT INFO
 }
 EXAMPLE RESPONSE
 {
-	. . ., 
-	"<light ID>": {
+	"success":<True | False>,
+	"message": <None | "<Example message>">,
+	"lights": [
+		. . ., 
+		{
+		"id": "<light ID>",
 		"name": "<light name>",
 		"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
-		"current time": <current time>
+		"time": <current time>
 		},
-	. . .
+		. . .
+	]
 }
 
 EXAMPLE S->C CLIENT INFO(Type: "INFO"):
@@ -256,7 +261,7 @@ EXAMPLE S->C CLIENT INFO(Type: "INFO"):
 	<No JSON is parsed server side.>
 }
 EXAMPLE RESPONSE (As 'data')
-{
+{	
 	[
 		. . ., 
 		{
