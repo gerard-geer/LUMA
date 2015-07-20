@@ -18,7 +18,7 @@ def _encode_light(l, type='state'):
 		type (String): The type of encoding to perform.
 		-state: Returns data encoded for a state request.
 		-save: Returns a more complete light meant for saving to file.
-		-info: Returns that of save, with also the current time.
+		-info: Returns name, id, pins and time.
 		(Default = "state")
 	
 	Returns:
@@ -31,22 +31,24 @@ def _encode_light(l, type='state'):
 		None.
 	"""
 	d = {}
-	if type == 'state':
-		d['name'] = l.name
-		d['id'] = l.id
+	d['name'] = l.name
+	d['id'] = l.id
+	
+	if type == 'state' or type == 'save':
 		d['r_t'] = l.r.times.aslist()
 		d['r_v'] = l.r.vals.aslist()
 		d['g_t'] = l.g.times.aslist()
 		d['g_v'] = l.g.vals.aslist()
 		d['b_t'] = l.b.times.aslist()
 		d['b_v'] = l.b.vals.aslist()
-	if type == 'save':
+		
+	if type == 'save' or type == 'info':
 		d['r_c'] = l.r.chan
 		d['g_c'] = l.g.chan
 		d['b_c'] = l.b.chan
+		
 	if type == 'info':
-		# d['time'] = l.r.chan.cur
-		pass
+		d['time'] = l.r.cur
 
 	return d
 
