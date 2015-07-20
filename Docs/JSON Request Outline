@@ -255,13 +255,16 @@ EXAMPLE S->C CLIENT INFO(Type: "INFO"):
 {
 	<No JSON is parsed server side.>
 }
-EXAMPLE RESPONSE
+EXAMPLE RESPONSE (As 'data')
 {
-	. . ., 
-	"<light ID>": {
+	[
+		. . ., 
+		{
+		"id": "<light ID>",
 		"name": "<light name>",
 		"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
 		"time": <current time>
 		},
-	. . .
+		. . .
+	]
 }
