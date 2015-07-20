@@ -41,6 +41,28 @@ class Light(object):
 		self.b = b
 		self.name = name
 		self.id = id
+		
+	def clone(self):
+		"""
+		Returns a clone of this light.
+		
+		Parameters:
+			None.
+			
+		Returns:
+			A clone of this light.
+			
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		return Light(	self.r.clone(),	\
+						self.g.clone(),	\
+						self.b.clone(),	\
+						self.name+'', 	\
+						self.id+'')
 
 	def update(self, pwm):
 		"""
