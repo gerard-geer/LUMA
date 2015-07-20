@@ -71,7 +71,7 @@ class _LightEncoder(JSONEncoder):
 			None.
 		"""
 		try:
-			return _encode_light(obj)
+			return _encode_light(obj, 'state')
 		except:
 			return JSONEncoder.default(self, obj)
 			
@@ -98,7 +98,34 @@ class _LightSaveEncoder(JSONEncoder):
 			None.
 		"""
 		try:
-			return _encode_light(obj, True)
+			return _encode_light(obj, 'save')
+		except:
+			return JSONEncoder.default(self, obj)
+			
+class _LightDetailEncoder(JSONEncoder):
+	"""
+	A custom JSONEncoder that specifies its own way of doing things, this
+	time for encoding all the info needed for a detailed info request.
+	"""
+	def default(self, obj):
+		"""
+		Overrides JSONEncoder.default() to call _encode_light() if the
+		object being encoded is actually a Light instance.
+		
+		Parameters:
+			obj (Any): The object to encode.
+			
+		Returns:
+			The object transformed to be encoded.
+			
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		try:
+			return _encode_light(obj, 'info')
 		except:
 			return JSONEncoder.default(self, obj)
 
