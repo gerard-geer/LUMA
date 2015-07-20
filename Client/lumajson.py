@@ -265,7 +265,7 @@ def encodeResponse(type, light_s, message):
 			affected light's name, and an explanatory message.
 	
 	Parameters:
-		type ("status" | "success" | "error"): The type of response.
+		type ("status" | "info" | "success" | "error"): The type of response.
 		light (Light | Light[] | None): The light to return.
 		message (String): A message to send back.
 		
@@ -286,7 +286,16 @@ def encodeResponse(type, light_s, message):
 	print("Response:")
 	print("  Type:    "+str(r['type']))
 	print("  Message: "+str(r['message']))
-	s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	
+	if str(r['type']) == 'info'
+		s = dumps(r, cls=_LightDetailEncoder, separators=(',',':'))
+	elif str(r['type']) == 'status'
+		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	elif str(r['type']) == 'success'
+		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	elif str(r['type']) == 'error'
+		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+		
 	print("  Length:  "+str(len(s)))
 	return s
 	
