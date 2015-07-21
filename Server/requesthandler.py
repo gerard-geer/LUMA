@@ -655,6 +655,7 @@ class RequestHandler(object):
 		resp = {
 			"success": False,
 			"message": None,
+			"client": None,
 			"lights":[]
 			}
 			
@@ -693,6 +694,7 @@ class RequestHandler(object):
 		# At this point things have gone pretty smoothly.
 		else:
 			resp['success'] = True
+			resp['client'] = req['client']
 			resp['lights'] = cresp['data']
 			return resp
 				

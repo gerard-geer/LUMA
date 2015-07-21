@@ -244,6 +244,7 @@ EXAMPLE RESPONSE
 {
 	"success":<True | False>,
 	"message": <None | "<Example message>">,
+	"client": "<client name>",
 	"lights": [
 		. . ., 
 		{
