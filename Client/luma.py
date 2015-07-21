@@ -675,7 +675,7 @@ class LUMA(object):
 		"""
 		# Log some info. 
 		print(' Fetching info.')
-		return encodeResponse('info', self._getLight(),	\
+		return encodeResponse('success', self._getLight(),	\
 		'info returned.')
 		
 	def onRequest(self, s):
