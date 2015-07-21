@@ -489,6 +489,44 @@
 			</div>
 		</modal-dialog>
 		</div>
+		
+		<!-- The detailed client info modal.								 -->
+		<div class='modal-container'
+		ng-show='dialog.isDialog(dialog.DIALOG_ENUM.DETAILED_CLIENT_INFO)'
+		>
+		<modal-dialog 
+		show='dialog.state.showDialog'
+		width='auto' 
+		height='auto'>
+			<div class='modal-header'>
+				XXXXXXXXXXXX Details
+				<div class='modal-subtitle'>
+				A more in-depth look at the XXXXXXXXXXXX client.
+				</div>
+			</div>
+			<div class='modal-text-container listing-container'
+			ng-controller='ListingController as listing'>
+				<table class='listing-table'>
+				  <tr>
+					<th class='listing-header'>ID</th>
+					<th class='listing-header'>Name</th>
+					<th class='listing-header'>Pin 1</th>
+					<th class='listing-header'>Pin 2</th>
+					<th class='listing-header'>Pin 3</th>
+					<th class='listing-header'>Current Time</th>
+				  </tr>
+				  <tr
+					class='listing'
+					ng-repeat='(name, addr) in state.listing'
+						ng-controller='ClientListingController as cl'
+						ng-click='cl.onClientClick(name, addr)'>
+					<td class='listing-element odd'>{{name}}</td>
+					<td class='listing-element even'>{{addr}}</td>		
+				  </tr>
+				</table>
+			</div>
+		</modal-dialog>
+		</div>
 	</div>
 </body>
 </html>

@@ -42,10 +42,17 @@ def _encode_light(l, type='state'):
 		d['b_t'] = l.b.times.aslist()
 		d['b_v'] = l.b.vals.aslist()
 		
-	if type == 'save' or type == 'info':
+	if type == 'save':
 		d['r_c'] = l.r.chan
 		d['g_c'] = l.g.chan
 		d['b_c'] = l.b.chan
+		
+	if type == 'info':
+		d['pins'] = {
+					'r_c':l.r.chan,
+					'g_c':l.g.chan,
+					'b_c':l.b.chan
+					}
 		
 	if type == 'info':
 		d['time'] = l.r.cur
