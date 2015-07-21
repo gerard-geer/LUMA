@@ -77,8 +77,16 @@ def adminPage():
 	return send_from_directory('webs/admin/', 'admin-page.html')
 	
 # Admin page CSS and JS
-@app.route('/admin/<path:filename>', methods=['GET'])
+@app.route('/admin/css/<path:filename>', methods=['GET'])
 def fetchAdminCSS(filename):
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN CSS/JS Request from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()) + ' For: '+request.path)
+	return send_from_directory('webs/admin/', filename)
+	
+# Admin page CSS and JS
+@app.route('/admin/js/<path:filename>', methods=['GET'])
+def fetchAdminJS(filename):
 	print('-------------------------------------------------------------------------------')
 	print(' ADMIN CSS/JS Request from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()) + ' For: '+request.path)
@@ -131,6 +139,14 @@ def updateClientInfo():
 	print(' ADMIN ACTION: Client info update from: '+request.remote_addr)
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.clientInfoUpdate(request.get_json()))
+	
+# Administrative stuff: Getting detailed info for a client.
+@app.route('/admin/resources/clients/<detailedclientrequest>', methods=['GET'])
+def detailedClientInfoRequest(detailedclientrequest):
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Detailed client info request from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return dumps(rh.detailedInfoQuery(detailedclientrequest))
 	
 # Draw an initial setup message.
 def printInitialSetupHeader():
