@@ -66,7 +66,7 @@
 	<div class='task-container'>
 		<div class='task-button-container'>
 			<div class='task-button' 
-			ng-click='task.setDialog(task.DIALOG_ENUM.LIGHT_LISTING);task.server.getLightListing()'>
+			ng-click='task.server.getLightListing()'>
 			Get Light List
 			</div>
 		</div>
@@ -78,7 +78,7 @@
 	<div class='task-container'>
 		<div class='task-button-container'>
 			<div class='task-button' 
-			ng-click='task.setDialog(task.DIALOG_ENUM.CLIENT_LISTING);task.server.getClientListing()'>
+			ng-click='task.server.getClientListing()'>
 			Get Client List
 			</div>
 		</div>
@@ -477,7 +477,8 @@
 						Cancel
 					</div>
 					<!-- The detailed info button brings up a whole new thing. -->
-					<div class='task-button'>
+					<div class='task-button'
+					ng-click='info.onDetailsClick()'>
 						Details
 					</div>
 					<!-- And the update button calls the update info callback. -->
@@ -496,12 +497,13 @@
 		>
 		<modal-dialog 
 		show='dialog.state.showDialog'
-		width='auto' 
+		width='800pt' 
 		height='auto'>
-			<div class='modal-header'>
-				XXXXXXXXXXXX Details
+			<div class='modal-header'
+			ng-controller='ListingController as listingHeader'>
+				{{state.listing.client}} Details
 				<div class='modal-subtitle'>
-				A more in-depth look at the XXXXXXXXXXXX client.
+				A more in-depth look at the {{state.listing.client}} client.
 				</div>
 			</div>
 			<div class='modal-text-container listing-container'
@@ -510,18 +512,16 @@
 				  <tr>
 					<th class='listing-header'>ID</th>
 					<th class='listing-header'>Name</th>
-					<th class='listing-header'>Pin 1</th>
-					<th class='listing-header'>Pin 2</th>
-					<th class='listing-header'>Pin 3</th>
+					<th class='listing-header'>Pins</th>
 					<th class='listing-header'>Current Time</th>
 				  </tr>
 				  <tr
 					class='listing'
-					ng-repeat='(name, addr) in state.listing'
-						ng-controller='ClientListingController as cl'
-						ng-click='cl.onClientClick(name, addr)'>
-					<td class='listing-element odd'>{{name}}</td>
-					<td class='listing-element even'>{{addr}}</td>		
+					ng-repeat='light in state.listing.lights'>
+					<td class='listing-element odd'>{{light.id}}</td>
+					<td class='listing-element even'>{{light.name}}</td>		
+					<td class='listing-element odd'>{{light.pins}}</td>		
+					<td class='listing-element even'>{{light.time}}</td>		
 				  </tr>
 				</table>
 			</div>
