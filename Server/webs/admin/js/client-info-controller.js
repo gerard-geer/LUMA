@@ -13,4 +13,9 @@ function($scope, AdminStateService, AdminServerService)
 	{
 		AdminServerService.updateClientInfo();
 	}
+	
+	this.onDetailsClick = function()
+	{
+		AdminServerService.getDetailedInfoListing(AdminStateService.selected.name);
+	}
 }]);
