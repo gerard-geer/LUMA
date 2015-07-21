@@ -198,20 +198,58 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
 	}
 	
 	// A function to request a listing from the server.
-	function performListingRequest(path)
+	function performListingRequest(path, modal)
 	{
 		// Not much to this one.
 		$http.get(path).
 		success(function(response)
 		{
-			console.log("Client listing response:");
+			console.log("Listing response:");
 			console.log(response);
 			// Store the light listing on the state for access elsewhere.
 			AdminStateService.listing = response;
+			// Bring up the next modal.
+			AdminStateService.dialogToShow = modal;
+			AdminStateService.showDialog = true;
 		}).
 		error(function(response)
 		{
-			console.log("Client listing response:");
+			console.log("Listing response:");
+			console.log(response);
+			// Bring up the error message.
+			AdminStateService.errorMessage = response;
+			AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+			AdminStateService.showDialog = true;
+		});
+	}
+	
+	// A function to request detailed client information.
+	function performDetailedInfoRequest(path)
+	{
+		// Not much to this either.
+		$http.get(path).
+		success(function(response)
+		{
+			console.log("Detailed info response:");
+			console.log(response);
+			if(response['success'])
+			{
+				// Store the light listing on the state for access elsewhere.
+				AdminStateService.listing = response;
+				// Bring up the next modal.
+				AdminStateService.dialogToShow = modal;
+				AdminStateService.showDialog = true;
+			}
+			else
+			{
+				AdminStateService.errorMessage = response['message'];
+				AdminStateService.dialogToShow = AdminStateService.DIALOG_ENUM.ERROR;
+				AdminStateService.showDialog = true;
+			}
+		}).
+		error(function(response)
+		{
+			console.log("Detailed response:");
 			console.log(response);
 			// Bring up the error message.
 			AdminStateService.errorMessage = response;
@@ -315,8 +353,15 @@ angular.module('LUMAClientAdminPortal').factory('AdminServerService',
     return {
 		addNewLight: function(){performLightAdd();},
 		addNewClient: function(){performClientAdd();},
-		getLightListing: function(){performListingRequest('resources/lights/');},
-		getClientListing: function(){performListingRequest('resources/clients/');},
+		getLightListing: function(){
+			performListingRequest('resources/lights/', AdminStateService.DIALOG_ENUM.LIGHT_LISTING);
+			},
+		getClientListing: function(){
+			performListingRequest('resources/clients/', AdminStateService.DIALOG_ENUM.CLIENT_LISTING);
+			},
+		getDetailedInfoListing: function(client){
+			performDetailedInfoRequest('resources/clients/'+JSON.stringify({'client':AdminStateService.selected.name}));
+			},
 		updateLightInfo: function(){performLightInfoUpdate();},
 		updateClientInfo: function(){performClientInfoUpdate();}
     };

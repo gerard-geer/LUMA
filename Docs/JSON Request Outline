@@ -186,7 +186,7 @@ EXAMPLE RESPONSE:
 
 EXAMPLE LIGHT REMOVE:
 {
-	"name": "<example light id>"
+	"id": "<example light id>"
 }
 EXAMPLE RESPONSE:
 {
@@ -235,3 +235,40 @@ EXAMPLE RESPONSE
 	"<client name>": "<client address>",
 	. . .
 }
+
+EXAMPLE ADVANCED CLIENT INFO
+{
+	"client": "<client name>"
+}
+EXAMPLE RESPONSE
+{
+	"success":<True | False>,
+	"message": <None | "<Example message>">,
+	"client": "<client name>",
+	"lights": [
+		. . ., 
+		{
+		"id": "<light ID>",
+		"name": "<light name>",
+		"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
+		"time": <current time>
+		},
+		. . .
+	]
+}
+
+EXAMPLE S->C CLIENT INFO(Type: "INFO"):
+{
+	<No JSON is parsed server side.>
+}
+EXAMPLE RESPONSE (As 'data')
+[
+	. . ., 
+	{
+	"id": "<light ID>",
+	"name": "<light name>",
+	"pins": {..."<pin title>":<pin number>...}, // Future proofing for non RGB setups.
+	"time": <current time>
+	},
+	. . .
+]

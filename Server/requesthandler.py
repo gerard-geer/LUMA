@@ -633,6 +633,70 @@ class RequestHandler(object):
 			None.
 		"""
 		return self._am.getClientCatalog()
+		
+	def detailedInfoQuery(self, req):
+		"""
+		Handles a request for detailed information about a client.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			The state of the lights supplied is updated, if they exist.
+		"""	
+		
+		# Create a base response object.
+		resp = {
+			"success": False,
+			"message": None,
+			"client": None,
+			"lights":[]
+			}
+			
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			resp['message'] = 'Invalid query.'
+			return resp
+			
+		# Sanitize the request.
+		if not sanitizeClientInfoQuery(req):
+			print(' Request did not pass sanitation.')
+			resp['message'] = 'Invalid query.'
+			return resp
+					
+		# Get the client address given its name.
+		address = self._am.getAddress(req['client'])
+		if address == None:
+			print(' Unrecognized client name/alias.')
+			resp['message'] = 'Client alias not recognized.'
+			return resp
+		
+		# If we can, well, that's good.
+		print(' To: '+address+' ('+req['client']+')')
+		cresp = self._cm.sendRequest(address, 'info', None)
+		
+		# Now if we were unable to connect to the client we have to adapt.
+		if cresp['type'] == 'error':
+			print('  Could not connect to client. '+str(cresp['message']))
+			cresp['message'] = 'Could not connect to client. '+str(cresp['message'])
+			return resp
+			
+		# At this point things have gone pretty smoothly.
+		else:
+			resp['success'] = True
+			resp['client'] = req['client']
+			resp['lights'] = cresp['data']
+			return resp
 				
 	def addUUID(self, req):
 		"""

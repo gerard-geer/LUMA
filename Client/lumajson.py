@@ -9,15 +9,17 @@ from json import dumps, loads, JSONEncoder
 from light import Light
 from colorchannel import ColorChannel
 
-def _encode_light(l, complete=False):
+def _encode_light(l, type='state'):
 	"""
 	Encodes a light object into a dictionary.
 	
 	Parameters:
 		l (Light): The Light instance to encode.
-		complete (Boolean) (Default = False): Whether or not to encode
-			all components of the light. This mode is meant for saving
-			the state of the lights to file.
+		type (String): The type of encoding to perform.
+		-state: Returns data encoded for a state request.
+		-save: Returns a more complete light meant for saving to file.
+		-info: Returns name, id, pins and time.
+		(Default = "state")
 	
 	Returns:
 		A dictionary containing all the fields of the Light instance.
@@ -31,16 +33,30 @@ def _encode_light(l, complete=False):
 	d = {}
 	d['name'] = l.name
 	d['id'] = l.id
-	d['r_t'] = l.r.times.aslist()
-	d['r_v'] = l.r.vals.aslist()
-	d['g_t'] = l.g.times.aslist()
-	d['g_v'] = l.g.vals.aslist()
-	d['b_t'] = l.b.times.aslist()
-	d['b_v'] = l.b.vals.aslist()
-	if complete:
+	
+	if type == 'state' or type == 'save':
+		d['r_t'] = l.r.times.aslist()
+		d['r_v'] = l.r.vals.aslist()
+		d['g_t'] = l.g.times.aslist()
+		d['g_v'] = l.g.vals.aslist()
+		d['b_t'] = l.b.times.aslist()
+		d['b_v'] = l.b.vals.aslist()
+		
+	if type == 'save':
 		d['r_c'] = l.r.chan
 		d['g_c'] = l.g.chan
 		d['b_c'] = l.b.chan
+		
+	if type == 'info':
+		d['pins'] = {
+					'r_c':l.r.chan,
+					'g_c':l.g.chan,
+					'b_c':l.b.chan
+					}
+		
+	if type == 'info':
+		d['time'] = l.r.cur
+
 	return d
 
 class _LightEncoder(JSONEncoder):
@@ -65,7 +81,7 @@ class _LightEncoder(JSONEncoder):
 			None.
 		"""
 		try:
-			return _encode_light(obj)
+			return _encode_light(obj, 'state')
 		except:
 			return JSONEncoder.default(self, obj)
 			
@@ -92,7 +108,34 @@ class _LightSaveEncoder(JSONEncoder):
 			None.
 		"""
 		try:
-			return _encode_light(obj, True)
+			return _encode_light(obj, 'save')
+		except:
+			return JSONEncoder.default(self, obj)
+			
+class _LightDetailEncoder(JSONEncoder):
+	"""
+	A custom JSONEncoder that specifies its own way of doing things, this
+	time for encoding all the info needed for a detailed info request.
+	"""
+	def default(self, obj):
+		"""
+		Overrides JSONEncoder.default() to call _encode_light() if the
+		object being encoded is actually a Light instance.
+		
+		Parameters:
+			obj (Any): The object to encode.
+			
+		Returns:
+			The object transformed to be encoded.
+			
+		Preconditions:
+			None.
+		
+		Postconditions:
+			None.
+		"""
+		try:
+			return _encode_light(obj, 'info')
 		except:
 			return JSONEncoder.default(self, obj)
 
@@ -190,8 +233,11 @@ def sanitizeRequest(r):
 	
 	# There are only two acceptable type values at this point in time.
 	# THIS LIST MAY NEED EXPANSION LATER.
-	if r['type'] != 'status' and r['type'] != 'change' and r['type'] != 'add':
-		return 'Type is not "status" or "change" or "add". Type is '+str(r['type'])
+	if r['type'] != 'status'	\
+	and r['type'] != 'change'	\
+	and r['type'] != 'add'		\
+	and r['type'] != 'info':
+		return 'Type is not "status" or "change" or "add" or "info". Type is '+str(r['type'])
 		
 	# Status requests require an ID in their data field.
 	if r['type'] == 'status' and 			\
@@ -206,6 +252,10 @@ def sanitizeRequest(r):
 	# Add requests require a dict as well.
 	if r['type'] == 'add' and (not isinstance(r['data'], dict)):
 		return 'Type is "add" but data is not a dictionary. Type: '+str(type(r['data']))
+	
+	# Info requests don't use the data field.
+	if r['type'] == 'info':
+		pass
 		
 	return None
 	
@@ -225,7 +275,7 @@ def encodeResponse(type, light_s, message):
 			affected light's name, and an explanatory message.
 	
 	Parameters:
-		type ("status" | "success" | "error"): The type of response.
+		type ("status" | "info" | "success" | "error"): The type of response.
 		light (Light | Light[] | None): The light to return.
 		message (String): A message to send back.
 		
@@ -246,7 +296,16 @@ def encodeResponse(type, light_s, message):
 	print("Response:")
 	print("  Type:    "+str(r['type']))
 	print("  Message: "+str(r['message']))
-	s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	
+	if str(r['type']) == 'info':
+		s = dumps(r, cls=_LightDetailEncoder, separators=(',',':'))
+	elif str(r['type']) == 'status':
+		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	elif str(r['type']) == 'success':
+		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+	elif str(r['type']) == 'error':
+		s = dumps(r, cls=_LightEncoder, separators=(',',':'))
+		
 	print("  Length:  "+str(len(s)))
 	return s
 	

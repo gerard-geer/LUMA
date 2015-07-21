@@ -47,6 +47,26 @@ class ColorChannel(object):
 		self.chan = channel
 		self.cur = 0.0
 		
+	def clone(self):
+		"""
+		Returns a copy of this ColorChannel.
+		
+		Parameters:
+			None.
+		
+		Returns:
+			A copy of this ColorChannel.
+			
+		Preconditions:
+			None.
+			
+		Postconditions:
+			None.
+		"""
+		fresh = ColorChannel(self.times.aslist(), self.vals.aslist(), self.chan)
+		fresh.cur = self.cur
+		return fresh
+		
 	def update(self, pwm):
 		"""
 		Performs a per-"frame" update of the lighting channel, by incrementing
@@ -113,7 +133,7 @@ class ColorChannel(object):
 		maxRate = 0
 		for i in range(len(self.vals)):
 			# We have to account for zero-length times.
-			rate = self.vals[i]/(self.times[i]+.0001)
+			rate = ( self.vals[i+1]-self.vals[i] ) / (self.times[i]+.0001)
 			# Update the maximum rate should we need to.
 			maxRate = max(rate, maxRate)
 				
