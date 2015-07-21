@@ -184,7 +184,7 @@ EXAMPLE RESPONSE:
 	"message": <None | "<Example message>">
 }
 
-EXAMPLE LIGHT REMOVE:
+EXAMPLE LIGHT DELETE:
 {
 	"id": "<example light id>"
 }
@@ -194,7 +194,7 @@ EXAMPLE RESPONSE:
 	"message": <None | "<Example message>">
 }
 
-EXAMPLE CLIENT LIGHT DELETE (Type: "DELETE"):
+EXAMPLE CLIENT LIGHT DELETE (Type: "delete"):
 {
 	id:	"<light id>"
 }
