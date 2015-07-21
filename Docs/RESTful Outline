@@ -6,15 +6,16 @@ eventually be implemented, and only reflects what can be done.
 <LUMA domain> is just the URL of the server.
 ********************************************************************************
 
-<LUMA domain>/resources/lights
-	GET: Gets collection of lights that are available to the current UUID
+<LUMA domain>/resources/lights[/<query>]
+	GET (with <query>: Gets collection of lights that are available to the 
+		current UUID.
 	and match the query.
 	POST: Not used.
 	PUT: Not used.
 	DELETE: Not used.
 
-<LUMA domain>/resources/lights/state
-	GET: Gets the state of a single light.
+<LUMA domain>/resources/lights/state[/<light ID>]
+	GET (with light ID): Gets the state of a single light.
 	POST: Sets the state of one or more lights.
 	PUT: Not used.
 	DELETE: Not used.
@@ -25,8 +26,9 @@ eventually be implemented, and only reflects what can be done.
 	PUT: Change a light's information (client, permission list, and/or name).
 	DELETE: Not used.
 	
-<LUMA domain>/admin/resources/clients
+<LUMA domain>/admin/resources/clients[/<client name>]
 	GET: Returns a listing of all the clients on the server.
+	GET (with <client name>): Detailed info regarding the given client.
 	POST: Add a client.
 	PUT: Change a client's address.
 	DELETE: Not used.
