@@ -668,21 +668,21 @@ class RequestHandler(object):
 			return resp
 			
 		# Sanitize the request.
-		if not sanitizeDetailedClientInfoQuery(req):
+		if not sanitizeClientInfoQuery(req):
 			print(' Request did not pass sanitation.')
 			resp['message'] = 'Invalid query.'
 			return resp
 					
 		# Get the client address given its name.
-		address = self._am.getAddress(light['client'])
+		address = self._am.getAddress(req['client'])
 		if address == None:
 			print(' Unrecognized client name/alias.')
 			resp['message'] = 'Client alias not recognized.'
 			return resp
 		
 		# If we can, well, that's good.
-		print(' To: '+address+' ('+light['client']+')')
-		cresp = self._cm.sendRequest(address, 'status', req['id'])
+		print(' To: '+address+' ('+req['client']+')')
+		cresp = self._cm.sendRequest(address, 'info', None)
 		
 		# Now if we were unable to connect to the client we have to adapt.
 		if cresp['type'] == 'error':
