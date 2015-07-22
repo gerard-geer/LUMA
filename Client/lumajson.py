@@ -236,6 +236,7 @@ def sanitizeRequest(r):
 	if r['type'] != 'status'	\
 	and r['type'] != 'change'	\
 	and r['type'] != 'add'		\
+	and r['type'] != 'delete'	\
 	and r['type'] != 'info':
 		return 'Type is not "status" or "change" or "add" or "info". Type is '+str(r['type'])
 		
@@ -256,6 +257,12 @@ def sanitizeRequest(r):
 	# Info requests don't use the data field.
 	if r['type'] == 'info':
 		pass
+		
+	# Delete requests, like status requests, require a String.
+	if r['type'] == 'delete' and 			\
+	(not isinstance(r['data'], str)) and 	\
+	(not isinstance(r['data'], unicode)):
+		return 'Type is "delete" but data is not an ID string. Type: '+str(type(r['data']))
 		
 	return None
 	
