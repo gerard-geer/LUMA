@@ -782,6 +782,8 @@ class LUMA(object):
 			return self._onAddRequest(r)
 		elif r['type'] == 'info':
 			return self._onInfoRequest(r) 
+		elif r['type'] == 'delete':
+			return self._onDeleteRequest(r) 
 		else:
 			print('  Request of invalid type.')
 			return encodeResponse('error', None, 'Invalid request type sent to '+
