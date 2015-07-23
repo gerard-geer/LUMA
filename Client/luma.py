@@ -328,7 +328,7 @@ class LUMA(object):
 			id (String): The ID of the light to delete.
 			
 		Returns:
-			True, if the light was deleted, false otherwise.
+			None.
 			
 		Preconditions:
 			The light must exist for this to succedd.
@@ -340,7 +340,6 @@ class LUMA(object):
 		self.lightLock.acquire(True)
 		del self.lights[id]
 		self.lightLock.release()
-		return True
 	
 	def pinsInUse(self, pins):
 		"""
