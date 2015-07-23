@@ -698,6 +698,46 @@ class LUMA(object):
 		return encodeResponse('success', self._getLight(),	\
 		'info returned.')
 		
+	def _onDeleteRequest(self, req):
+		"""
+		Defines behaviour when given a delete light request.
+		
+		Parameters:
+			req (Dictionary): The decoded request Dictionary.
+			
+		Returns:
+			A JSON String encoding the response to this request.
+			
+		Preconditions:
+			The request is valid.
+			
+		Postconditions:
+			None.
+		"""
+		# Log some info. 
+		print('  For:    id='+req['data'])
+		
+		# Test to see if the light exists.
+		if not self._exists(req['data']):
+			return encodeResponse('error', None,	\
+			'Light '+str(req['data'])+' does not exist on client '+\
+			str(self.name))
+			
+		# If the light does exist, we delete it.
+		self._deleteLight(id)
+		
+		# Make sure the delete happened.
+		if not self._exists(req['data']):
+			print('  Light deleted.')
+			return encodeResponse('success', None,	\
+			'Light '+str(req['data'])+' deleted from '+\
+			str(self.name))
+		else: 
+			print('  Light not deleted!')
+			return encodeResponse('error', None,	\
+			'Light '+str(req['data'])+' delete operation failed on client '+\
+			str(self.name))
+		
 	def onRequest(self, s):
 		"""
 		Acts upon a request.
