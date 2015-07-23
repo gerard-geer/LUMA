@@ -724,7 +724,7 @@ class LUMA(object):
 			str(self.name))
 			
 		# If the light does exist, we delete it.
-		self._deleteLight(id)
+		self._deleteLight(req['data'])
 		
 		# Make sure the delete happened.
 		if not self._exists(req['data']):
