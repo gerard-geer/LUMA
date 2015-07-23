@@ -337,12 +337,10 @@ class LUMA(object):
 			The light is deleted from the current workload of the server.
 			To remove it from configuration, a save is required.
 		"""
-		if self._exists(id):
-			self.lightLock.acquire(True)
-			del self.lights[id]
-			self.lightLock.release()
-			return True
-		return False
+		self.lightLock.acquire(True)
+		del self.lights[id]
+		self.lightLock.release()
+		return True
 	
 	def pinsInUse(self, pins):
 		"""
