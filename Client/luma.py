@@ -320,6 +320,29 @@ class LUMA(object):
 		self.lights[id] = newLight
 		self.lightLock.release()
 		
+	def _deleteLight(self, id):
+		"""
+		Thread-safely delete a light from this client.
+		
+		Parameters:
+			id (String): The ID of the light to delete.
+			
+		Returns:
+			True, if the light was deleted, false otherwise.
+			
+		Preconditions:
+			The light must exist for this to succedd.
+			
+		Postconditions:
+			The light is deleted from the current workload of the server.
+			To remove it from configuration, a save is required.
+		"""
+		if self._exists(id):
+			self.lightLock.acquire(True)
+			del self.lights[id]
+			self.lightLock.release()
+			return True
+		return False
 	
 	def pinsInUse(self, pins):
 		"""
