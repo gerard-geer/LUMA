@@ -688,7 +688,7 @@ class RequestHandler(object):
 		# Now if we were unable to connect to the client we have to adapt.
 		if cresp['type'] == 'error':
 			print('  Could not connect to client. '+str(cresp['message']))
-			cresp['message'] = 'Could not connect to client. '+str(cresp['message'])
+			resp['message'] = 'Could not connect to client. '+str(cresp['message'])
 			return resp
 			
 		# At this point things have gone pretty smoothly.
