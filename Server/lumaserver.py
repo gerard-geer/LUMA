@@ -148,6 +148,14 @@ def detailedClientInfoRequest(detailedclientrequest):
 	print(' Time: '+str(datetime.now()))
 	return dumps(rh.detailedInfoQuery(detailedclientrequest))
 	
+# Administrative stuff: Deleting a light.
+@app.route('/admin/resources/clients/<lighttodelete>', methods=['DELETE'])
+def deleteLightRequest(lighttodelete):
+	print('-------------------------------------------------------------------------------')
+	print(' ADMIN ACTION: Detailed client info request from: '+request.remote_addr)
+	print(' Time: '+str(datetime.now()))
+	return dumps(rh.deleteLightRequest(lighttodelete))
+	
 # Draw an initial setup message.
 def printInitialSetupHeader():
 	print('*******************************************************************************')

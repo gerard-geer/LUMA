@@ -700,7 +700,7 @@ class RequestHandler(object):
 			
 	def deleteLightRequest(self, req):
 		"""
-		Handles a request to delete a light.
+		Handles a request to delete a light. This is for admin action only.
 		
 		Parameters:
 			req (JSON String): The JSON String that describes the request.
