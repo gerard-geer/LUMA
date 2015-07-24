@@ -697,6 +697,73 @@ class RequestHandler(object):
 			resp['client'] = req['client']
 			resp['lights'] = cresp['data']
 			return resp
+			
+	def deleteLightRequest(self, req):
+		"""
+		Handles a request to delete a light.
+		
+		Parameters:
+			req (JSON String): The JSON String that describes the request.
+			
+		Returns:
+			A dictionary containing the response to the request.
+			
+		Preconditions:
+			The request be a valid JSON object for this request type.
+			
+		Postconditions:
+			The state of the lights supplied is updated, if they exist.
+		"""	
+		
+		# Create a base response object.
+		resp = {
+			"success": False,
+			"message": None
+			}
+			
+		# Try to decode the JSON.
+		try:
+			if isinstance(req, unicode) or isinstance(req, str):
+				req = loads(req)
+		except:
+			print(' Could not decode JSON of request.')
+			resp['message'] = 'Invalid query.'
+			return resp
+			
+		# Sanitize the request.
+		if not sanitizeDeleteLightRequest(req):
+			print(' Request did not pass sanitation.')
+			resp['message'] = 'Invalid query.'
+			return resp
+					
+		# First we need to get the light, and for that it needs to exist.
+		light = self._lm.getLight(req['id'])
+		if light == None:
+			print(' Light does not exist on the server.')
+			resp['message'] = 'Light does not exist on the server.'
+			return resp
+		
+		# Now we need to get the client that the light resides on.
+		addr = self._am.getAddress(light['client'])
+		if alias == None:
+			print(' Cannot resolve client address. Perhaps client has been deleted?')
+			resp['message'] = 'Cannot resolve client address. Perhaps client has been deleted?'
+			return resp
+		
+		# If we can, well, that's good.
+		print(' To: '+address+' ('+req['client']+')')
+		cresp = self._cm.sendRequest(address, 'delete', req['id'])
+		
+		# Now if we were unable to connect to the client we have to adapt.
+		if cresp['type'] == 'error':
+			print('  Could not resolve communication with client. '+str(cresp['message']))
+			resp['message'] = 'Could not resolve communication with client. '+str(cresp['message'])
+			return resp
+			
+		# At this point things have gone pretty smoothly.
+		else:
+			resp['success'] = True
+			return resp
 				
 	def addUUID(self, req):
 		"""
