@@ -760,9 +760,13 @@ class RequestHandler(object):
 			resp['message'] = 'Could not resolve communication with client. '+str(cresp['message'])
 			return resp
 			
-		# At this point things have gone pretty smoothly.
+		# At this point things have gone pretty smoothly. Let's continue by
+		# deleting our local copy of the light.
+		if not deleteLight(req['id']):
+			print(' Could not delete local copy of the light. Perhaps it is already gone?')
+			resp['message'] = 'Could not delete local copy of the light. Perhaps it is already gone?'
 		else:
-			resp['success'] = True
+			resp['success'] = False
 			return resp
 				
 	def addUUID(self, req):
