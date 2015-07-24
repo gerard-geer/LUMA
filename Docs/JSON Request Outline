@@ -196,7 +196,7 @@ EXAMPLE RESPONSE:
 
 EXAMPLE CLIENT LIGHT DELETE (Type: "delete"):
 {
-	id:	"<light id>"
+	"<light id>"
 }
 EXAMPLE RESPONSE:
 {
