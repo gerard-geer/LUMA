@@ -367,3 +367,36 @@ def sanitizeClientInfoQuery(req):
 		
 	# Finally after all that checks out we can return True.
 	return True
+	
+def sanitizeDeleteLightRequest(req):
+	"""
+	Pasteurizes a "delete this light" request.
+	
+	Parameters:
+		req (JSON): The Dictionary that contains the request.
+		
+	Returns:
+		True if the light query was valid, false otherwise.
+		
+	Preconditions:
+		None.
+	"""
+	# Make sure the request is a Dictionary.
+	if not isinstance(req, dict):
+		print('Not a dictionary.')
+		return False
+		
+	# Make sure all required keys are present.
+	for key in ['id']:
+		if key not in req.keys():
+			print(key + ' not in req.keys()')
+			return False
+	
+	# Verify the types of the keys' values.
+	if  not isinstance(req['id'], str) and	\
+		not isinstance(req['id'], unicode):
+		print('client not string. Type: '+str(type(req['id'])))
+		return False
+		
+	# Finally after all that checks out we can return True.
+	return True
